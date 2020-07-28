@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Operations Data</title>
+        <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+        <script src="https://cdn.jsdelivr.net/gh/cryptonomic/conseiljs/dist-web/conseiljs.min.js"
+                integrity="sha384-g7ZPuT8xCBXLdgu2vBXWuOiEQIes6tPyFP4DIJBbgGfGSLRkOvET5Ra6dN9AePbQ"
+                crossorigin="anonymous"></script>
+        <script src="../util/conseilSetup.js"></script>
+        <script src="../util/chartGenerator.js"></script>
+        <link rel="stylesheet" href="../stylesheet.css">
+        <link href="https://fonts.googleapis.com/css?family=Jost&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="sideBar">
+        <table>
+            <tr>
+                <td>
+                    <a href="../index.html"><< Back</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>
+                        <a href="../accounts/accounts.html">Accounts</a>
+                    </strong>
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="../accounts/accounts.html#topAccounts">Top Accounts</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>
+                        <a href="../contracts/contracts.html">Contracts</a>
+                    </strong>
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="../contracts/contracts.html#topContracts">Contracts by Balance</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="../contracts/contracts.html#topInvoked">Contracts by Invocations</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>
+                        <a href="../bakers/bakers.html">Bakers</a>
+                    </strong>
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="../bakers/bakers.html#topStakers">Top Bakers by Stake</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="../bakers/bakers.html#topBakers">Top Bakers by Block</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="../bakers/bakers.html#topDelegates">Top Bakers by Delegations</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>
+                        <a href="../operations/operations.html">Operations</a>
+                    </strong>
+                </td>
+                <table>
+                    <tr>
+                        <td>
+                            <a href="../operations/operations.html#transactionsPerHour">Transactions Per Hour</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="../operations/operations.html#volumePerHour">Transaction Volume Per Hour</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="../operations/operations.html#gasPerHour">Gas Per Hour</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="../operations/operations.html#transactionsPerHour">Transactions Per Hour</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="../operations/operations.html#feesPerHour">Fees Paid Per Hour</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="../operations/operations.html#activationsPerDay">Activations Per Day</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="../operations/operations.html#originationsPerDay">Originations Per Day</a>
+                        </td>
+                    </tr>
+                </table>
+            </tr>
+            <tr>
+                <td>
+                    <strong>
+                        <a href="../blocks/blocks.html">Blocks</a>
+                    </strong>
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="../blocks/blocks.html#bph">Blocks per Hour</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="../blocks/blocks.html#priorityBPH">Priority Zero Blocks per Hour</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="../blocks/blocks.html#pbe">Endorsements per Hour</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+        <table id="graphArray">
+            <tr>
+                <td>
+                    <h1>Operations</h1>
+                    <div class="pageControlPanel">
+                        <table class="wideOptions">
+                            <tr id="operationsPageOptions">
+                                <td class="wideChartOption" id="oneDay">
+                                    One Day
+                                </td>
+                                <td class="wideChartOption" id="oneWeek">
+                                    One Week
+                                </td>
+                                <td class="wideChartOption" id="oneMonth">
+                                    One Month
+                                </td>
+                                <td class="wideChartOption" id="oneYear">
+                                    One Year
+                                </td>
+                                <td class="wideChartOption" id="allTime">
+                                    All Time
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="wideContainer">
+                        <h2>Transactions per Hour</h2>
+                        <svg id="tphAxis" class="axis">
+                        </svg>
+                        <div class="wideChartContainer">
+                            <svg id="transactionsPerHour" class="barChart">
+                            </svg>
+                        </div>
+                        <br>
+                        <a href="" id="transactionsPerHourLink" class="arronaxLink">Link to Query in Arronax</a>
+                        <script src="transactionsPerBlock.js"></script>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="wideContainer">
+                        <h2>Transaction Volume per Hour</h2>
+                        <svg id="vphAxis" class="axis">
+                        </svg>
+                        <div class="wideChartContainer">
+                            <svg id="volumePerHour" class="barChart">
+                            </svg>
+                        </div>
+                        <br>
+                        <a href="" id="volumePerHourLink" class="arronaxLink">Link to Query in Arronax</a>
+                        <script src="hourlyVolume.js"></script>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="wideContainer">
+                        <h2>Gas per Hour</h2>
+                        <svg id="gphAxis" class="axis">
+                        </svg>
+                        <div class="wideChartContainer">
+                            <svg id="gasPerHour" class="barChart">
+                            </svg>
+                        </div>
+                        <br>
+                        <a href="" id="gasPerHourLink" class="arronaxLink">Link to Query in Arronax</a>
+                        <script src="hourlyGas.js"></script>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="wideContainer">
+                        <h2>Fees Paid per Hour</h2>
+                        <svg id="fphAxis" class="axis">
+                        </svg>
+                        <div class="wideChartContainer">
+                            <svg id="feesPerHour" class="barChart">
+                            </svg>
+                        </div>
+                        <br>
+                        <a href="" id="feesPerHourLink" class="arronaxLink">Link to Query in Arronax</a>
+                        <script src="hourlyFees.js"></script>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="wideContainer">
+                        <h2>Activations per Day</h2>
+                        <svg id="apdAxis" class="axis">
+                        </svg>
+                        <div class="wideChartContainer">
+                            <svg id="activationsPerDay" class="barChart">
+                            </svg>
+                        </div>
+                        <br>
+                        <a href="" id="activationsPerDayLink" class="arronaxLink">Link to Query in Arronax</a>
+                        <script src="dailyActivations.js"></script>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="wideContainer">
+                        <h2>Originations per Day</h2>
+                        <svg id="opdAxis" class="axis">
+                        </svg>
+                        <div class="wideChartContainer">
+                            <svg id="originationsPerDay" class="barChart">
+                            </svg>
+                        </div>
+                        <br>
+                        <a href="" id="originationsPerDayLink" class="arronaxLink">Link to Query in Arronax</a>
+                        <script src="dailyOriginations.js"></script>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <script src="operationsReload.js"></script>
+    </body>
+</html>
