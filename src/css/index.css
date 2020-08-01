@@ -138,6 +138,41 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Quicksand';
+    src: url('../assets/fonts/Quicksand/Quicksand-Regular.ttf') format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../assets/fonts/Nunito/NunitoSans-Light.ttf') format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../assets/fonts/Nunito/NunitoSans-Regular.ttf') format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../assets/fonts/Nunito/NunitoSans-SemiBold.ttf') format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../assets/fonts/Nunito/NunitoSans-Bold.ttf') format("truetype");
+    font-weight: 800;
+    font-style: normal;
+}
+
 html {
     box-sizing: border-box;
     line-height: 1.618;
@@ -157,10 +192,7 @@ body {
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    background-color: #f9fafc;
-    height: 100%;
+    background-color: #ECF0F4;
 }
 
 #root {
@@ -190,6 +222,7 @@ div[class^="Footer"] a {
     bottom: 50px;
 }
 
-svg.y-axis g path, svg.y-axis g line {
+svg.y-axis g path,
+svg.y-axis g line {
     display: none;
 }
