@@ -1,4 +1,3 @@
-import { WithTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 import { EntityDefinition } from 'conseiljs';
 
@@ -49,4 +48,4 @@ export interface RouteComponentWithParmas extends RouteComponentProps {
     };
 }
 
-export type Props = OwnProps & RouteComponentWithParmas & WithTranslation;
+export type Props = OwnProps & RouteComponentWithParmas;

@@ -7,7 +7,7 @@ interface Props {
 const Header: React.FC<Props> = props => {
     return (
         <div>
-            Header goes here
+            side menu
         </div>
     )
 }

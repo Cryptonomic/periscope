@@ -1,5 +1,4 @@
 import React from 'react';
-import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -27,4 +26,4 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => ({
 });
 
-export const ArronaxApp: any = compose(withTranslation(), withRouter, connect(mapStateToProps, mapDispatchToProps))(Arronax);
+export const ArronaxApp: any = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Arronax);
