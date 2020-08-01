@@ -9,12 +9,12 @@ import {
 
 import { Props, States } from './types';
 
-class Arronax extends React.Component<Props, States> {
+class AccountsComponent extends React.Component<Props, States> {
 
     render() {
         return (
             <MainContainer>
-                Hello From Periscope
+                Hello From accounts
             </MainContainer>
         );
     }
@@ -26,4 +26,4 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => ({
 });
 
-export const ArronaxApp: any = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Arronax);
+export const Accounts: any = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(AccountsComponent);
