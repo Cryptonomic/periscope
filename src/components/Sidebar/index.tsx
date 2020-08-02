@@ -13,7 +13,7 @@ interface Props {
     // types goes here
 }
 
-const Header: React.FC<Props> = props => {
+const Sidebar: React.FC<Props> = props => {
     return (
         <div>
             <Holder>
@@ -46,4 +46,4 @@ const Header: React.FC<Props> = props => {
     )
 }
 
-export default Header;
+export default Sidebar;

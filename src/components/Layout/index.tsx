@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../Header';
+import Sidebar from '../Sidebar';
 import Grid from '@material-ui/core/Grid';
 
 interface Props {
@@ -10,7 +10,7 @@ const Layout: React.FC<Props> = props => {
         <div>
             <Grid container spacing={3}>
                 <Grid item sm={3}>
-                    <Header/>
+                    <Sidebar/>
                 </Grid>
                 <Grid item sm={9}>
                     <div className="content">
