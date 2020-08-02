@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import {chartGenerator} from '../../utils/chartGenerator';
 import * as d3 from 'd3';
+import { debounce } from 'throttle-debounce';
 
 import {
     MainContainer,
@@ -11,7 +12,7 @@ import {
     Widget
 } from './styles';
 
-import { Props, AccountsType } from './types';
+import { Props, States, AccountsType } from './types';
 
 import { fetchTopAccounts} from '../../reducers/accounts/thunks';
 import {
@@ -19,11 +20,12 @@ import {
     getTopAccountsLoading,
 } from '../../reducers/accounts/selectors';
 
-class AccountsComponent extends React.Component<Props> {
+class AccountsComponent extends React.Component<Props, States> {
 
     topAccountsRef: any = null;
     xAxis: any = null;
     yAxis: any = null;
+    updateLimitDebounce: Function;
 
     constructor(props: Props) {
         super(props);
@@ -31,12 +33,20 @@ class AccountsComponent extends React.Component<Props> {
         this.topAccountsRef = React.createRef();
         this.xAxis = React.createRef();
         this.yAxis = React.createRef();
+        this.updateLimitDebounce = debounce(300, this.updateLimit);
+        this.state = {
+            limit: 15
+        }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.fetchTopAccountsData();
+    }
+
+    async fetchTopAccountsData(){
         const { fetchTopAccounts } = this.props;
         // Fetch top ten
-        await fetchTopAccounts(15);
+        await fetchTopAccounts(this.state.limit);
         this.generateTopAccountGraph(this.props.topAccounts);
     }
 
@@ -59,10 +69,15 @@ class AccountsComponent extends React.Component<Props> {
         chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltip, yTooltip);
     }
 
-
+    updateLimit = (limit: number) => {
+        limit = limit ? limit : 15; 
+        this.setState({ limit });
+        this.fetchTopAccountsData();
+    }
 
     render() {
         const { isLoading } = this.props;
+        const { limit } = this.state;
         return (
             <MainContainer>
                 <Title>Accounts</Title>
@@ -91,11 +106,21 @@ class AccountsComponent extends React.Component<Props> {
                             isLoading 
                             ? <p>Loading...</p> :
                             <React.Fragment>
-                                <svg ref={this.yAxis}></svg>
-                                <svg className="account-graph" ref={this.topAccountsRef}></svg>
-                                <svg ref={this.xAxis}></svg>
+                                <div className="pos-abs">
+                                    <p>
+                                        <span>View Top</span>
+                                        <input type="number" value={limit} onChange={(e)=> this.updateLimitDebounce(e.target.value)}/>
+                                        <span>Accounts</span>
+                                    </p>
+                                </div>
+                                <div className="graph-holder">
+                                    <svg ref={this.yAxis}></svg>
+                                    <svg className="account-graph" ref={this.topAccountsRef}></svg>
+                                    <svg ref={this.xAxis}></svg>
+                                </div>
                             </React.Fragment>
                         }
+                        
                     </div>
                 </Widget>
             </MainContainer>

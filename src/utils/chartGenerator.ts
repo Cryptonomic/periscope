@@ -88,6 +88,7 @@ export class chartGenerator {
             .join("g")
                 .attr("transform", (d: any, i: any) => `translate(${xScale(i)}, ${height - yScale(d)})`);
         
+        spacing = yAxisData.length <= 70 ? spacing : 1;
         bar.append("rect")
             .style("stroke-width", "1")
             .style("stroke", stroke) 

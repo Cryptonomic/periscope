@@ -7,7 +7,6 @@ import {
 
 import { defaultQueries } from '../../utils/defaultQueries';
 
-
 export const fetchTopAccounts = (limit: number) => async (dispatch: any, state: any) => {
     
     try {
@@ -23,9 +22,9 @@ export const fetchTopAccounts = (limit: number) => async (dispatch: any, state: 
         query = ConseilQueryBuilder.setLimit(query, limit);
 
         const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'accounts', query);
-        
-        result.forEach(element => {
-            element.balance = element.balance / 1000000.0
+
+        result.forEach(element  => {
+            element.balance = Math.floor(element.balance / 1000000.0)
         });
 
         dispatch(setTopAccounts(result));
