@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import {chartGenerator} from '../../utils/chartGenerator';
+import * as d3 from 'd3';
 
 import {
     MainContainer,
@@ -9,11 +11,58 @@ import {
     Widget
 } from './styles';
 
-import { Props, States } from './types';
+import { Props, AccountsType } from './types';
 
-class AccountsComponent extends React.Component<Props, States> {
+import { fetchTopAccounts} from '../../reducers/accounts/thunks';
+import {
+    getTopAccounts,
+    getTopAccountsLoading,
+} from '../../reducers/accounts/selectors';
+
+class AccountsComponent extends React.Component<Props> {
+
+    topAccountsRef: any = null;
+    xAxis: any = null;
+    yAxis: any = null;
+
+    constructor(props: Props) {
+        super(props);
+        
+        this.topAccountsRef = React.createRef();
+        this.xAxis = React.createRef();
+        this.yAxis = React.createRef();
+    }
+
+    async componentDidMount() {
+        const { fetchTopAccounts } = this.props;
+        // Fetch top ten
+        await fetchTopAccounts(15);
+        this.generateTopAccountGraph(this.props.topAccounts);
+    }
+
+    generateTopAccountGraph(topAccounts: Array<AccountsType>) {
+        const svg = d3.select(this.topAccountsRef.current);
+        const yAxisSvg = d3.select(this.yAxis.current);
+        const xAxisSvg = d3.select(this.xAxis.current);
+
+        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, 1100, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
+        chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
+        chartGenerator.xAxisGenerator(xAxisSvg, 1150, 250,topAccounts, 'balance', '' )
+        const xTooltip = function(d: any, i: number) {
+            return topAccounts[i].account_id
+        }
+    
+        const yTooltip = function(d: any, i: number) {
+            return d + " ꜩ"
+        }
+
+        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltip, yTooltip);
+    }
+
+
 
     render() {
+        const { isLoading } = this.props;
         return (
             <MainContainer>
                 <Title>Accounts</Title>
@@ -38,7 +87,15 @@ class AccountsComponent extends React.Component<Props, States> {
                         </ul>
                     </div>
                     <div className="mapHolder">
-                        Map here
+                        {
+                            isLoading 
+                            ? <p>Loading...</p> :
+                            <React.Fragment>
+                                <svg ref={this.yAxis}></svg>
+                                <svg className="account-graph" ref={this.topAccountsRef}></svg>
+                                <svg ref={this.xAxis}></svg>
+                            </React.Fragment>
+                        }
                     </div>
                 </Widget>
             </MainContainer>
@@ -47,9 +104,13 @@ class AccountsComponent extends React.Component<Props, States> {
 }
 
 const mapStateToProps = (state: any) => ({
+    topAccounts: getTopAccounts(state),
+    isLoading: getTopAccountsLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
+    fetchTopAccounts: (limit: number) => dispatch(fetchTopAccounts(limit)),
 });
+
 
 export const Accounts: any = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(AccountsComponent);

@@ -58,5 +58,11 @@ export const Widget = styled.div`
   .mapHolder {
     min-height:350px;
     background:#fff;
+    position: relative;
+  }
+  .account-graph {
+      position: relative;
+      left: 125px;
+      top: 60px;
   }
 `;

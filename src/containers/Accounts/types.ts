@@ -4,39 +4,9 @@ import { EntityDefinition } from 'conseiljs';
 import { Config } from '../../types';
 
 export interface OwnProps {
+    topAccounts: AccountsType[];
     isLoading: boolean;
-    configs: Config[];
-    selectedConfig: Config;
-    selectedEntity: string;
-    items: object[];
-    isFullLoaded: boolean;
-    filterCount: number;
-    aggCount: number;
-    selectedColumns: EntityDefinition[];
-    entities: EntityDefinition[];
-    isError: boolean;
-    message: string;
-    attributes: any;
-    rowsPerPage: number;
-    modal: any;
-    removeAllFilters: (entity: string) => void;
-    changeTab: (type: string) => void;
-    initLoad: (props: any) => void;
-    submitQuery: () => void;
-    exportCsvData: () => void;
-    shareReport: () => void;
-    initMessage: () => void;
-    addConfig: (config: Config, isUse: boolean) => void;
-    removeConfig: (index: number) => void;
-    searchById: (id: string | number) => any;
-    getModalItemAction: (entity: string, key: string, value: string | number) => void;
-}
-
-export interface States {
-    isSettingCollapsed: boolean;
-    selectedTool: string;
-    isOpenConfigMdoal: boolean;
-    page: number;
+    fetchTopAccounts: (limit: number) => void;
 }
 
 export interface RouteComponentWithParmas extends RouteComponentProps {
@@ -49,3 +19,8 @@ export interface RouteComponentWithParmas extends RouteComponentProps {
 }
 
 export type Props = OwnProps & RouteComponentWithParmas;
+
+export interface AccountsType {
+    account_id: string;
+    balance: number;
+}

@@ -219,10 +219,16 @@ div[class^="Footer"] a {
 .y-axis {
     position: absolute;
     left: 15px;
-    bottom: 50px;
+    bottom: 48px;
+    width: 110px;
 }
 
-svg.y-axis g path,
-svg.y-axis g line {
+.x-axis {
+    position: relative;
+    left: 115px;
+    bottom: 16px;
+}
+
+.x-axis g.tick:nth-child(2) {
     display: none;
 }
