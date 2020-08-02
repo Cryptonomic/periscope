@@ -148,7 +148,7 @@ export class chartGenerator {
         axisSVGElement.selectAll("*").remove();
 
         const xAxisScale: any = d3.scaleLinear<string>()
-            .domain([0, queryResult.length])
+            .domain([0, width])
             .range(<any>([1, width]));
         // Prepare the Y-Axis Element
         axisSVGElement
@@ -158,7 +158,7 @@ export class chartGenerator {
 
         // Create a Y-Axis Scale
         const x_axis = d3.axisBottom(xAxisScale)
-        .scale(xAxisScale).ticks(queryResult.length-1);
+        .scale(xAxisScale).ticks(15);
 
         axisSVGElement.append("g")
             .style("color", "#6A707E")

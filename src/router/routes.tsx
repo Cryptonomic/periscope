@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 
-import { ArronaxApp } from '../containers/App';
 import Layout from '../components/Layout';
 import { Accounts } from '../containers/Accounts';
 
