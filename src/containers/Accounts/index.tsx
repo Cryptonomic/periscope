@@ -38,7 +38,13 @@ class AccountsComponent extends React.Component<Props, States> {
                         </ul>
                     </div>
                     <div className="mapHolder">
-                        Map here
+                        <div className="pos-abs">
+                            <p>
+                                <span>View Top</span>
+                                <input type="text" />
+                                <span>Accounts</span>
+                            </p>
+                        </div>
                     </div>
                 </Widget>
             </MainContainer>
