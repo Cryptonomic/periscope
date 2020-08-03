@@ -25,6 +25,7 @@ class AccountsComponent extends React.Component<Props, States> {
     topAccountsRef: any = null;
     xAxis: any = null;
     yAxis: any = null;
+    graphContainer: any = null;
     updateLimitDebounce: Function;
 
     constructor(props: Props) {
@@ -33,6 +34,7 @@ class AccountsComponent extends React.Component<Props, States> {
         this.topAccountsRef = React.createRef();
         this.xAxis = React.createRef();
         this.yAxis = React.createRef();
+        this.graphContainer = React.createRef();
         this.updateLimitDebounce = debounce(300, this.updateLimit);
         this.state = {
             limit: 15
@@ -55,9 +57,11 @@ class AccountsComponent extends React.Component<Props, States> {
         const yAxisSvg = d3.select(this.yAxis.current);
         const xAxisSvg = d3.select(this.xAxis.current);
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, 1100, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
+        const height = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
+
+        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, height, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
         chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
-        chartGenerator.xAxisGenerator(xAxisSvg, 1150, 250,topAccounts, 'balance', '' )
+        chartGenerator.xAxisGenerator(xAxisSvg, height, 250,topAccounts, 'balance', '' )
         const xTooltip = function(d: any, i: number) {
             return topAccounts[i].account_id
         }
@@ -113,7 +117,7 @@ class AccountsComponent extends React.Component<Props, States> {
                                         <span>Accounts</span>
                                     </p>
                                 </div>
-                                <div className="graph-holder">
+                                <div className="graph-holder" ref={this.graphContainer}>
                                     <svg ref={this.yAxis}></svg>
                                     <svg className="account-graph" ref={this.topAccountsRef}></svg>
                                     <svg ref={this.xAxis}></svg>
