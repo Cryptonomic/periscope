@@ -51,7 +51,7 @@ export class chartGenerator {
     
             // Set up SVG element for graph
             graphSVGElement
-                .attr("height", height)
+                .attr("height", height + margin.top + margin.bottom)
                 .attr("width", xScale.range()[1] + 25)
                 .attr("font-family", "roboto")
                 .attr("font-size", "12")
