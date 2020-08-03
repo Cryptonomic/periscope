@@ -55,9 +55,9 @@ class AccountsComponent extends React.Component<Props, States> {
         const yAxisSvg = d3.select(this.yAxis.current);
         const xAxisSvg = d3.select(this.xAxis.current);
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, 1100, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
+        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, 800, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
         chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
-        chartGenerator.xAxisGenerator(xAxisSvg, 1150, 250,topAccounts, 'balance', '' )
+        chartGenerator.xAxisGenerator(xAxisSvg, 800, 250,topAccounts, 'balance', '' )
         const xTooltip = function(d: any, i: number) {
             return topAccounts[i].account_id
         }

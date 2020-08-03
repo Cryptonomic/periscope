@@ -1,18 +1,20 @@
 import React from 'react';
 import Sidebar from '../Sidebar';
 import Grid from '@material-ui/core/Grid';
+import { styles } from './styles';
+import { withStyles } from '@material-ui/core/styles';
 
 interface Props {
-    // types goes here
+    classes:any
 }
 const Layout: React.FC<Props> = props => {
     return (
-        <div>
+        <div className={props.classes.overflowHidden}>
             <Grid container spacing={3}>
-                <Grid item sm={3}>
+                <Grid className={props.classes.maxWidth300} item sm={3}>
                     <Sidebar/>
                 </Grid>
-                <Grid item sm={9}>
+                <Grid className={props.classes.maxWidth100} item sm={9}>
                     <div className="content">
                         {props.children}
                      </div>
@@ -22,4 +24,4 @@ const Layout: React.FC<Props> = props => {
     );
 }
 
-export default Layout;
+export default withStyles(styles)(Layout);
