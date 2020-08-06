@@ -35,7 +35,7 @@ class AccountsComponent extends React.Component<Props, States> {
         this.xAxis = React.createRef();
         this.yAxis = React.createRef();
         this.graphContainer = React.createRef();
-        this.updateLimitDebounce = debounce(300, this.updateLimit);
+        this.updateLimitDebounce = debounce(1000, false, this.updateLimit);
         this.state = {
             limit: 15
         }
@@ -57,11 +57,11 @@ class AccountsComponent extends React.Component<Props, States> {
         const yAxisSvg = d3.select(this.yAxis.current);
         const xAxisSvg = d3.select(this.xAxis.current);
 
-        const height = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
+        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, height, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
+        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
         chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
-        chartGenerator.xAxisGenerator(xAxisSvg, height, 250,topAccounts, 'balance', '' )
+        chartGenerator.xAxisGenerator(xAxisSvg, width, 250,topAccounts, 'balance', '' )
         const xTooltip = function(d: any, i: number) {
             return topAccounts[i].account_id
         }
@@ -75,7 +75,6 @@ class AccountsComponent extends React.Component<Props, States> {
 
     updateLimit = (limit: number) => {
         limit = limit ? limit : 15; 
-        this.setState({ limit });
         this.fetchTopAccountsData();
     }
 
@@ -113,7 +112,7 @@ class AccountsComponent extends React.Component<Props, States> {
                                 <div className="pos-abs">
                                     <p>
                                         <span>View Top</span>
-                                        <input type="number" value={limit} onChange={(e)=> this.updateLimitDebounce(e.target.value)}/>
+                                        <input type="number" value={limit} onChange={(e)=> {this.setState({ limit: parseInt(e.target.value) });this.updateLimitDebounce(e.target.value)}}/>
                                         <span>Accounts</span>
                                     </p>
                                 </div>
