@@ -24,9 +24,15 @@ export class chartGenerator {
                     .domain([1, d3.max<any>(yAxisData)])
                     .range([height - margin.bottom, margin.top])
 
+        
+        let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, data.length]).range(<any>([margin.left, width - margin.right]));
+        if(data.length < 100) {
+            xAxisScaleForBottom = x; 
+        }
+       
         const xAxis = (g:any) => g
             .attr("transform", `translate(0,${height - margin.bottom})`)
-            .call(d3.axisBottom(x).ticks(15))
+            .call(d3.axisBottom(xAxisScaleForBottom).ticks(15))
 
         const yAxis = (g:any) => g
             .attr("transform", `translate(${margin.left},0)`)
