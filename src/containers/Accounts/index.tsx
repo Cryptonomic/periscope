@@ -59,18 +59,25 @@ class AccountsComponent extends React.Component<Props, States> {
 
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
-        chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
-        chartGenerator.xAxisGenerator(xAxisSvg, width, 250,topAccounts, 'balance', '' )
+        chartGenerator.graphGenerator(250, width, svg, topAccounts,"account_id", "balance", '#697A21' ,10);
+        //chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
+        //chartGenerator.xAxisGenerator(xAxisSvg, width, 250,topAccounts, 'balance', '' )
+        const self = this;
         const xTooltip = function(d: any, i: number) {
-            return topAccounts[i].account_id
+            return self.getFormattedToken(topAccounts[i].account_id);
         }
     
         const yTooltip = function(d: any, i: number) {
-            return d + " ꜩ"
+            return topAccounts[i].balance.toLocaleString() + " ꜩ"
         }
 
         chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltip, yTooltip);
+    }
+
+    getFormattedToken = (tokenId: string) => {
+        let subStr1 = tokenId.substring(0, 6);
+        let subStr2 = tokenId.substring(tokenId.length-6, tokenId.length);
+        return `${subStr1}...${subStr2}`;
     }
 
     updateLimit = (limit: number) => {
@@ -81,6 +88,8 @@ class AccountsComponent extends React.Component<Props, States> {
     render() {
         const { isLoading } = this.props;
         const { limit } = this.state;
+        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
+        const svgLength = `0,0,${width},300`;
         return (
             <MainContainer>
                 <Title>Accounts</Title>
@@ -117,9 +126,9 @@ class AccountsComponent extends React.Component<Props, States> {
                                     </p>
                                 </div>
                                 <div className="graph-holder" ref={this.graphContainer}>
-                                    <svg ref={this.yAxis}></svg>
-                                    <svg className="account-graph" ref={this.topAccountsRef}></svg>
-                                    <svg ref={this.xAxis}></svg>
+                                    {/* <svg ref={this.yAxis}></svg> */}
+                                    <svg viewBox={svgLength} className="account-graph" ref={this.topAccountsRef}></svg>
+                                    {/* <svg ref={this.xAxis}></svg> */}
                                 </div>
                             </React.Fragment>
                         }
