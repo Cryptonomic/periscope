@@ -14,7 +14,7 @@ export class chartGenerator {
         const xAxisData =  data.map((d: any, index: any) => index);
         const yAxisData = data.map((d: { [x: string]: string; }) => parseInt(d[yAxisKey]));
 
-        const x = d3.scaleBand()
+        let x = d3.scaleBand()
                     .domain(xRange)
                     .range([margin.left, width - margin.right])
                     .padding(0.1);
@@ -29,6 +29,13 @@ export class chartGenerator {
         if(data.length < 100) {
             xAxisScaleForBottom = x; 
         }
+
+        if(x.bandwidth() <= 3) {
+            let rangeData: any = d3.range(xAxisData.length)
+            x = d3.scaleBand()
+                .domain(rangeData)
+                .range([margin.left, xAxisData.length * 3]);
+        }
        
         const xAxis = (g:any) => g
             .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -41,7 +48,7 @@ export class chartGenerator {
                 .attr("x", -margin.left)
                 .attr("y", 10)
                 .attr("fill", "currentColor")
-                .attr("text-anchor", "middle"))
+                .attr("text-anchor", "middle"));
 
         spacing = yAxisData.length <= 70 ? spacing : 1;
         svg.append("g")

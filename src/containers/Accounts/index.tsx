@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import {chartGenerator} from '../../utils/chartGenerator';
+import Loader from '../../components/Loader';
 import * as d3 from 'd3';
 import { debounce } from 'throttle-debounce';
 
@@ -81,8 +82,13 @@ class AccountsComponent extends React.Component<Props, States> {
     }
 
     updateLimit = (limit: number) => {
-        limit = limit ? limit : 15; 
-        this.fetchTopAccountsData();
+        limit = limit ? limit : 15;
+        if(limit <= 1000) {
+            this.fetchTopAccountsData();
+        } else {
+            this.setState({limit: 1000});
+        }
+        
     }
 
     render() {
@@ -115,8 +121,6 @@ class AccountsComponent extends React.Component<Props, States> {
                     </div>
                     <div className="mapHolder">
                         {
-                            isLoading 
-                            ? <p>Loading...</p> :
                             <React.Fragment>
                                 <div className="pos-abs">
                                     <p>
@@ -134,7 +138,8 @@ class AccountsComponent extends React.Component<Props, States> {
                         }
                         
                     </div>
-                </Widget>
+                    { isLoading && <Loader /> }         
+                    </Widget>
             </MainContainer>
         );
     }
