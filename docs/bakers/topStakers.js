@@ -5,7 +5,7 @@ let stakeQuery = async function(limit) {
     query = conseiljs.ConseilQueryBuilder.addOrdering(query, "staking_balance", conseiljs.ConseilSortDirection.DESC);
     query = conseiljs.ConseilQueryBuilder.setLimit(query, limit);
 
-    const result = await conseiljs.ConseilDataClient.executeEntityQuery(conseilServer, 'tezos', conseilServer.network, 'delegates', query);
+    const result = await conseiljs.ConseilDataClient.executeEntityQuery(conseilServer, 'tezos', conseilServer.network, 'bakers', query);
 
     result.forEach(element => {
         element.staking_balance = element.staking_balance / 1000000.0
