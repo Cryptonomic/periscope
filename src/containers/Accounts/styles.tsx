@@ -61,7 +61,7 @@ export const Widget = styled.div`
     position:relative;
     .account-graph {
         position: relative;
-        left: 125px;
+        left: 0;
         top: 60px;
     }
     .graph-holder {

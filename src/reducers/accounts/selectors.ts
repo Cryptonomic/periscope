@@ -5,5 +5,5 @@ export const getAppState = (state: RootState) => state.accounts;
 
 export const getTopAccounts = createSelector(getAppState, (accounts) => accounts.topAccounts);
 
-export const getTopAccountsLoading = createSelector(getAppState, (accounts) => accounts.isTopAccountsLoading);
+export const getTopAccountsLoading = createSelector(getAppState, (accounts) => accounts.isLoading);
 

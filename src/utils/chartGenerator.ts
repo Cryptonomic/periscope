@@ -2,176 +2,77 @@ import * as d3 from "d3";
 
 export class chartGenerator {
 
-    
-    static seperateAxisPrioritizedBarChartGenerator(height: number, width: number, graphSVGElement: any, queryResult: Array<object>, xAxisKey: string, yAxisKey: string, barColor:string = "rgba(135, 194, 205, 0.58639)", labelX: string, labelY: string, spacing: number, stroke: string = "#56C2D9") {
+    static graphGenerator(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", spacing: number) {
         
-        // Clear SVG Elements of old data
-        graphSVGElement.selectAll("*").remove();
+         // Clear SVG Elements of old data
+         svg.selectAll("*").remove();
 
-        const margin = {top: 20, right: 0, bottom: 50, left: 0};
-    
-        // Create an Array for each Axis
-        let xAxisData: any = queryResult.map(d => (<any>d)[xAxisKey]);
-        const yAxisData: any = queryResult.map(d => (<any>d)[yAxisKey]);
-    
-        // Create a D3 Linear Scale for the Y-Axis
-        const yScale = d3.scaleLinear()
-            .domain([0, d3.max<any>(yAxisData)])
-            .range([0, height]);
-    
-        // Create a D3 Linear Scale for the Y-Axis Label
-        // We negate the height here so that the bars are drawn correctly
-        const yAxisScale: any = d3.scaleLinear<string>()
-            .domain([0, d3.max<any>(yAxisData)])
-            .range(<any>([0, -height]));
-    
-        // Create a D3 Band Scale for the X-Axis
-        // A static SVG will have a fixed size no matter the number of elements
-        // Here, the width parameter is treated as the width of each bar in the graph
-        let range: any = d3.range(xAxisData.length);
-        let xScale = d3.scaleBand()
-            .domain(range)
-            .range([0, width]);
-    
-        // Setup SVG element attributes 
-        graphSVGElement
-            .attr("height", height + margin.top + margin.bottom)
-            .attr("width", width + margin.left + margin.right)
-            .attr("font-family", "roboto")
-            .attr("color", "#6A707E")
-            .attr("font-size", "12")
-            .attr("font-weight", "500")
-            .attr("text-anchor", "end");
-            
-        if(xScale.bandwidth() <= 1) {
-            let rangeData: any = d3.range(xAxisData.length)
-            xScale = d3.scaleBand()
-                .domain(rangeData)
-                .range([0, xAxisData.length * 3]);
-    
-            // Set up SVG element for graph
-            graphSVGElement
-                .attr("height", height + margin.top + margin.bottom)
-                .attr("width", xScale.range()[1] + 25)
-                .attr("font-family", "roboto")
-                .attr("font-size", "12")
-                .attr("font-weight", "500")
-                .attr("text-anchor", "end");
+        const margin = {top: 0, right: 0, bottom: 50, left: 100};
+
+        let xRange: any = d3.range(data.length);
+        const constData: any = d3.range(15);
+        const xAxisData =  data.map((d: any, index: any) => index);
+        const yAxisData = data.map((d: { [x: string]: string; }) => parseInt(d[yAxisKey]));
+
+        let x = d3.scaleBand()
+                    .domain(xRange)
+                    .range([margin.left, width - margin.right])
+                    .padding(0.1);
+
+
+        const y = d3.scaleLinear()
+                    .domain([1, d3.max<any>(yAxisData)])
+                    .range([height - margin.bottom, margin.top])
+
+        
+        let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, data.length]).range(<any>([margin.left, width - margin.right]));
+        if(data.length < 100) {
+            xAxisScaleForBottom = x; 
         }
-        // X axis Label
-        graphSVGElement.append("text")
-            .attr("class", "x label")
-            .attr("color", "#6A707E")
-            .attr("text-anchor", "end")
-            .attr("font-family", "Roboto")
-            .attr("font-weight", "500")
-            .attr("font-size", "12px")
-            .attr("x", width/2)
-            .attr("y", height +30)
-            .text(labelX);
-        // Y axis Label
-        graphSVGElement.append("text")
-            .attr("class", "y label")
-            .attr("color", "#6A707E")
-            .attr("text-anchor", "end")
-            .attr("font-family", "Roboto")
-            .attr("font-weight", "500")
-            .attr("font-size", "12px")
-            .attr("x", -height/2)
-            .attr("y", 10)
-            .attr("transform", "rotate(-90)")
-            .text(labelY);
 
-        // Create selection for bar graph bars
-        const bar = graphSVGElement.selectAll("g")
-            .data(yAxisData) //Attach bars to Y-Axis data
-            .join("g")
-                .attr("transform", (d: any, i: any) => `translate(${xScale(i)}, ${height - yScale(d)})`);
-        
+        if(x.bandwidth() <= 3) {
+            let rangeData: any = d3.range(xAxisData.length)
+            x = d3.scaleBand()
+                .domain(rangeData)
+                .range([margin.left, xAxisData.length * 3]);
+        }
+       
+        const xAxis = (g:any) => g
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(xAxisScaleForBottom).ticks(15))
+
+        const yAxis = (g:any) => g
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(y).ticks(5))
+            .call((g:any) => g.append("text")
+                .attr("x", -margin.left)
+                .attr("y", 10)
+                .attr("fill", "currentColor")
+                .attr("text-anchor", "middle"));
+
         spacing = yAxisData.length <= 70 ? spacing : 1;
-        bar.append("rect")
-            .style("stroke-width", "1")
-            .style("stroke", stroke) 
-            .attr("fill", barColor)
-            .attr("width", xScale.bandwidth() - spacing) // Sets a padding of five pixel between bars
-            .attr("height", yScale);
-    }
-
-    static yAxisGenerator(axisSVGElement: any, height: number, queryResult: Array<object>, yAxisKey: string, labelY: string, axisWidth: number=100) {
+        svg.append("g")
+            .attr("class", "svg-columns")
+            .attr("fill", color)
+            .selectAll("rect")
+            .data(data)
+            .join("rect")
+            .attr("x", (d:any, i:any) => x(i))
+            .attr("y", (d:any) => y(d[yAxisKey]))
+            .attr("height", (d:any) => y(0) - y(d[yAxisKey]))
+            .attr("width", x.bandwidth() - spacing);
         
-        axisSVGElement.selectAll("*").remove();
-
-        let yAxisData: any = queryResult.map(d => parseInt((<any>d)[yAxisKey]));
-
-        const max = d3.max<any>(yAxisData)+5;
-        console.log(max);
-        const yAxisScale: any = d3.scaleLinear<string>()
-            .domain([0, max])
-            .range(<any>([-5, -height]));
-
-        // Create a Y-Axis Scale
-        const yAxis = d3.axisLeft(yAxisScale)
-        .scale(yAxisScale).ticks(5);
-
-        // Prepare the Y-Axis Element
-        axisSVGElement
-            .attr("height", height)
-            .attr("width", axisWidth)
-            .attr("class", "y-axis");
-
-        // axisSVGElement.append("text")
-        //     .attr("class", "y label")
-        //     .attr("color", "#6A707E")
-        //     .attr("text-anchor", "end")
-        //     .attr("font-family", "Roboto")
-        //     .attr("font-weight", "500")
-        //     .attr("font-size", "12px")
-        //     .attr("x", -height/2)
-        //     .attr("y", 10)
-        //     .attr("transform", "rotate(-90)")
-        //     .text(labelY);
+        svg.append("g")
+                .call(xAxis);
         
-
-        // Attach the axis to the SVG Element
-        axisSVGElement
-            .append("g")
-            .attr("transform", `translate(${axisWidth}, ${height})`)
-            .style("color", "#6A707E")
-            .style("font-size", "14px")
-            .style("font-weight", "500")
-            .style("font-family", "roboto")
-            .call(yAxis);
-    }
-
-    static xAxisGenerator(axisSVGElement: any, width: number, height: number, queryResult: Array<object>, xAxisKey: string, labelY: string, axisWidth: number=100) {
-        
-        axisSVGElement.selectAll("*").remove();
-
-        const xAxisScale: any = d3.scaleLinear<string>()
-            .domain([0, width])
-            .range(<any>([1, width]));
-        // Prepare the Y-Axis Element
-        axisSVGElement
-            .attr("height", 30)
-            .attr("width", width)
-            .attr("class", "x-axis");
-
-        // Create a Y-Axis Scale
-        const x_axis = d3.axisBottom(xAxisScale)
-        .scale(xAxisScale).ticks(15);
-
-        axisSVGElement.append("g")
-            .style("color", "#6A707E")
-            .style("font-size", "14px")
-            .style("font-weight", "500")
-            .style("font-family", "roboto")
-            .call(x_axis)
+        svg.append("g")
+                .call(yAxis);
     }
 
     static barGraphFloatingTooltipGenerator(graphSVGElement: any, xLabelFunction: Function, yLabelFunction: Function) {
         
         //Select all bar graph bar elements
-        const bar = graphSVGElement.selectAll("g")
+        const bar = graphSVGElement.selectAll("g.svg-columns rect")
         
         // Set up tooltip for graph data viewing
         const tooltip = d3.select("body").append("div").attr("class", "graphToolTip");
@@ -191,12 +92,11 @@ export class chartGenerator {
                 .style("line-height", "15px")
                 .style("letter-spacing", "0.4px")
                 .style("color", "#ffffff")
-                .style("padding", "10px 15px")
+                .style("padding", "5px 20px")
                 .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
         })
             .on("mouseout", function(d: any){ tooltip.style("display", "none");
         });
     }
-    
-}
 
+}

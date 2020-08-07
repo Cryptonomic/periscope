@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import {chartGenerator} from '../../utils/chartGenerator';
+import Loader from '../../components/Loader';
 import * as d3 from 'd3';
 import { debounce } from 'throttle-debounce';
 
@@ -35,7 +36,7 @@ class AccountsComponent extends React.Component<Props, States> {
         this.xAxis = React.createRef();
         this.yAxis = React.createRef();
         this.graphContainer = React.createRef();
-        this.updateLimitDebounce = debounce(300, this.updateLimit);
+        this.updateLimitDebounce = debounce(1000, false, this.updateLimit);
         this.state = {
             limit: 15
         }
@@ -57,31 +58,44 @@ class AccountsComponent extends React.Component<Props, States> {
         const yAxisSvg = d3.select(this.yAxis.current);
         const xAxisSvg = d3.select(this.xAxis.current);
 
-        const height = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
+        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, height, svg, topAccounts,"account_id", "balance", '#697A21',  '',  '', 15, '#697A21');
-        chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
-        chartGenerator.xAxisGenerator(xAxisSvg, height, 250,topAccounts, 'balance', '' )
+        chartGenerator.graphGenerator(250, width, svg, topAccounts,"account_id", "balance", '#697A21' ,10);
+        //chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
+        //chartGenerator.xAxisGenerator(xAxisSvg, width, 250,topAccounts, 'balance', '' )
+        const self = this;
         const xTooltip = function(d: any, i: number) {
-            return topAccounts[i].account_id
+            return self.getFormattedToken(topAccounts[i].account_id);
         }
     
         const yTooltip = function(d: any, i: number) {
-            return d + " ꜩ"
+            return topAccounts[i].balance.toLocaleString() + " ꜩ"
         }
 
         chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltip, yTooltip);
     }
 
+    getFormattedToken = (tokenId: string) => {
+        let subStr1 = tokenId.substring(0, 6);
+        let subStr2 = tokenId.substring(tokenId.length-6, tokenId.length);
+        return `${subStr1}...${subStr2}`;
+    }
+
     updateLimit = (limit: number) => {
-        limit = limit ? limit : 15; 
-        this.setState({ limit });
-        this.fetchTopAccountsData();
+        limit = limit ? limit : 15;
+        if(limit <= 1000) {
+            this.fetchTopAccountsData();
+        } else {
+            this.setState({limit: 1000});
+        }
+        
     }
 
     render() {
         const { isLoading } = this.props;
         const { limit } = this.state;
+        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
+        const svgLength = `0,0,${width},300`;
         return (
             <MainContainer>
                 <Title>Accounts</Title>
@@ -107,26 +121,25 @@ class AccountsComponent extends React.Component<Props, States> {
                     </div>
                     <div className="mapHolder">
                         {
-                            isLoading 
-                            ? <p>Loading...</p> :
                             <React.Fragment>
                                 <div className="pos-abs">
                                     <p>
                                         <span>View Top</span>
-                                        <input type="number" value={limit} onChange={(e)=> this.updateLimitDebounce(e.target.value)}/>
+                                        <input type="number" value={limit} onChange={(e)=> {this.setState({ limit: parseInt(e.target.value) });this.updateLimitDebounce(e.target.value)}}/>
                                         <span>Accounts</span>
                                     </p>
                                 </div>
                                 <div className="graph-holder" ref={this.graphContainer}>
-                                    <svg ref={this.yAxis}></svg>
-                                    <svg className="account-graph" ref={this.topAccountsRef}></svg>
-                                    <svg ref={this.xAxis}></svg>
+                                    {/* <svg ref={this.yAxis}></svg> */}
+                                    <svg viewBox={svgLength} className="account-graph" ref={this.topAccountsRef}></svg>
+                                    {/* <svg ref={this.xAxis}></svg> */}
                                 </div>
                             </React.Fragment>
                         }
                         
                     </div>
-                </Widget>
+                    { isLoading && <Loader /> }         
+                    </Widget>
             </MainContainer>
         );
     }
