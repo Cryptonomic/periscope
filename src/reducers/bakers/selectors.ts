@@ -9,6 +9,8 @@ export const getTopBakersByBlockLoading = createSelector(getAppState, (bakers) =
 
 export const getTopBakersByStake = createSelector(getAppState, (bakers) => bakers.topBakersByStake);
 
+export const getTopBakersByStakeLoading = createSelector(getAppState, (bakers) => bakers.isTopBakersByStakeLoading);
+
 export const getTopBakersByDelegation = createSelector(getAppState, (bakers) => bakers.topBakersByDelegation);
 
 export const getTopBakersByDelegationLoading = createSelector(getAppState, (bakers) => bakers.isTopBakersByDelegationLoading);

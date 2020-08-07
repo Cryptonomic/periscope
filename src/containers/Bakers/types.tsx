@@ -4,11 +4,13 @@ import { EntityDefinition } from 'conseiljs';
 import { Config } from '../../types';
 
 export interface OwnProps {
-    topBakersByDelegation: BakerByDelegation[];
+    topBakersByDelegation: Array<BakerByDelegation>;
+    topBakersByStake: Array<BakerByStake>;
     isTopBakersByDelegationLoading: boolean;
-    topBakersByBlock: [],
+    topBakersByBlock: Array<BakerByBlock>,
     isTopBakersByBlockLoading: boolean
     fetchTopBakersByDelegation: (limit: number) => void;
+    fetchTopBakersByStake: (limit: number) => void;
     fetchTopBakersByBlocks: (limit: number, date: number) => void;
 }
 
@@ -31,4 +33,14 @@ export interface States {
 export interface BakerByDelegation {
     count_account_id: string;
     delegate_value: string;
+}
+
+export interface BakerByBlock {
+    baker: string;
+    count_hash: string;
+}
+
+export interface BakerByStake {
+    pkh: string;
+    staking_balance: string;
 }

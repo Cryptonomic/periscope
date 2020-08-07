@@ -26,12 +26,12 @@ export const fetchTopBakersByStake = (
         let userQuery = {...defaultQueries.topBakersByStake};
         userQuery.limit = limit;
         let query = {...ConseilQueryBuilder.blankQuery(), ...userQuery };
-        const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'delegates', query);
-
-        result.forEach(element  => {
-            element.balance = Math.floor(element.balance / 1000000.0)
+        const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'bakers', query);
+        
+        result.forEach(element => {
+            element.staking_balance = element.staking_balance / 1000000.0
         });
-
+        
         dispatch(setTopBakersByStake(result));
         dispatch(setTopBakersByStakeLoading(false));
     } catch (e) {
