@@ -1,6 +1,7 @@
 export const styles: any = {
     maxWidth300: {
-        maxWidth:'300px'
+        maxWidth:'300px',
+        paddingBottom: '0 !important'
     },
     maxWidth100: {
         maxWidth:'100%',

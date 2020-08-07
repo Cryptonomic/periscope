@@ -49,7 +49,7 @@ export const List = styled.ul`
         }
     }
     &.sub {
-        padding:10px 16px 0px 26px;
+        padding: 10px 0px 0px 26px;
     }
 `;
 
@@ -72,7 +72,7 @@ export const ListItem = styled.li`
         font-style: normal;
         font-weight:300;
         font-size: 14px;
-        line-height: 18px;
+        line-height: 20px;
         color: #000000;
         letter-spacing:0.5px;
         &.main-style {
