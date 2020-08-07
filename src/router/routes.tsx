@@ -3,6 +3,7 @@ import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 
 import Layout from '../components/Layout';
 import { Accounts } from '../containers/Accounts';
+import { Bakers } from '../containers/Bakers';
 
 
 export default () => {
@@ -11,7 +12,8 @@ export default () => {
     <Switch>
       <Layout>
         <Route exact path="/" component={Accounts} />
-        <Redirect to="/" />
+        <Route exact path="/bakers" component={Bakers} />
+        {/* <Redirect to="/" /> */}
       </Layout>
     </Switch>
   );
