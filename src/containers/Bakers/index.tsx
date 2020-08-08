@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import {constants} from '../../utils/constants';
 import Loader from '../../components/Loader';
 import ChartWrapper from '../../components/ChartGenerator';
+import { getBaker } from '../../utils/GetBakers';
 
 import {
     MainContainer,
@@ -41,7 +42,9 @@ class BakersComponent extends React.Component<Props, States> {
         this.graphContainer = React.createRef();
         this.state = {
             limit: 15,
-            bakerByBlockLimit: 15,
+            stakersNames: {},
+            topBakerNamesByBlock: {},
+            topBakerNamesByDelegation: {}
         }
     }
 
@@ -55,6 +58,7 @@ class BakersComponent extends React.Component<Props, States> {
         const { fetchTopBakersByDelegation } = this.props;
         // Fetch top ten
         await fetchTopBakersByDelegation(limit);
+        this.setState({topBakerNamesByDelegation: await this.getBakerNames(this.props.topBakersByDelegation, 'delegate_value')});
     }
 
     async fetchTopBakerByBlockData(limit: number){
@@ -62,12 +66,31 @@ class BakersComponent extends React.Component<Props, States> {
         // Fetch top ten
         let timestamp = new Date().getTime() - constants.one_day_in_milliseconds;
         await fetchTopBakersByBlocks(limit, timestamp);
+        this.setState({topBakerNamesByBlock: await this.getBakerNames(this.props.topBakersByBlock, 'baker')});
     }
 
     async fetchTopBakersByStakeData(limit: number) {
         const { fetchTopBakersByStake } = this.props;
+
         // Fetch top ten
         await fetchTopBakersByStake(limit);
+        this.setState({stakersNames: await this.getBakerNames(this.props.topBakersByStake, 'pkh')});
+    }
+
+    async getBakerNames(data: any, key: string) {
+        let bakerNames: any = {};
+        return await Promise.all(data.map(async (d:any) => {
+            return{[d[key]]: await getBaker(d[key])} ;
+        })).then(data => {
+            // do something with the data
+            console.log(data);
+            data.forEach((item: any)=> {
+                const key = Object.keys(item)[0];
+                bakerNames[key] = item[key];
+            });
+
+            return bakerNames;
+        });
     }
 
     getFormattedToken = (tokenId: string) => {
@@ -91,19 +114,22 @@ class BakersComponent extends React.Component<Props, States> {
     }
 
     xToolTipForTopBakerByBLock = (d:any, i:any) => {
-        return this.getFormattedToken(this.props.topBakersByBlock[i].baker);
+        return this.state.topBakerNamesByBlock[d.baker]
     }
 
     yToolTipForTopBakerByBLock = (d:any, i:any) => {
+        
         return this.props.topBakersByBlock[i].count_hash.toLocaleString();
     }
 
     xToolTipForTopBakerByDelegation = (d:any, i:any) => {
-        return this.props.topBakersByDelegation[i].count_account_id.toLocaleString();
+        //return this.getFormattedToken(this.props.topBakersByDelegation[i].delegate_value);
+        return this.state.topBakerNamesByDelegation[d.delegate_value]
     }
 
     yToolTipForTopBakerByDelegation = (d:any, i:any) => {
-        return this.getFormattedToken(this.props.topBakersByDelegation[i].delegate_value);
+        
+        return d.count_account_id.toLocaleString();
     }
 
     onTopBakerByStakeLimitChange= (limit: number) => {
@@ -114,11 +140,11 @@ class BakersComponent extends React.Component<Props, States> {
     }
 
     xToolTipForTopBakerByStake = (d:any, i:any) => {
-        return this.props.topBakersByStake[i].staking_balance.toLocaleString();
+        return this.state.stakersNames[d.pkh];
     }
 
     yToolTipForTopBakerByStake = (d:any, i:any) => {
-        return this.getFormattedToken(this.props.topBakersByStake[i].pkh);
+        return this.props.topBakersByStake[i].staking_balance.toLocaleString();
     }
 
     render() {
