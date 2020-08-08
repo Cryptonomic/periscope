@@ -92,6 +92,13 @@ export default class ChartWrapper extends React.Component<Props, States> {
                                 <span>Accounts</span>
                             </p>
                         </div>
+                        <div className="pos-abs-right">
+                            <span className="selected">Day</span>
+                            <span>Week</span>
+                            <span>Month</span>
+                            <span>Year</span>
+                            <span>All Time</span>
+                        </div>
                         <div className="graph-holder" ref={this.graphContainer}>
                             <svg viewBox={svgLength} className="account-graph" ref={_ref}></svg>
                         </div>

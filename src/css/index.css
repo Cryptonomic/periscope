@@ -232,3 +232,121 @@ div[class^="Footer"] a {
 .x-axis g.tick:nth-child(2) {
     display: none;
 }
+
+.linkHolder {
+    margin-bottom: 25px;
+}
+
+.linkHolder ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.linkHolder ul li {
+    list-style: none;
+}
+
+.linkHolder ul li.rightAlign {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.linkHolder ul li a {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #5cbbd4;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+.linkHolder ul li svg {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.mapHolder {
+    min-height: 350px;
+    background: #fff;
+    position: relative;
+}
+
+.mapHolder .account-graph {
+    position: relative;
+    left: 0;
+    top: 60px;
+}
+
+.mapHolder .graph-holder {
+    padding: 20px 12px;
+}
+
+.mapHolder .pos-abs {
+    position: absolute;
+    top: 15px;
+    left: 12px;
+}
+
+.mapHolder .pos-abs p {
+    font-family: 'Nunito';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #3d4857;
+    margin: 0;
+}
+
+.mapHolder .pos-abs p span,
+.mapHolder .pos-abs p input {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.mapHolder .pos-abs p input {
+    margin: 0 10px;
+    background: #f6f6f9;
+    border: 1px solid #ececee;
+    border-radius: 4px;
+    font-family: Nunito;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 16px;
+    color: #242423;
+    padding: 4px 10px;
+    width: 76px;
+}
+
+.mapHolder .pos-abs p input:focus {
+    outline: none;
+}
+
+.pos-abs-right {
+    position: absolute;
+    top: 16px;
+    right: 12px;
+}
+
+.pos-abs-right span {
+    font-family: 'Nunito';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: #3D4857;
+    margin: 0 5px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.pos-abs-right span:last-child {
+    margin-right: 0;
+}
+
+.pos-abs-right span.selected {
+    color: #697A21;
+    border-bottom: 2px solid #697A21;
+}

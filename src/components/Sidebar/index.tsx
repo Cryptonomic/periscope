@@ -4,9 +4,11 @@ import {
     Holder,
     Subtitle,
     List,
-    ListItem
+    ListItem,
+    Footer
 } from './styles';
 import { Link } from 'react-router-dom';
+import Logo from '../../assets/images/logo.svg';
 
 interface Props {
     // types goes here
@@ -122,6 +124,16 @@ const Sidebar: React.FC<Props> = props => {
                         <a href="#">Originations per Day</a>
                     </ListItem>
                 </List>
+                <Footer>
+                    <p>
+                        <span>A product of </span>
+                        <img src={Logo} alt="img"/>
+                        <span className="logo">CRYPTONOMIC</span>
+                    </p>
+                    <p className="links">
+                        <span>Powered by <a href="#">Arronax</a>, <a href="#">Conseil</a> and  <a href="#">Nautilus Cloud</a></span>
+                    </p>
+                </Footer>
             </Holder>
         </div>
     )

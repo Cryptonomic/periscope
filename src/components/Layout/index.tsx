@@ -10,7 +10,7 @@ interface Props {
 const Layout: React.FC<Props> = props => {
     return (
         <div className={props.classes.overflowHidden}>
-            <Grid container spacing={3}>
+            <Grid alignItems="stretch" container spacing={3}>
                 <Grid className={props.classes.maxWidth300} item sm={3}>
                     <Sidebar/>
                 </Grid>
