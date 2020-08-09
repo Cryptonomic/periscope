@@ -84,7 +84,7 @@ export const defaultQueries: any = {
         }, {
             field: "timestamp",
             operation: "after",
-            set: [1594049052333],
+            set: [],
             inverse: false
         }, {
             field: "parameters",

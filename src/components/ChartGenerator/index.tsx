@@ -43,7 +43,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (prevProps.data.length != this.props.data.length) {
+        if (JSON.stringify(prevProps.data) != JSON.stringify(this.props.data.length)) {
           this.generateChart();
         }
     }
@@ -70,12 +70,14 @@ export default class ChartWrapper extends React.Component<Props, States> {
 
     updateLimit = (limit: number) => {
         limit = limit ? limit : 15;
-        if(limit <= 1000) {
-            this.props.onLimitChange(limit);
-        } else {
+        if(limit > 1000) {
             this.setState({limit: 1000});
+        } 
+        if(this.props.isDateFilter) {
+            this.filterResult(this.state.selectedDateFilter);
+        } else {
+            this.props.onLimitChange(limit);
         }
-        
     }
 
     filterResult(filter: string) {

@@ -1,50 +1,34 @@
 import {
-    SET_TOP_BAKERS_BY_BLOCK,
-    SET_TOP_BAKERS_BY_DELEGATION,
-    SET_TOP_BAKERS_BY_STAKE,
-    SET_TOP_BAKERS_BY_STAKE_LOADING,
-    SET_TOP_BAKERS_BY_DELEGATION_LOADING,
-    SET_TOP_BAKERS_BY_BLOCK_LOADING
+    SET_TOP_CONTRACTS_BY_BALANCE,
+    SET_TOP_CONTRACTS_BY_BALANCE_LOADING,
+    SET_TOP_CONTRACTS_BY_INVOCATION,
+    SET_TOP_CONTRACTS_BY_INVOCATION_LOADING,
 } from './types';
 
-export function setTopBakersByBlock(topBakersByBlock: Array<object>) {
+export function setTopContractsByBalance(topContractsByBalance: Array<object>) {
     return {
-        type: SET_TOP_BAKERS_BY_BLOCK,
-        topBakersByBlock,
+        type: SET_TOP_CONTRACTS_BY_BALANCE,
+        topContractsByBalance,
     }
 }
 
-export function setTopBakersByStake(topBakersByStake: Array<object>) {
+export function setTopContractsByBalanceLoading(isTopContractsByBalanceLoading: boolean) {
     return {
-        type: SET_TOP_BAKERS_BY_STAKE,
-        topBakersByStake,
+        type: SET_TOP_CONTRACTS_BY_BALANCE_LOADING,
+        isTopContractsByBalanceLoading,
     }
 }
 
-export function setTopBakersByDelegations(topBakersByDelegation: Array<object>) {
+export function setTopContractsByInvocation(topContractsByInvocation: Array<object>) {
     return {
-        type: SET_TOP_BAKERS_BY_DELEGATION,
-        topBakersByDelegation,
+        type: SET_TOP_CONTRACTS_BY_INVOCATION,
+        topContractsByInvocation,
     }
 }
 
-export function setTopBakersByStakeLoading(isTopBakersByStakeLoading: boolean) {
+export function setTopContractsByInvocationLoading(isTopContractsByInvocationLoading: boolean) {
     return {
-        type: SET_TOP_BAKERS_BY_STAKE_LOADING,
-        isTopBakersByStakeLoading,
-    }
-}
-
-export function setTopBakersByDelegationLoading(isTopBakersByDelegationLoading: boolean) {
-    return {
-        type: SET_TOP_BAKERS_BY_DELEGATION_LOADING,
-        isTopBakersByDelegationLoading,
-    }
-}
-
-export function setTopBakersByBlockLoading(isTopBakersByBlockLoading: boolean) {
-    return {
-        type: SET_TOP_BAKERS_BY_BLOCK_LOADING,
-        isTopBakersByBlockLoading,
+        type: SET_TOP_CONTRACTS_BY_INVOCATION_LOADING,
+        isTopContractsByInvocationLoading,
     }
 }

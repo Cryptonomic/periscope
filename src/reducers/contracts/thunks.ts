@@ -1,10 +1,8 @@
-import { 
-    setTopBakersByBlock, 
-    setTopBakersByDelegations, 
-    setTopBakersByDelegationLoading,
-    setTopBakersByStake, 
-    setTopBakersByStakeLoading,
-    setTopBakersByBlockLoading
+import {
+    setTopContractsByBalance,
+    setTopContractsByBalanceLoading,
+    setTopContractsByInvocation,
+    setTopContractsByInvocationLoading
 } from './actions';
 import {
     ConseilDataClient,
@@ -14,26 +12,26 @@ import {
 
 import { defaultQueries } from '../../utils/defaultQueries';
 
-export const fetchTopBakersByStake = (
+export const fetchTopContractsByBalance = (
     limit: number
 ) => async (dispatch: any, state: any) => {
 
     try { 
-        dispatch(setTopBakersByStakeLoading(true));
+        dispatch(setTopContractsByBalanceLoading(true));
         const { selectedConfig } = state().accounts;
         const { network, url, apiKey } = selectedConfig;
         const serverInfo = { url, apiKey, network };
-        let userQuery = {...defaultQueries.topBakersByStake};
+        let userQuery = JSON.parse(JSON.stringify(defaultQueries.topContractsByBalance));
         userQuery.limit = limit;
         let query = {...ConseilQueryBuilder.blankQuery(), ...userQuery };
-        const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'bakers', query);
+        const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos',  network, 'accounts', query);
         
         result.forEach(element => {
-            element.staking_balance = element.staking_balance / 1000000.0
+            element.balance = element.balance / 1000000.0;
         });
         
-        dispatch(setTopBakersByStake(result));
-        dispatch(setTopBakersByStakeLoading(false));
+        dispatch(setTopContractsByBalance(result));
+        dispatch(setTopContractsByBalanceLoading(false));
     } catch (e) {
         const message =
             e.message ||
@@ -41,57 +39,29 @@ export const fetchTopBakersByStake = (
         if (e.message) {
             // await dispatch(createMessageAction(e.message, true));
         }
-        setTopBakersByStakeLoading(true);
+        setTopContractsByBalanceLoading(true);
     }
 
 }
 
-export const fetchTopBakersByDelegation = (
-    limit: number
-) => async (dispatch: any, state: any) => {
-
-    try { 
-        dispatch(setTopBakersByDelegationLoading(true));
-        const { selectedConfig } = state().accounts;
-        const { network, url, apiKey } = selectedConfig;
-        const serverInfo = { url, apiKey, network };
-        let userQuery = {...defaultQueries.topBakersByDelegation};
-        userQuery.limit = limit;
-        let query = {...ConseilQueryBuilder.blankQuery(), ...userQuery };
-        const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'accounts', query);
-
-        dispatch(setTopBakersByDelegations(result));
-        dispatch(setTopBakersByDelegationLoading(false));
-    } catch (e) {
-        const message =
-            e.message ||
-            `Unable to load transactions data for Home page.`;
-        if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
-        }
-        setTopBakersByStakeLoading(true);
-    }
-
-}
-
-export const fetchTopBakersByBlocks = (
-    limit: number,
+export const fetchTopContractsByInvocation = (
+    limit: number, 
     date: number
 ) => async (dispatch: any, state: any) => {
 
     try { 
-        dispatch(setTopBakersByBlockLoading(true));
+        dispatch(setTopContractsByInvocationLoading(true));
         const { selectedConfig } = state().accounts;
         const { network, url, apiKey } = selectedConfig;
         const serverInfo = { url, apiKey, network };
-        let userQuery = {...defaultQueries.topBakersByBlock};
+        let userQuery = JSON.parse(JSON.stringify(defaultQueries.topContractsByInvocation));
         userQuery.limit = limit;
-        userQuery.predicates[0].set.push(date);
+        userQuery.predicates[2].set.push(date);
         let query = {...ConseilQueryBuilder.blankQuery(), ...userQuery };
-        const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'blocks', query);
+        const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'operations', query);
 
-        dispatch(setTopBakersByBlock(result));
-        dispatch(setTopBakersByBlockLoading(false));
+        dispatch(setTopContractsByInvocation(result));
+        dispatch(setTopContractsByInvocationLoading(false));
     } catch (e) {
         const message =
             e.message ||
@@ -99,7 +69,7 @@ export const fetchTopBakersByBlocks = (
         if (e.message) {
             // await dispatch(createMessageAction(e.message, true));
         }
-        setTopBakersByStakeLoading(true);
+        setTopContractsByInvocationLoading(true);
     }
 
 }

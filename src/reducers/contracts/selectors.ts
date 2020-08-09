@@ -1,17 +1,13 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../index';
 
-export const getAppState = (state: RootState) => state.bakers;
+export const getAppState = (state: RootState) => state.contracts;
 
-export const getTopBakersByBlock = createSelector(getAppState, (bakers) => bakers.topBakersByBlock);
+export const getTopContractsByBalance = createSelector(getAppState, (contracts) => contracts.topContractsByBalance);
 
-export const getTopBakersByBlockLoading = createSelector(getAppState, (bakers) => bakers.isTopBakersByBlockLoading);
+export const getTopContractsByInvocation = createSelector(getAppState, (contracts) => contracts.topContractsByInvocation);
 
-export const getTopBakersByStake = createSelector(getAppState, (bakers) => bakers.topBakersByStake);
+export const getTopContractsByBalanceLoading = createSelector(getAppState, (contracts) => contracts.isTopContractsByBalance);
 
-export const getTopBakersByStakeLoading = createSelector(getAppState, (bakers) => bakers.isTopBakersByStakeLoading);
 
-export const getTopBakersByDelegation = createSelector(getAppState, (bakers) => bakers.topBakersByDelegation);
-
-export const getTopBakersByDelegationLoading = createSelector(getAppState, (bakers) => bakers.isTopBakersByDelegationLoading);
-
+export const getTopContractsByInvocationLoading = createSelector(getAppState, (contracts) => contracts.isTopContractsByInvocationLoading);

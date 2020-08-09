@@ -4,15 +4,12 @@ import { EntityDefinition } from 'conseiljs';
 import { Config } from '../../types';
 
 export interface OwnProps {
-    topBakersByDelegation: Array<BakerByDelegation>;
-    topBakersByStake: Array<BakerByStake>;
-    isTopBakersByDelegationLoading: boolean;
-    topBakersByBlock: Array<BakerByBlock>,
-    isTopBakersByBlockLoading: boolean;
-    isTopBakerByStateLoading: boolean;
-    fetchTopBakersByDelegation: (limit: number) => void;
-    fetchTopBakersByStake: (limit: number) => void;
-    fetchTopBakersByBlocks: (limit: number, date: number) => void;
+    topContractsByBalance: Array<ContracyByBalance>;
+    isTopContractsByBalanceLoading: boolean;
+    topContractsByInvocation: Array<ContracyByInvocation>;
+    isTopContractsByInvocationLoading: boolean;
+    fetchTopContractsByBalance: (limit: number) => void;
+    fetchTopContractsByInvocation: (limit: number, date: number) => void;
 }
 
 export interface RouteComponentWithParmas extends RouteComponentProps {
@@ -28,22 +25,14 @@ export type Props = OwnProps & RouteComponentWithParmas;
 
 export interface States {
     limit: number;
-    stakersNames: any,
-    topBakerNamesByBlock: any,
-    topBakerNamesByDelegation: any
 }
 
-export interface BakerByDelegation {
-    count_account_id: string;
-    delegate_value: string;
+export interface ContracyByBalance {
+    account_id: string;
+    balance: number;
 }
 
-export interface BakerByBlock {
-    baker: string;
-    count_hash: string;
-}
-
-export interface BakerByStake {
-    pkh: string;
-    staking_balance: string;
+export interface ContracyByInvocation {
+    destination: string;
+    count_operation_group_hash: string;
 }

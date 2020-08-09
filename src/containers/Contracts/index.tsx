@@ -13,142 +13,89 @@ import {
     Widget
 } from './styles';
 
-import { Props, States, BakerByDelegation } from './types';
+import { Props, States } from './types';
 
-import { fetchTopBakersByDelegation, fetchTopBakersByBlocks, fetchTopBakersByStake} from '../../reducers/bakers/thunks';
+import { fetchTopContractsByBalance, fetchTopContractsByInvocation} from '../../reducers/contracts/thunks';
 import {
-    getTopBakersByDelegation,
-    getTopBakersByDelegationLoading,
-    getTopBakersByBlock,
-    getTopBakersByBlockLoading,
-    getTopBakersByStake,
-    getTopBakersByStakeLoading,
+    getTopContractsByBalance,
+    getTopContractsByBalanceLoading,
+    getTopContractsByInvocation,
+    getTopContractsByInvocationLoading
 
-} from '../../reducers/bakers/selectors';
+} from '../../reducers/contracts/selectors';
 
 class ContractsComponent extends React.Component<Props, States> {
 
-    topBakersByDelegationRef: any = null;
-    topBakersByBlockRef: any = null;
-    topBakersByStakeRef: any = null;
+    topContractsByBalanceRef: any = null;
+    topContractsByInvocationRef: any = null;
     graphContainer: any = null;
 
     constructor(props: Props) {
         super(props);
         
-        this.topBakersByBlockRef = React.createRef();
-        this.topBakersByDelegationRef = React.createRef();
-        this.topBakersByStakeRef = React.createRef();
+        this.topContractsByBalanceRef = React.createRef();
+        this.topContractsByInvocationRef = React.createRef();
         this.graphContainer = React.createRef();
         this.state = {
-            limit: 15,
-            stakersNames: {},
-            topBakerNamesByBlock: {},
-            topBakerNamesByDelegation: {}
+            limit: 15
         }
     }
 
     componentDidMount() {
-        this.fetchTopBakerByDelegationData(15);
-        this.fetchTopBakerByBlockData(15);
-        this.fetchTopBakersByStakeData(15);
+        this.fetchTopContractsByBalanceData(15);
+
+        const defayltTimestamp = new Date().getTime() - constants.one_day_in_milliseconds;
+        this.fetchTopContractsByInvocationData(15, defayltTimestamp);
     }
 
-    async fetchTopBakerByDelegationData(limit: number){
-        const { fetchTopBakersByDelegation } = this.props;
-        // Fetch top ten
-        await fetchTopBakersByDelegation(limit);
-        this.setState({topBakerNamesByDelegation: await this.getBakerNames(this.props.topBakersByDelegation, 'delegate_value')});
+    async fetchTopContractsByBalanceData(limit: number){
+        const { fetchTopContractsByBalance } = this.props;
+        await fetchTopContractsByBalance(limit);
     }
 
-    async fetchTopBakerByBlockData(limit: number){
-        const { fetchTopBakersByBlocks } = this.props;
-        // Fetch top ten
-        let timestamp = new Date().getTime() - constants.one_day_in_milliseconds;
-        await fetchTopBakersByBlocks(limit, timestamp);
-        this.setState({topBakerNamesByBlock: await this.getBakerNames(this.props.topBakersByBlock, 'baker')});
+    async fetchTopContractsByInvocationData(limit: number, date: number){
+        const { fetchTopContractsByInvocation } = this.props;
+        await fetchTopContractsByInvocation(limit, date);
     }
-
-    async fetchTopBakersByStakeData(limit: number) {
-        const { fetchTopBakersByStake } = this.props;
-
-        // Fetch top ten
-        await fetchTopBakersByStake(limit);
-        this.setState({stakersNames: await this.getBakerNames(this.props.topBakersByStake, 'pkh')});
-    }
-
-    async getBakerNames(data: any, key: string) {
-        let bakerNames: any = {};
-        return await Promise.all(data.map(async (d:any) => {
-            return{[d[key]]: await getBaker(d[key])} ;
-        })).then(data => {
-            // do something with the data
-            console.log(data);
-            data.forEach((item: any)=> {
-                const key = Object.keys(item)[0];
-                bakerNames[key] = item[key];
-            });
-
-            return bakerNames;
-        });
-    }
-
+    
     getFormattedToken = (tokenId: string) => {
         let subStr1 = tokenId.substring(0, 6);
         let subStr2 = tokenId.substring(tokenId.length-6, tokenId.length);
         return `${subStr1}...${subStr2}`;
     }
 
-    onTopBakerByDelegationLimitChange = (limit: number) => {
+    onTopContractsByBalanceLimitChange = (limit: number) => {
         limit = limit ? limit : 15;
         if(limit <= 1000) {
-            this.fetchTopBakerByDelegationData(limit);
+            this.fetchTopContractsByBalanceData(limit);
         }
     }
 
-    onTopBakerByBlockLimitChange = (limit: number) => {
+    onTopContractsBYInvocationLimitChange = (limit: number, date: number) => {
         limit = limit ? limit : 15;
         if(limit <= 1000) {
-            this.fetchTopBakerByBlockData(limit);
+            this.fetchTopContractsByInvocationData(limit, date);
         }
     }
 
-    xToolTipForTopBakerByBLock = (d:any, i:any) => {
-        return this.state.topBakerNamesByBlock[d.baker]
+    xToolTipForTopContractsByBalance = (d:any, i:any) => {
+        return this.getFormattedToken(d.account_id);
     }
 
-    yToolTipForTopBakerByBLock = (d:any, i:any) => {
-        
-        return this.props.topBakersByBlock[i].count_hash.toLocaleString();
+    yToolTipForTopContractsByBalance = (d:any, i:any) => {
+        return d.balance.toLocaleString()+ ' XTZ';
     }
 
-    xToolTipForTopBakerByDelegation = (d:any, i:any) => {
-        //return this.getFormattedToken(this.props.topBakersByDelegation[i].delegate_value);
-        return this.state.topBakerNamesByDelegation[d.delegate_value]
+    xToolTipForTopContractsByInvocation = (d:any, i:any) => {
+        return this.getFormattedToken(d.destination);
     }
 
-    yToolTipForTopBakerByDelegation = (d:any, i:any) => {
-        
-        return d.count_account_id.toLocaleString();
-    }
-
-    onTopBakerByStakeLimitChange= (limit: number) => {
-        limit = limit ? limit : 15;
-        if(limit <= 1000) {
-            this.fetchTopBakersByStakeData(limit);
-        }
-    }
-
-    xToolTipForTopBakerByStake = (d:any, i:any) => {
-        return this.state.stakersNames[d.pkh];
-    }
-
-    yToolTipForTopBakerByStake = (d:any, i:any) => {
-        return this.props.topBakersByStake[i].staking_balance.toLocaleString();
+    yToolTipForTopContractsByInvocation = (d:any, i:any) => {
+        return d.count_operation_group_hash.toLocaleString()+ ' Invocations';
     }
 
     render() {
-        const { isTopBakersByDelegationLoading, isTopBakersByBlockLoading, isTopBakerByStateLoading } = this.props;
+        const { isTopContractsByBalanceLoading, isTopContractsByInvocationLoading } = this.props;
         return (
             <MainContainer>
                 <Title>Contracts</Title>
@@ -176,17 +123,17 @@ class ContractsComponent extends React.Component<Props, States> {
                         {
                             <React.Fragment>
                                 {
-                                    this.props.topBakersByStake.length && 
-                                    <ChartWrapper data= {this.props.topBakersByStake}
+                                    this.props.topContractsByBalance.length && 
+                                    <ChartWrapper data= {this.props.topContractsByBalance}
                                         color= '#94D2D0'
                                         height= {250}
-                                        xKey= "pkh"
-                                        yKey= "staking_balance"
+                                        xKey= "account_id"
+                                        yKey= "balance"
                                         spacing= {10}
-                                        onLimitChange= {this.onTopBakerByStakeLimitChange}
-                                        xTooltip= {this.xToolTipForTopBakerByStake}
-                                        yTooltip= {this.yToolTipForTopBakerByStake}
-                                        _ref= {this.topBakersByStakeRef}
+                                        onLimitChange= {this.onTopContractsByBalanceLimitChange}
+                                        xTooltip= {this.xToolTipForTopContractsByBalance}
+                                        yTooltip= {this.yToolTipForTopContractsByBalance}
+                                        _ref= {this.topContractsByBalanceRef}
                                         isDateFilter={false}/>
                                 }
                                 
@@ -220,18 +167,18 @@ class ContractsComponent extends React.Component<Props, States> {
                         {
                             <React.Fragment>
                                 {
-                                    this.props.topBakersByBlock.length && 
-                                    <ChartWrapper data= {this.props.topBakersByBlock}
+                                    this.props.topContractsByInvocation.length && 
+                                    <ChartWrapper data= {this.props.topContractsByInvocation}
                                         color= '#94D2D0'
                                         height= {250}
-                                        xKey= "baker"
-                                        yKey= "count_hash"
+                                        xKey= "destination"
+                                        yKey= "count_operation_group_hash"
                                         spacing= {10}
-                                        onLimitChange= {this.onTopBakerByBlockLimitChange}
-                                        xTooltip= {this.xToolTipForTopBakerByBLock}
-                                        yTooltip= {this.yToolTipForTopBakerByBLock}
-                                        _ref= {this.topBakersByBlockRef}
-                                        isDateFilter={false}/>
+                                        onLimitChange= {this.onTopContractsBYInvocationLimitChange}
+                                        xTooltip= {this.xToolTipForTopContractsByInvocation}
+                                        yTooltip= {this.yToolTipForTopContractsByInvocation}
+                                        _ref= {this.topContractsByInvocationRef}
+                                        isDateFilter={true}/>
                                 }
                                 
                             </React.Fragment>
@@ -239,28 +186,23 @@ class ContractsComponent extends React.Component<Props, States> {
                         }
                         
                     </div>
-                    { isTopBakersByDelegationLoading && <Loader /> }         
                 </Widget>
-                { (isTopBakersByDelegationLoading || isTopBakersByBlockLoading || isTopBakerByStateLoading) && <Loader /> }         
+                { (isTopContractsByBalanceLoading || isTopContractsByInvocationLoading) && <Loader /> }         
             </MainContainer>
         );
     }
 }
 
 const mapStateToProps = (state: any) => ({
-    topBakersByDelegation: getTopBakersByDelegation(state),
-    isTopBakersByDelegationLoading: getTopBakersByDelegationLoading(state),
-    topBakersByBlock: getTopBakersByBlock(state),
-    isTopBakersByBlockLoading: getTopBakersByBlockLoading(state),
-    topBakersByStake: getTopBakersByStake(state),
-    isTopBakerByStateLoading :getTopBakersByStakeLoading(state),
+    topContractsByBalance: getTopContractsByBalance(state),
+    isTopContractsByBalanceLoading: getTopContractsByBalanceLoading(state),
+    topContractsByInvocation: getTopContractsByInvocation(state),
+    isTopContractsByInvocationLoading: getTopContractsByInvocationLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    fetchTopBakersByDelegation: (limit: number) => dispatch(fetchTopBakersByDelegation(limit)),
-    fetchTopBakersByBlocks: (limit: number, date: number) => dispatch(fetchTopBakersByBlocks(limit, date)),
-    fetchTopBakersByStake:  (limit: number) => dispatch(fetchTopBakersByStake(limit)),
+    fetchTopContractsByBalance: (limit: number) => dispatch(fetchTopContractsByBalance(limit)),
+    fetchTopContractsByInvocation: (limit: number, date: number) => dispatch(fetchTopContractsByInvocation(limit, date)),
 });
-
 
 export const Contracts: any = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(ContractsComponent);
