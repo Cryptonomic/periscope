@@ -23,10 +23,6 @@ export interface RouteComponentWithParmas extends RouteComponentProps {
 
 export type Props = OwnProps & RouteComponentWithParmas;
 
-export interface States {
-    limit: number;
-}
-
 export interface ContracyByBalance {
     account_id: string;
     balance: number;

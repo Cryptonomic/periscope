@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import {chartGenerator} from '../../utils/chartGenerator';
 import Loader from '../../components/Loader';
-import * as d3 from 'd3';
-import { debounce } from 'throttle-debounce';
+import ChartWrapper from '../../components/ChartGenerator';
 
 import {
     MainContainer,
@@ -24,55 +22,32 @@ import {
 class AccountsComponent extends React.Component<Props, States> {
 
     topAccountsRef: any = null;
-    xAxis: any = null;
-    yAxis: any = null;
-    graphContainer: any = null;
-    updateLimitDebounce: Function;
 
     constructor(props: Props) {
         super(props);
         
         this.topAccountsRef = React.createRef();
-        this.xAxis = React.createRef();
-        this.yAxis = React.createRef();
-        this.graphContainer = React.createRef();
-        this.updateLimitDebounce = debounce(1000, false, this.updateLimit);
         this.state = {
             limit: 15
         }
     }
 
     componentDidMount() {
-        this.fetchTopAccountsData();
+        this.fetchTopAccountsData(15);
     }
 
-    async fetchTopAccountsData(){
+    async fetchTopAccountsData(limit: number){
         const { fetchTopAccounts } = this.props;
         // Fetch top ten
-        await fetchTopAccounts(this.state.limit);
-        this.generateTopAccountGraph(this.props.topAccounts);
+        await fetchTopAccounts(limit);
     }
 
-    generateTopAccountGraph(topAccounts: Array<AccountsType>) {
-        const svg = d3.select(this.topAccountsRef.current);
-        const yAxisSvg = d3.select(this.yAxis.current);
-        const xAxisSvg = d3.select(this.xAxis.current);
+    xTooltip = (d: any, i: number) => {
+        return this.getFormattedToken(d.account_id);
+    }
 
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
-
-        chartGenerator.graphGenerator(250, width, svg, topAccounts,"account_id", "balance", '#697A21' ,10);
-        //chartGenerator.yAxisGenerator(yAxisSvg, 250, topAccounts, 'balance', '');
-        //chartGenerator.xAxisGenerator(xAxisSvg, width, 250,topAccounts, 'balance', '' )
-        const self = this;
-        const xTooltip = function(d: any, i: number) {
-            return self.getFormattedToken(topAccounts[i].account_id);
-        }
-    
-        const yTooltip = function(d: any, i: number) {
-            return topAccounts[i].balance.toLocaleString() + " ꜩ"
-        }
-
-        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltip, yTooltip);
+    yTooltip = (d: any, i: number) => {
+        return d.balance.toLocaleString() + " ꜩ"
     }
 
     getFormattedToken = (tokenId: string) => {
@@ -81,21 +56,14 @@ class AccountsComponent extends React.Component<Props, States> {
         return `${subStr1}...${subStr2}`;
     }
 
-    updateLimit = (limit: number) => {
-        limit = limit ? limit : 15;
-        if(limit <= 1000) {
-            this.fetchTopAccountsData();
-        } else {
-            this.setState({limit: 1000});
-        }
+    onLimitUpdate = (limit: number) => {
+
+        this.fetchTopAccountsData(limit);
         
     }
 
     render() {
         const { isLoading } = this.props;
-        const { limit } = this.state;
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
-        const svgLength = `0,0,${width},300`;
         return (
             <MainContainer>
                 <Title>Accounts</Title>
@@ -120,22 +88,22 @@ class AccountsComponent extends React.Component<Props, States> {
                         </ul>
                     </div>
                     <div className="mapHolder">
-                        {
-                            <React.Fragment>
-                                <div className="pos-abs">
-                                    <p>
-                                        <span>View Top</span>
-                                        <input type="number" value={limit} onChange={(e)=> {this.setState({ limit: parseInt(e.target.value) });this.updateLimitDebounce(e.target.value)}}/>
-                                        <span>Accounts</span>
-                                    </p>
-                                </div>
-                                <div className="graph-holder" ref={this.graphContainer}>
-                                    {/* <svg ref={this.yAxis}></svg> */}
-                                    <svg viewBox={svgLength} className="account-graph" ref={this.topAccountsRef}></svg>
-                                    {/* <svg ref={this.xAxis}></svg> */}
-                                </div>
-                            </React.Fragment>
-                        }
+                        <React.Fragment>
+                            {
+                                this.props.topAccounts.length && 
+                                <ChartWrapper data= {this.props.topAccounts}
+                                    color= '#697A21'
+                                    height= {250}
+                                    xKey= "account_id"
+                                    yKey= "balance"
+                                    spacing= {10}
+                                    onLimitChange= {this.onLimitUpdate}
+                                    xTooltip= {this.xTooltip}
+                                    yTooltip= {this.yTooltip}
+                                    _ref= {this.topAccountsRef}
+                                    isDateFilter={false}/>
+                            }
+                        </React.Fragment>
                         
                     </div>
                     { isLoading && <Loader /> }         

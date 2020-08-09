@@ -43,7 +43,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (JSON.stringify(prevProps.data) != JSON.stringify(this.props.data.length)) {
+        if (JSON.stringify(prevProps.data) !== JSON.stringify(this.props.data.length)) {
           this.generateChart();
         }
     }
@@ -55,7 +55,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
 
         chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing);
-        const self = this;
+        
         const xTooltipFn = function(d: any, i: number) {
             return xTooltip(d, i);
         }

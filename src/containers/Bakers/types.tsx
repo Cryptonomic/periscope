@@ -27,7 +27,6 @@ export interface RouteComponentWithParmas extends RouteComponentProps {
 export type Props = OwnProps & RouteComponentWithParmas;
 
 export interface States {
-    limit: number;
     stakersNames: any,
     topBakerNamesByBlock: any,
     topBakerNamesByDelegation: any

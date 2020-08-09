@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import {constants} from '../../utils/constants';
 import Loader from '../../components/Loader';
 import ChartWrapper from '../../components/ChartGenerator';
-import { getBaker } from '../../utils/GetBakers';
 
 import {
     MainContainer,
@@ -13,7 +12,7 @@ import {
     Widget
 } from './styles';
 
-import { Props, States } from './types';
+import { Props } from './types';
 
 import { fetchTopContractsByBalance, fetchTopContractsByInvocation} from '../../reducers/contracts/thunks';
 import {
@@ -24,7 +23,7 @@ import {
 
 } from '../../reducers/contracts/selectors';
 
-class ContractsComponent extends React.Component<Props, States> {
+class ContractsComponent extends React.Component<Props> {
 
     topContractsByBalanceRef: any = null;
     topContractsByInvocationRef: any = null;
@@ -36,9 +35,6 @@ class ContractsComponent extends React.Component<Props, States> {
         this.topContractsByBalanceRef = React.createRef();
         this.topContractsByInvocationRef = React.createRef();
         this.graphContainer = React.createRef();
-        this.state = {
-            limit: 15
-        }
     }
 
     componentDidMount() {
@@ -120,27 +116,23 @@ class ContractsComponent extends React.Component<Props, States> {
                         </ul>
                     </div>
                     <div className="mapHolder">
-                        {
-                            <React.Fragment>
-                                {
-                                    this.props.topContractsByBalance.length && 
-                                    <ChartWrapper data= {this.props.topContractsByBalance}
-                                        color= '#94D2D0'
-                                        height= {250}
-                                        xKey= "account_id"
-                                        yKey= "balance"
-                                        spacing= {10}
-                                        onLimitChange= {this.onTopContractsByBalanceLimitChange}
-                                        xTooltip= {this.xToolTipForTopContractsByBalance}
-                                        yTooltip= {this.yToolTipForTopContractsByBalance}
-                                        _ref= {this.topContractsByBalanceRef}
-                                        isDateFilter={false}/>
-                                }
-                                
-                            </React.Fragment>
+                        <React.Fragment>
+                            {
+                                this.props.topContractsByBalance.length && 
+                                <ChartWrapper data= {this.props.topContractsByBalance}
+                                    color= '#94D2D0'
+                                    height= {250}
+                                    xKey= "account_id"
+                                    yKey= "balance"
+                                    spacing= {10}
+                                    onLimitChange= {this.onTopContractsByBalanceLimitChange}
+                                    xTooltip= {this.xToolTipForTopContractsByBalance}
+                                    yTooltip= {this.yToolTipForTopContractsByBalance}
+                                    _ref= {this.topContractsByBalanceRef}
+                                    isDateFilter={false}/>
+                            }
                             
-                        }
-                        
+                        </React.Fragment>
                     </div>
                 </Widget>
                 <Widget>
@@ -164,27 +156,23 @@ class ContractsComponent extends React.Component<Props, States> {
                         </ul>
                     </div>
                     <div className="mapHolder">
-                        {
-                            <React.Fragment>
-                                {
-                                    this.props.topContractsByInvocation.length && 
-                                    <ChartWrapper data= {this.props.topContractsByInvocation}
-                                        color= '#94D2D0'
-                                        height= {250}
-                                        xKey= "destination"
-                                        yKey= "count_operation_group_hash"
-                                        spacing= {10}
-                                        onLimitChange= {this.onTopContractsBYInvocationLimitChange}
-                                        xTooltip= {this.xToolTipForTopContractsByInvocation}
-                                        yTooltip= {this.yToolTipForTopContractsByInvocation}
-                                        _ref= {this.topContractsByInvocationRef}
-                                        isDateFilter={true}/>
-                                }
-                                
-                            </React.Fragment>
+                        <React.Fragment>
+                            {
+                                this.props.topContractsByInvocation.length && 
+                                <ChartWrapper data= {this.props.topContractsByInvocation}
+                                    color= '#94D2D0'
+                                    height= {250}
+                                    xKey= "destination"
+                                    yKey= "count_operation_group_hash"
+                                    spacing= {10}
+                                    onLimitChange= {this.onTopContractsBYInvocationLimitChange}
+                                    xTooltip= {this.xToolTipForTopContractsByInvocation}
+                                    yTooltip= {this.yToolTipForTopContractsByInvocation}
+                                    _ref= {this.topContractsByInvocationRef}
+                                    isDateFilter={true}/>
+                            }
                             
-                        }
-                        
+                        </React.Fragment>
                     </div>
                 </Widget>
                 { (isTopContractsByBalanceLoading || isTopContractsByInvocationLoading) && <Loader /> }         

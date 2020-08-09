@@ -41,7 +41,6 @@ class BakersComponent extends React.Component<Props, States> {
         this.topBakersByStakeRef = React.createRef();
         this.graphContainer = React.createRef();
         this.state = {
-            limit: 15,
             stakersNames: {},
             topBakerNamesByBlock: {},
             topBakerNamesByDelegation: {}
