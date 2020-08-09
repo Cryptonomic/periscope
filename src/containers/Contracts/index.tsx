@@ -26,7 +26,7 @@ import {
 
 } from '../../reducers/bakers/selectors';
 
-class BakersComponent extends React.Component<Props, States> {
+class ContractsComponent extends React.Component<Props, States> {
 
     topBakersByDelegationRef: any = null;
     topBakersByBlockRef: any = null;
@@ -50,8 +50,7 @@ class BakersComponent extends React.Component<Props, States> {
 
     componentDidMount() {
         this.fetchTopBakerByDelegationData(15);
-        const defaultTimestamp = new Date().getTime() - constants.one_day_in_milliseconds;
-        this.fetchTopBakerByBlockData(15, defaultTimestamp);
+        this.fetchTopBakerByBlockData(15);
         this.fetchTopBakersByStakeData(15);
     }
 
@@ -62,10 +61,10 @@ class BakersComponent extends React.Component<Props, States> {
         this.setState({topBakerNamesByDelegation: await this.getBakerNames(this.props.topBakersByDelegation, 'delegate_value')});
     }
 
-    async fetchTopBakerByBlockData(limit: number, timestamp: number){
+    async fetchTopBakerByBlockData(limit: number){
         const { fetchTopBakersByBlocks } = this.props;
         // Fetch top ten
-        
+        let timestamp = new Date().getTime() - constants.one_day_in_milliseconds;
         await fetchTopBakersByBlocks(limit, timestamp);
         this.setState({topBakerNamesByBlock: await this.getBakerNames(this.props.topBakersByBlock, 'baker')});
     }
@@ -107,10 +106,10 @@ class BakersComponent extends React.Component<Props, States> {
         }
     }
 
-    onTopBakerByBlockLimitChange = (limit: number, timestamp: number) => {
+    onTopBakerByBlockLimitChange = (limit: number) => {
         limit = limit ? limit : 15;
         if(limit <= 1000) {
-            this.fetchTopBakerByBlockData(limit, timestamp);
+            this.fetchTopBakerByBlockData(limit);
         }
     }
 
@@ -152,9 +151,9 @@ class BakersComponent extends React.Component<Props, States> {
         const { isTopBakersByDelegationLoading, isTopBakersByBlockLoading, isTopBakerByStateLoading } = this.props;
         return (
             <MainContainer>
-                <Title>Bakers</Title>
+                <Title>Contracts</Title>
                 <Widget>
-                    <h3>Top Bakers by Stake</h3>
+                    <h3>Top Contracts by Balance</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
@@ -179,7 +178,7 @@ class BakersComponent extends React.Component<Props, States> {
                                 {
                                     this.props.topBakersByStake.length && 
                                     <ChartWrapper data= {this.props.topBakersByStake}
-                                        color= '#3371AA'
+                                        color= '#94D2D0'
                                         height= {250}
                                         xKey= "pkh"
                                         yKey= "staking_balance"
@@ -198,7 +197,7 @@ class BakersComponent extends React.Component<Props, States> {
                     </div>
                 </Widget>
                 <Widget>
-                    <h3>Top Bakers by Block</h3>
+                    <h3>Top Contracts by Invocation</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
@@ -223,7 +222,7 @@ class BakersComponent extends React.Component<Props, States> {
                                 {
                                     this.props.topBakersByBlock.length && 
                                     <ChartWrapper data= {this.props.topBakersByBlock}
-                                        color= '#3371AA'
+                                        color= '#94D2D0'
                                         height= {250}
                                         xKey= "baker"
                                         yKey= "count_hash"
@@ -232,7 +231,7 @@ class BakersComponent extends React.Component<Props, States> {
                                         xTooltip= {this.xToolTipForTopBakerByBLock}
                                         yTooltip= {this.yToolTipForTopBakerByBLock}
                                         _ref= {this.topBakersByBlockRef}
-                                        isDateFilter={true}/>
+                                        isDateFilter={false}/>
                                 }
                                 
                             </React.Fragment>
@@ -242,49 +241,7 @@ class BakersComponent extends React.Component<Props, States> {
                     </div>
                     { isTopBakersByDelegationLoading && <Loader /> }         
                 </Widget>
-                <Widget>
-                    <h3>Top Bakers by Delegations</h3>
-                    <div className="linkHolder">
-                        <ul>
-                            <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
-                                <a href="">Arronax Query
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="mapHolder">
-                        {
-                            <React.Fragment>
-                                {
-                                    this.props.topBakersByDelegation.length && 
-                                    <ChartWrapper data= {this.props.topBakersByDelegation}
-                                        color= '#3371AA'
-                                        height= {250}
-                                        xKey= "delegate_value"
-                                        yKey= "count_account_id"
-                                        spacing= {10}
-                                        onLimitChange= {this.onTopBakerByDelegationLimitChange}
-                                        xTooltip= {this.xToolTipForTopBakerByDelegation}
-                                        yTooltip= {this.yToolTipForTopBakerByDelegation}
-                                        _ref= {this.topBakersByDelegationRef}
-                                        isDateFilter={false}/>
-                                }
-                            </React.Fragment>
-                        }
-                        
-                    </div>        
-                </Widget>
-                { (isTopBakersByDelegationLoading || isTopBakersByBlockLoading || isTopBakerByStateLoading) && <Loader /> }
+                { (isTopBakersByDelegationLoading || isTopBakersByBlockLoading || isTopBakerByStateLoading) && <Loader /> }         
             </MainContainer>
         );
     }
@@ -306,4 +263,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 });
 
 
-export const Bakers: any = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(BakersComponent);
+export const Contracts: any = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(ContractsComponent);

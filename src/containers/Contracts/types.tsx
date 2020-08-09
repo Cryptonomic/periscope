@@ -7,7 +7,7 @@ export interface OwnProps {
     topBakersByDelegation: Array<BakerByDelegation>;
     topBakersByStake: Array<BakerByStake>;
     isTopBakersByDelegationLoading: boolean;
-    topBakersByBlock: Array<BakerByBlock>;
+    topBakersByBlock: Array<BakerByBlock>,
     isTopBakersByBlockLoading: boolean;
     isTopBakerByStateLoading: boolean;
     fetchTopBakersByDelegation: (limit: number) => void;

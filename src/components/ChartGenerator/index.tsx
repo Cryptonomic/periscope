@@ -1,6 +1,6 @@
 import React from 'react';
 import {chartGenerator} from '../../utils/chartGenerator';
-import {constants} from '../../utils/constants';
+import { constants } from '../../utils/constants';
 import * as d3 from 'd3';
 import { debounce } from 'throttle-debounce';
 
@@ -15,10 +15,12 @@ interface Props {
     xTooltip: Function,
     yTooltip: Function,
     _ref: any,
+    isDateFilter: boolean
 }
 
 interface States {
-    limit: number
+    limit: number,
+    selectedDateFilter: string
 }
 
 export default class ChartWrapper extends React.Component<Props, States> {
@@ -32,6 +34,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
         this.updateLimitDebounce = debounce(1000, false, this.updateLimit);
         this.state = {
             limit: 15,
+            selectedDateFilter: 'one_day_in_milliseconds'
         }
     }
 
@@ -75,10 +78,24 @@ export default class ChartWrapper extends React.Component<Props, States> {
         
     }
 
+    filterResult(filter: string) {
+        this.setState({selectedDateFilter: filter});
+        let timestamp = 0;
+        // calculate timestamp for conseiljs query builder
+        if(filter === constants.all_time_filter) {
+            timestamp = constants.all_time_date
+        } else {
+            timestamp = new Date().getTime() - constants[filter];
+        }
+
+        this.props.onLimitChange(this.state.limit, timestamp);
+
+    }
+
     render() {
-        const { height, _ref } = this.props;
+        const { height, _ref, isDateFilter } = this.props;
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
-        const { limit } = this.state;
+        const { limit, selectedDateFilter } = this.state;
         const svgLength = `0,0,${width},${height}`;
 
         return (
@@ -92,13 +109,17 @@ export default class ChartWrapper extends React.Component<Props, States> {
                                 <span>Accounts</span>
                             </p>
                         </div>
-                        <div className="pos-abs-right">
-                            <span className="selected">Day</span>
-                            <span>Week</span>
-                            <span>Month</span>
-                            <span>Year</span>
-                            <span>All Time</span>
-                        </div>
+                        {
+                            isDateFilter && 
+                            <div className="pos-abs-right">
+                                <span onClick={e=> this.filterResult(constants.one_day_filter)} className={selectedDateFilter=== constants.one_day_filter ? 'selected': ' '} >Day</span>
+                                <span onClick={e=> this.filterResult(constants.one_week_filter)} className={selectedDateFilter=== constants.one_week_filter ? 'selected': ' '}>Week</span>
+                                <span onClick={e=> this.filterResult(constants.one_month_filter)} className={selectedDateFilter=== constants.one_month_filter ? 'selected': ' '}>Month</span>
+                                <span onClick={e=> this.filterResult(constants.one_year_filter)} className={selectedDateFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
+                                <span onClick={e=> this.filterResult(constants.all_time_filter)} className={selectedDateFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span>
+                            </div>
+                        }
+                        
                         <div className="graph-holder" ref={this.graphContainer}>
                             <svg viewBox={svgLength} className="account-graph" ref={_ref}></svg>
                         </div>
