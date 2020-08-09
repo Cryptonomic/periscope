@@ -1,4 +1,4 @@
-# Arronax
+# Periscope
 
 [![Build Status](https://travis-ci.org/Cryptonomic/Arronax.svg?branch=master)](https://travis-ci.org/Cryptonomic/Arronax)
 [![dependencies](https://david-dm.org/Cryptonomic/Arronax/status.svg)](https://david-dm.org/Cryptonomic/Arronax)
@@ -8,8 +8,8 @@ Blockchain data analytics tool built with [ConseilJS](https://github.com/Crypton
 ## Building
 
 ```bash
-git clone https://github.com/Cryptonomic/Arronax.git
-cd Arronax
+git clone https://github.com/Cryptonomic/periscope.git
+cd periscope
 npm install
 #Read instructions for configuration
 npm start
@@ -48,9 +48,3 @@ Start the local server without forcing open a browser.
 Package (webpack) for distribution. Fully contained artifacts will appear in `/build` once this process is complete.
 `npm run build`
 
-Package into docker
-
-```bash
-docker build -t arronaxcontainer .
-docker run -d -p 3080:80 arronaxcontainer
-```
