@@ -4,6 +4,7 @@ import { modal } from './modal/reducers';
 import { accounts } from './accounts/reducers';
 import { bakers } from './bakers/reducers';
 import { contracts } from './contracts/reducers';
+import { operations } from './Operations/reducers';
 
 export interface RootState {
     accounts: any;
@@ -11,6 +12,7 @@ export interface RootState {
     contracts: any,
     message: any;
     modal: any;
+    operations: any
 }
 
 export const rootReducer = combineReducers({
@@ -19,4 +21,5 @@ export const rootReducer = combineReducers({
     contracts,
     message,
     modal,
+    operations
 });

@@ -12,7 +12,7 @@ export class chartGenerator {
         let xRange: any = d3.range(data.length);
         const constData: any = d3.range(15);
         const xAxisData =  data.map((d: any, index: any) => index);
-        const yAxisData = data.map((d: { [x: string]: string; }) => parseInt(d[yAxisKey]));
+        const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
 
         let x = d3.scaleBand()
                     .domain(xRange)
@@ -21,7 +21,7 @@ export class chartGenerator {
 
 
         const y = d3.scaleLinear()
-                    .domain([1, d3.max<any>(yAxisData)])
+                    .domain([0, d3.max<any>(yAxisData)])
                     .range([height - margin.bottom, margin.top])
 
         
