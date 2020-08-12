@@ -15,8 +15,10 @@ import {
 
 import { Props, States } from './types';
 
-import { fetchHourlyVolume, fetchHourlyGas, fetchHourlyFee, fetchDailyActivation} from '../../reducers/Operations/thunks';
+import { fetchHourlyTransaction, fetchHourlyVolume, fetchHourlyGas, fetchHourlyFee, fetchDailyActivation, fetchDailyOrigination} from '../../reducers/Operations/thunks';
 import {
+    getHourlyTransaction,
+    getHourlyTransactionLoading,
     getHourlyVolume,
     getHourlyVolumeLoading,
     getHourlyGas,
@@ -25,10 +27,13 @@ import {
     getHourlyFeeLoading,
     getDailyActivation,
     getDailyActivationLoading,
+    getDailyOrigination,
+    getDailyOriginationLoading
 } from '../../reducers/Operations/selectors';
 
 class OperationsComponent extends React.Component<Props, States> {
 
+    hourlyTransactionRef: any = null;
     hourlyVolumeRef: any = null;
     hourlyGasRef: any = null;
     hourlyFeeRef: any = null;
@@ -38,6 +43,8 @@ class OperationsComponent extends React.Component<Props, States> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            xHourlyTransactionKey: 'date',
+            yHourlyTransactionKey: 'values',
             xHourlyVolumeKey: 'date',
             yHourlyVolumeKey: 'values',
             xHourlyGasKey: 'date',
@@ -45,6 +52,7 @@ class OperationsComponent extends React.Component<Props, States> {
             xHourlyFeeKey: 'date',
             yHourlyFeeKey: 'values',
         }
+        this.hourlyTransactionRef = React.createRef();
         this.hourlyVolumeRef = React.createRef();
         this.hourlyGasRef = React.createRef();
         this.hourlyFeeRef = React.createRef(); 
@@ -56,10 +64,38 @@ class OperationsComponent extends React.Component<Props, States> {
 
         const defaultTimestamp = new Date().getTime() - constants.one_day_in_milliseconds;
         this.fetchHourlyVolumeData(defaultTimestamp);
+        this.fetchHourlyTransactionData(defaultTimestamp);
         this.fetchHourlyGasData(defaultTimestamp);
         this.fetchHourlyFeeData(defaultTimestamp);
         const oneYear = new Date().getTime() - constants.one_year_in_milliseconds;
         this.fetchDailyActivationData(oneYear);
+        this.fetchDailyOriginationData(oneYear);
+    }
+
+    async fetchHourlyTransactionData(date: number){
+        const { fetchHourlyTransaction } = this.props;
+        await fetchHourlyTransaction(date);
+        if(this.props.hourlyTransaction[0].hasOwnProperty('cycle')) {
+            this.setState({xHourlyTransactionKey: 'cycle', yHourlyTransactionKey: 'sum_amount'})
+        }
+    }
+
+    onHourlyTransactionChange = (limit: any, date: number) => {
+        this.fetchHourlyTransactionData(date);
+    }
+
+    xToolTipForHourlyTransaction = (d:any, i:any) => {
+        if(d.hasOwnProperty('cycle')) {
+            return "Cycle "+ d.cycle;
+        }
+        return d.values.toLocaleString();
+    }
+
+    yToolTipForHourlyTransaction = (d:any, i:any) => {
+        if(d.hasOwnProperty('count_kind')) {
+            return d.sum_amount + "Transaction per Cycle";
+        }
+        return moment(d.date).format("YYYY MMM DD, HH:mm");
     }
 
     async fetchHourlyVolumeData(date: number){
@@ -158,26 +194,88 @@ class OperationsComponent extends React.Component<Props, States> {
     }
 
     xToolTipForDailyActivation = (d:any, i:any) => {
-        return d.values.toLocaleString();
+        return d.values.toLocaleString() +" Account Activations per Day";
     }
 
     yToolTipForDailyActivation = (d:any, i:any) => {
         return moment(d.date).format("YYYY MMM DD, HH:mm");
     }
 
+    async fetchDailyOriginationData(date: number){
+        const { fetchDailyOrigination } = this.props;
+        await fetchDailyOrigination(date);
+    }
+    
+    onDailyOriginationChange = (limit: any, date: number) => {
+        this.fetchDailyActivationData(date);
+    }
+
+    xToolTipForDailyOrigination = (d:any, i:any) => {
+        return d.values.toLocaleString() + " Contract Originations per Day";
+    }
+
+    yToolTipForDailyOrigination = (d:any, i:any) => {
+        return moment(d.date).format("YYYY MMM DD, HH:mm");
+    }
+
     render() {
         const { 
+            hourlyTransaction,
+            isHourlyTransactionLoading,
             isHourlyVolumeLoading, 
             hourlyVolume, hourlyGas,
             isHourlyGasLoading, 
             hourlyFee, 
             isHourlyFeeLoading,
             dailyActivation,
-            isDailyActivationLoading
+            isDailyActivationLoading,
+            dailyOrigination,
+            isDailyOriginationLoading,
         } = this.props;
         return (
             <MainContainer>
                 <Title>Operations</Title>
+                <Widget>
+                    <h3>Transactions per Hour</h3>
+                    <div className="linkHolder">
+                        <ul>
+                            <li className="rightAlign">
+                                <a href="">View in Harpoon 
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
+                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
+                                    </svg>
+                                </a>
+                                <a href="">Arronax Query
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
+                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="mapHolder">
+                        <React.Fragment>
+                            {
+                                hourlyTransaction.length > 0 && 
+                                <ChartWrapper data= {hourlyTransaction}
+                                    color= '#5CBBD4'
+                                    height= {250}
+                                    xKey= {this.state.xHourlyTransactionKey}
+                                    yKey= {this.state.yHourlyTransactionKey}
+                                    spacing= {10}
+                                    onLimitChange= {this.onHourlyTransactionChange}
+                                    xTooltip= {this.xToolTipForHourlyTransaction}
+                                    yTooltip= {this.yToolTipForHourlyTransaction}
+                                    _ref= {this.hourlyTransactionRef}
+                                    isLimitAvailable={false}
+                                    isDateFilter={true}/>
+                            }
+                            
+                        </React.Fragment>
+                    </div>
+                </Widget>
                 <Widget>
                     <h3>Transaction Volume per Hour</h3>
                     <div className="linkHolder">
@@ -212,6 +310,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                     xTooltip= {this.xToolTipForHourlyVolume}
                                     yTooltip= {this.yToolTipForHourlyVolume}
                                     _ref= {this.hourlyVolumeRef}
+                                    isLimitAvailable={false}
                                     isDateFilter={true}/>
                             }
                             
@@ -252,6 +351,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                     xTooltip= {this.xToolTipForHourlyGas}
                                     yTooltip= {this.yToolTipForHourlyGas}
                                     _ref= {this.hourlyGasRef}
+                                    isLimitAvailable={false}
                                     isDateFilter={true}/>
                             }
                             
@@ -292,6 +392,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                     xTooltip= {this.xToolTipForHourlyFee}
                                     yTooltip= {this.yToolTipForHourlyFee}
                                     _ref= {this.hourlyFeeRef}
+                                    isLimitAvailable={false}
                                     isDateFilter={true}/>
                             }
                             
@@ -332,19 +433,64 @@ class OperationsComponent extends React.Component<Props, States> {
                                     xTooltip= {this.xToolTipForDailyActivation}
                                     yTooltip= {this.yToolTipForDailyActivation}
                                     _ref= {this.dailyActivationRef}
-                                    isDateFilter={true}/>
+                                    isLimitAvailable={false}
+                                    isDateFilter={false}/>
                             }
                             
                         </React.Fragment>
                     </div>
                 </Widget>
-                { (isHourlyVolumeLoading || isHourlyGasLoading || isHourlyFeeLoading || isDailyActivationLoading) && <Loader /> }         
+                <Widget>
+                    <h3>Originations per Day</h3>
+                    <div className="linkHolder">
+                        <ul>
+                            <li className="rightAlign">
+                                <a href="">View in Harpoon 
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
+                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
+                                    </svg>
+                                </a>
+                                <a href="">Arronax Query
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
+                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="mapHolder">
+                        <React.Fragment>
+                            {
+                                dailyOrigination.length > 0 && 
+                                <ChartWrapper data= {dailyOrigination}
+                                    color= '#5CBBD4'
+                                    height= {250}
+                                    xKey= {this.state.xHourlyFeeKey}
+                                    yKey= {this.state.yHourlyFeeKey}
+                                    spacing= {10}
+                                    onLimitChange= {this.onDailyOriginationChange}
+                                    xTooltip= {this.xToolTipForDailyOrigination}
+                                    yTooltip= {this.yToolTipForDailyOrigination}
+                                    _ref= {this.dailyActivationRef}
+                                    isLimitAvailable={false}
+                                    isDateFilter={false}/>
+                            }
+                            
+                        </React.Fragment>
+                    </div>
+                </Widget>
+                { (isHourlyTransactionLoading || isHourlyVolumeLoading || isHourlyGasLoading || isHourlyFeeLoading || isDailyActivationLoading || isDailyOriginationLoading) && <Loader /> }         
             </MainContainer>
         );
     }
 }
 
 const mapStateToProps = (state: any) => ({
+
+    hourlyTransaction: getHourlyTransaction(state),
+    isHourlyTransactionLoading: getHourlyTransactionLoading(state),
     hourlyVolume: getHourlyVolume(state),
     isHourlyVolumeLoading: getHourlyVolumeLoading(state),
     hourlyGas: getHourlyGas(state),
@@ -352,14 +498,18 @@ const mapStateToProps = (state: any) => ({
     hourlyFee: getHourlyFee(state),
     isHourlyFeeLoading: getHourlyFeeLoading(state),
     dailyActivation: getDailyActivation(state),
-    isDailyActivationLoading: getDailyActivationLoading(state)
+    isDailyActivationLoading: getDailyActivationLoading(state),
+    dailyOrigination: getDailyOrigination(state),
+    isDailyOriginationLoading: getDailyOriginationLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
+    fetchHourlyTransaction: (date: number) => dispatch(fetchHourlyTransaction(date)),
     fetchHourlyVolume: (date: number) => dispatch(fetchHourlyVolume(date)),
     fetchHourlyGas: (date: number) => dispatch(fetchHourlyGas(date)),
     fetchHourlyFee: (date: number) => dispatch(fetchHourlyFee(date)),
     fetchDailyActivation: (date: number) => dispatch(fetchDailyActivation(date)),
+    fetchDailyOrigination: (date: number) => dispatch(fetchDailyOrigination(date)),
 });
 
 export const Operations: any = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(OperationsComponent);

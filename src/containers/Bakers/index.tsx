@@ -187,6 +187,7 @@ class BakersComponent extends React.Component<Props, States> {
                                         xTooltip= {this.xToolTipForTopBakerByStake}
                                         yTooltip= {this.yToolTipForTopBakerByStake}
                                         _ref= {this.topBakersByStakeRef}
+                                        isLimitAvailable={true}
                                         isDateFilter={false}/>
                                 }
                                 
@@ -231,6 +232,7 @@ class BakersComponent extends React.Component<Props, States> {
                                         xTooltip= {this.xToolTipForTopBakerByBLock}
                                         yTooltip= {this.yToolTipForTopBakerByBLock}
                                         _ref= {this.topBakersByBlockRef}
+                                        isLimitAvailable={true}
                                         isDateFilter={true}/>
                                 }
                                 
@@ -276,6 +278,7 @@ class BakersComponent extends React.Component<Props, States> {
                                         xTooltip= {this.xToolTipForTopBakerByDelegation}
                                         yTooltip= {this.yToolTipForTopBakerByDelegation}
                                         _ref= {this.topBakersByDelegationRef}
+                                        isLimitAvailable={true}
                                         isDateFilter={false}/>
                                 }
                             </React.Fragment>

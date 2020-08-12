@@ -15,7 +15,8 @@ interface Props {
     xTooltip: Function,
     yTooltip: Function,
     _ref: any,
-    isDateFilter: boolean
+    isDateFilter: boolean,
+    isLimitAvailable: boolean,
 }
 
 interface States {
@@ -95,7 +96,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     render() {
-        const { height, _ref, isDateFilter } = this.props;
+        const { height, _ref, isDateFilter, isLimitAvailable } = this.props;
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
         const { limit, selectedDateFilter } = this.state;
         const svgLength = `0,0,${width},${height}`;
@@ -104,13 +105,17 @@ export default class ChartWrapper extends React.Component<Props, States> {
             <div className="mapHolder">
                 {
                     <React.Fragment>
-                        <div className="pos-abs">
-                            <p>
-                                <span>View Top</span>
-                                <input type="number" value={limit} onChange={(e)=> {this.setState({ limit: parseInt(e.target.value) });this.updateLimitDebounce(e.target.value)}}/>
-                                <span>Accounts</span>
-                            </p>
-                        </div>
+                        {
+                            isLimitAvailable && 
+                            <div className="pos-abs">
+                                <p>
+                                    <span>View Top</span>
+                                    <input type="number" value={limit} onChange={(e)=> {this.setState({ limit: parseInt(e.target.value) });this.updateLimitDebounce(e.target.value)}}/>
+                                    <span>Accounts</span>
+                                </p>
+                            </div>
+                        }
+                        
                         {
                             isDateFilter && 
                             <div className="pos-abs-right">

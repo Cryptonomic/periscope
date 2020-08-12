@@ -101,6 +101,7 @@ class AccountsComponent extends React.Component<Props, States> {
                                     xTooltip= {this.xTooltip}
                                     yTooltip= {this.yTooltip}
                                     _ref= {this.topAccountsRef}
+                                    isLimitAvailable={true}
                                     isDateFilter={false}/>
                             }
                         </React.Fragment>

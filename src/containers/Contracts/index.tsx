@@ -129,6 +129,7 @@ class ContractsComponent extends React.Component<Props> {
                                     xTooltip= {this.xToolTipForTopContractsByBalance}
                                     yTooltip= {this.yToolTipForTopContractsByBalance}
                                     _ref= {this.topContractsByBalanceRef}
+                                    isLimitAvailable={true}
                                     isDateFilter={false}/>
                             }
                             
@@ -169,6 +170,7 @@ class ContractsComponent extends React.Component<Props> {
                                     xTooltip= {this.xToolTipForTopContractsByInvocation}
                                     yTooltip= {this.yToolTipForTopContractsByInvocation}
                                     _ref= {this.topContractsByInvocationRef}
+                                    isLimitAvailable={true}
                                     isDateFilter={true}/>
                             }
                             
