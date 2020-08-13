@@ -269,7 +269,7 @@ div[class^="Footer"] a {
 }
 
 .mapHolder {
-    min-height: 350px;
+    min-height: 380px;
     background: #fff;
     position: relative;
 }
@@ -349,4 +349,14 @@ div[class^="Footer"] a {
 .pos-abs-right span.selected {
     color: #697A21;
     border-bottom: 2px solid #697A21;
+}
+
+.year-text {
+    margin: 10px 0 0;
+    font-family: 'Nunito';
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+    color: #8492A4;
 }

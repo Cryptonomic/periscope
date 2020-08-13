@@ -130,6 +130,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
                         <div className="graph-holder" ref={this.graphContainer}>
                             <svg viewBox={svgLength} className="account-graph" ref={_ref}></svg>
                         </div>
+                        <p className="year-text">2020 Jun 11 to 2020 Jun 18</p>
                     </React.Fragment>
                 }
             </div>

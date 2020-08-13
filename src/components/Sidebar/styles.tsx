@@ -44,8 +44,26 @@ export const List = styled.ul`
         }
     }
     &.head {
+        padding:0;
+        margin:0;
         li {
             margin-bottom:0;
+            a {
+                padding: 16px 10px;
+                margin: 0 10px;
+                display:block;
+                svg {
+                    margin-right:10px;
+                }
+                &.selected {
+                    border-radius: 4px;
+                    color:#5987D7;
+                    svg path {
+                        fill:#426DD5;
+                        stroke:#426DD5;
+                    }
+                }
+            }
         }
     }
     &.sub {
@@ -56,10 +74,10 @@ export const List = styled.ul`
 export const ListItem = styled.li`
     font-size:12px;
     list-style:none;
-    margin-bottom:10px;
+    margin-bottom:15px;
     svg,a {
         display: inline-block;
-        vertical-align: bottom;
+        vertical-align: sub;
     }
     svg path {
         fill:#8492A4;
@@ -77,6 +95,10 @@ export const ListItem = styled.li`
         letter-spacing:0.5px;
         &.main-style {
             font-weight: 800;
+        }
+        &.selected {
+            background: rgba(168, 218, 220, 0.23);
+            border-radius: 4px;
         }
     }
 `;
