@@ -360,3 +360,11 @@ div[class^="Footer"] a {
     text-align: center;
     color: #8492A4;
 }
+
+g.y-axis > path {
+    display: none !important;
+}
+
+g.y-axis > g > line {
+    display: none !important;
+}
