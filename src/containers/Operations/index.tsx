@@ -72,6 +72,16 @@ class OperationsComponent extends React.Component<Props, States> {
         this.fetchDailyOriginationData(oneYear);
     }
 
+    componentDidUpdate(prevProps: Props) {
+        const currParams = new URLSearchParams(this.props.history.location.search);
+        const currId: any = currParams.get('q');
+
+        const element: any = document.getElementById(currId);
+        if(element) {
+            window.scrollTo(0, element.offsetTop); 
+        }
+    }
+
     async fetchHourlyTransactionData(date: number){
         const { fetchHourlyTransaction } = this.props;
         await fetchHourlyTransaction(date);
@@ -235,17 +245,11 @@ class OperationsComponent extends React.Component<Props, States> {
         return (
             <MainContainer>
                 <Title>Operations</Title>
-                <Widget>
+                <Widget id="trancations">
                     <h3>Transactions per Hour</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -270,23 +274,18 @@ class OperationsComponent extends React.Component<Props, States> {
                                     yTooltip= {this.yToolTipForHourlyTransaction}
                                     _ref= {this.hourlyTransactionRef}
                                     isLimitAvailable={false}
-                                    isDateFilter={true}/>
+                                    isDateFilter={true}
+                                    text={moment().format("YYYY MMMM Do")}/>
                             }
                             
                         </React.Fragment>
                     </div>
                 </Widget>
-                <Widget>
+                <Widget id="trancationsVolume">
                     <h3>Transaction Volume per Hour</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -311,23 +310,18 @@ class OperationsComponent extends React.Component<Props, States> {
                                     yTooltip= {this.yToolTipForHourlyVolume}
                                     _ref= {this.hourlyVolumeRef}
                                     isLimitAvailable={false}
-                                    isDateFilter={true}/>
+                                    isDateFilter={true}
+                                    text=''/>
                             }
                             
                         </React.Fragment>
                     </div>
                 </Widget>
-                <Widget>
+                <Widget id="gasConsumed">
                     <h3>Gas Consumed per Hour</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -352,23 +346,18 @@ class OperationsComponent extends React.Component<Props, States> {
                                     yTooltip= {this.yToolTipForHourlyGas}
                                     _ref= {this.hourlyGasRef}
                                     isLimitAvailable={false}
-                                    isDateFilter={true}/>
+                                    isDateFilter={true}
+                                    text=''/>
                             }
                             
                         </React.Fragment>
                     </div>
                 </Widget>
-                <Widget>
+                <Widget id="feesPaid">
                     <h3>Fees Paid per Hour</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -393,23 +382,18 @@ class OperationsComponent extends React.Component<Props, States> {
                                     yTooltip= {this.yToolTipForHourlyFee}
                                     _ref= {this.hourlyFeeRef}
                                     isLimitAvailable={false}
-                                    isDateFilter={true}/>
+                                    isDateFilter={true}
+                                    text={moment().format("YYYY MMMM Do")}/>
                             }
                             
                         </React.Fragment>
                     </div>
                 </Widget>
-                <Widget>
+                <Widget id="activations">
                     <h3>Activations per Day</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -434,23 +418,18 @@ class OperationsComponent extends React.Component<Props, States> {
                                     yTooltip= {this.yToolTipForDailyActivation}
                                     _ref= {this.dailyActivationRef}
                                     isLimitAvailable={false}
-                                    isDateFilter={false}/>
+                                    isDateFilter={false}
+                                    text={`${moment(new Date().getTime() - constants.one_year_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                             }
                             
                         </React.Fragment>
                     </div>
                 </Widget>
-                <Widget>
+                <Widget id="originations">
                     <h3>Originations per Day</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -475,7 +454,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                     yTooltip= {this.yToolTipForDailyOrigination}
                                     _ref= {this.dailyActivationRef}
                                     isLimitAvailable={false}
-                                    isDateFilter={false}/>
+                                    isDateFilter={false}
+                                    text={`${moment(new Date().getTime() - constants.one_year_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                             }
                             
                         </React.Fragment>

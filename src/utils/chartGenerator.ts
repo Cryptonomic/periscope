@@ -49,6 +49,7 @@ export class chartGenerator {
                 .attr("y", 10)
                 .attr("fill", "currentColor")
                 .attr("text-anchor", "middle"));
+    
 
         spacing = yAxisData.length <= 70 ? spacing : 1;
         svg.append("g")
@@ -137,7 +138,8 @@ export class chartGenerator {
         const tooltip = d3.select("body").append("div").attr("class", "graphToolTip");
     
         // Add event listener for tooltip
-        bar.on("mousemove", function(d: any, i: number) {
+        bar.on("mousemove", function(this:any, d: any, i: number,) {
+            // d3.select(this).attr("fill", "red");
             tooltip
                 .style("left", d3.event.pageX + 20 + "px")
                 .style("top", d3.event.pageY - 70 + "px")
@@ -154,7 +156,9 @@ export class chartGenerator {
                 .style("padding", "5px 20px")
                 .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
         })
-            .on("mouseout", function(d: any){ tooltip.style("display", "none");
+        .on("mouseout", function(this:any, d: any){ 
+            // d3.select(this).attr("fill", "yellow");
+            tooltip.style("display", "none");
         });
     }
 

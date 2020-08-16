@@ -57,6 +57,16 @@ class BlocksComponent extends React.Component<Props, States> {
         this.fetchEndorsement(defayltTimestamp);
     }
 
+    componentDidUpdate(prevProps: Props) {
+        const currParams = new URLSearchParams(this.props.history.location.search);
+        const currId: any = currParams.get('q');
+
+        const element: any = document.getElementById(currId);
+        if(element) {
+            window.scrollTo(0, element.offsetTop); 
+        }
+    }
+
     async fetchHourlyBlockData(date: number){
         const { fetchHourlyBlock } = this.props;
         // Fetch top ten
@@ -171,7 +181,7 @@ class BlocksComponent extends React.Component<Props, States> {
         return (
             <MainContainer>
                 <Title>Blocks</Title>
-                <Widget>
+                <Widget id="hourlyBlocks">
                     <h3>Blocks per Hour</h3>
                     <div className="linkHolder">
                         <ul>
@@ -205,7 +215,7 @@ class BlocksComponent extends React.Component<Props, States> {
                     </div>
                        
                     </Widget>
-                    <Widget>
+                    <Widget id="priorityBlocks">
                     <h3>Priority Zero Blocks per Hour</h3>
                     <div className="linkHolder">
                         <ul>
@@ -238,7 +248,7 @@ class BlocksComponent extends React.Component<Props, States> {
                         }
                     </div>      
                     </Widget>
-                    <Widget>
+                    <Widget id="endorsement">
                     <h3>Endorsements per Hour</h3>
                     <div className="linkHolder">
                         <ul>

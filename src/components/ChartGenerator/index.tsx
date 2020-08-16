@@ -3,6 +3,7 @@ import {chartGenerator} from '../../utils/chartGenerator';
 import { constants } from '../../utils/constants';
 import * as d3 from 'd3';
 import { debounce } from 'throttle-debounce';
+import moment from 'moment';
 
 interface Props {
     data: Array<any>,
@@ -17,11 +18,13 @@ interface Props {
     _ref: any,
     isDateFilter: boolean,
     isLimitAvailable: boolean,
+    text: any
 }
 
 interface States {
     limit: number,
-    selectedDateFilter: string
+    selectedDateFilter: string,
+    xLabel: any
 }
 
 export default class ChartWrapper extends React.Component<Props, States> {
@@ -35,7 +38,8 @@ export default class ChartWrapper extends React.Component<Props, States> {
         this.updateLimitDebounce = debounce(1000, false, this.updateLimit);
         this.state = {
             limit: 15,
-            selectedDateFilter: 'one_day_in_milliseconds'
+            selectedDateFilter: 'one_day_in_milliseconds',
+            xLabel: props.text ? props.text : '',
         }
     }
 
@@ -90,15 +94,21 @@ export default class ChartWrapper extends React.Component<Props, States> {
         } else {
             timestamp = new Date().getTime() - constants[filter];
         }
-
+        if(this.state.xLabel) {
+            this.changeLabelText(timestamp);
+        }
         this.props.onLimitChange(this.state.limit, timestamp);
+    }
 
+    changeLabelText(timestamp: number) {
+        const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`
+        this.setState({xLabel: text});
     }
 
     render() {
         const { height, _ref, isDateFilter, isLimitAvailable } = this.props;
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
-        const { limit, selectedDateFilter } = this.state;
+        const { limit, selectedDateFilter, xLabel } = this.state;
         const svgLength = `0,0,${width},${height}`;
 
         return (
@@ -130,7 +140,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
                         <div className="graph-holder" ref={this.graphContainer}>
                             <svg viewBox={svgLength} className="account-graph" ref={_ref}></svg>
                         </div>
-                        <p className="year-text">2020 Jun 11 to 2020 Jun 18</p>
+                        <p className="year-text">{xLabel}</p>
                     </React.Fragment>
                 }
             </div>

@@ -44,6 +44,16 @@ class ContractsComponent extends React.Component<Props> {
         this.fetchTopContractsByInvocationData(15, defayltTimestamp);
     }
 
+    componentDidUpdate(prevProps: Props) {
+        const currParams = new URLSearchParams(this.props.history.location.search);
+        const currId: any = currParams.get('q');
+
+        const element: any = document.getElementById(currId);
+        if(element) {
+            window.scrollTo(0, element.offsetTop); 
+        }
+    }
+
     async fetchTopContractsByBalanceData(limit: number){
         const { fetchTopContractsByBalance } = this.props;
         await fetchTopContractsByBalance(limit);
@@ -95,17 +105,11 @@ class ContractsComponent extends React.Component<Props> {
         return (
             <MainContainer>
                 <Title>Contracts</Title>
-                <Widget>
+                <Widget id="contractsByBalance">
                     <h3>Top Contracts by Balance</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -118,7 +122,7 @@ class ContractsComponent extends React.Component<Props> {
                     <div className="mapHolder">
                         <React.Fragment>
                             {
-                                this.props.topContractsByBalance.length && 
+                                this.props.topContractsByBalance.length > 0 && 
                                 <ChartWrapper data= {this.props.topContractsByBalance}
                                     color= '#94D2D0'
                                     height= {250}
@@ -130,23 +134,18 @@ class ContractsComponent extends React.Component<Props> {
                                     yTooltip= {this.yToolTipForTopContractsByBalance}
                                     _ref= {this.topContractsByBalanceRef}
                                     isLimitAvailable={true}
-                                    isDateFilter={false}/>
+                                    isDateFilter={false}
+                                    text=''/>
                             }
                             
                         </React.Fragment>
                     </div>
                 </Widget>
-                <Widget>
+                <Widget id="contractsByInvocation">
                     <h3>Top Contracts by Invocation</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -171,7 +170,8 @@ class ContractsComponent extends React.Component<Props> {
                                     yTooltip= {this.yToolTipForTopContractsByInvocation}
                                     _ref= {this.topContractsByInvocationRef}
                                     isLimitAvailable={true}
-                                    isDateFilter={true}/>
+                                    isDateFilter={true}
+                                    text=''/>
                             }
                             
                         </React.Fragment>

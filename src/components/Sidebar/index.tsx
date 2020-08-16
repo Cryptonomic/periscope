@@ -8,7 +8,7 @@ import {
     Footer
 } from './styles';
 import Logo from '../../assets/images/logo.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 interface Props {
     // types goes here
@@ -31,7 +31,7 @@ const Sidebar: React.FC<Props> = props => {
                 </List>
                 <List className="sub">
                     <ListItem>
-                        <a href="#">Top Accounts by Balance</a>
+                        <Link to='/accounts'> Accounts by Balance</Link>
                     </ListItem>
                 </List>
                 <List className="head">
@@ -46,13 +46,13 @@ const Sidebar: React.FC<Props> = props => {
                 </List>
                 <List className="sub">
                     <ListItem>
-                        <a href="#">Top Bakers by Stake</a>
+                        <Link to={`/bakers?q=topStakers`} >Top Bakers by Stake</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Top Bakers by Block</a>
+                        <Link to={`/bakers?q=topBlockers`} >Top Bakers by Block</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Top Bakers by Delegations</a>
+                    <Link to={`/bakers?q=topDelegator`}>Top Bakers by Delegations</Link>
                     </ListItem>
                 </List>
                 <List className="head">
@@ -71,10 +71,10 @@ const Sidebar: React.FC<Props> = props => {
                 </List>
                 <List className="sub">
                     <ListItem>
-                        <a href="#">Top Contracts by Balance</a>
+                    <Link to={`/contracts?q=contractsByBalance`} >Top Contracts by Balance</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Top Contracts by Invocation</a>
+                    <Link to={`/contracts?q=contractsByInvocation`} >Top Contracts by Invocation</Link>
                     </ListItem>
                 </List>
                 <List className="head">
@@ -91,13 +91,13 @@ const Sidebar: React.FC<Props> = props => {
                 </List>
                 <List className="sub">
                     <ListItem>
-                        <a href="#">Blocks per Hour</a>
+                    <Link to={`/blocks?q=hourlyBlocks`} >Blocks per Hour</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Priority Zero Blocks per Hour</a>
+                    <Link to={`/blocks?q=priorityBlocks`} >Priority Zero Blocks per Hour</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Endorsements per Hour</a>
+                        <Link to={`/blocks?q=endorsement`} >Endorsements per Hour</Link>
                     </ListItem>
                 </List>
                 <List className="head">
@@ -111,22 +111,22 @@ const Sidebar: React.FC<Props> = props => {
                 </List>
                 <List className="sub">
                     <ListItem>
-                        <a href="#">Transactions per Hour</a>
+                        <Link to={`/operations?q=trancations`} >Transactions per Hour</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Transaction volume per Hour</a>
+                        <Link to={`/operations?q=trancationsVolume`} >Transaction volume per Hour</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Gas Consumed per Hour</a>
+                        <Link to={`/operations?q=gasConsumed`} >Gas Consumed per Hour</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Fees paid per Hour</a>
+                        <Link to={`/operations?q=feesPaid`} >Fees paid per Hour</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Activiations per Day</a>
+                        <Link to={`/operations?q=activations`}>Activiations per Day</Link>
                     </ListItem>
                     <ListItem>
-                        <a href="#">Originations per Day</a>
+                        <Link to={`/operations?q=originations`} >Originations per Day</Link>
                     </ListItem>
                 </List>
                 <Footer>

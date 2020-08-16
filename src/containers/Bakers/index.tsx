@@ -52,6 +52,24 @@ class BakersComponent extends React.Component<Props, States> {
         const defaultTimestamp = new Date().getTime() - constants.one_day_in_milliseconds;
         this.fetchTopBakerByBlockData(15, defaultTimestamp);
         this.fetchTopBakersByStakeData(15);
+        // const params = new URLSearchParams(this.props.history.location.search);
+        // const id = params.get('q') ? params.get('q') : 'topStakers';
+        // if(id) {
+        //     const element: any = document.getElementById(id)
+        //     window.scrollTo(0, element.offsetTop);
+        // }
+        
+    }
+
+    componentDidUpdate(prevProps: Props) {
+        const currParams = new URLSearchParams(this.props.history.location.search);
+        const currId: any = currParams.get('q') ? currParams.get('q') : 'topStakers';
+
+        const element: any = document.getElementById(currId);
+        if(element) {
+            window.scrollTo(0, element.offsetTop); 
+        }
+        
     }
 
     async fetchTopBakerByDelegationData(limit: number){
@@ -152,17 +170,11 @@ class BakersComponent extends React.Component<Props, States> {
         return (
             <MainContainer>
                 <Title>Bakers</Title>
-                <Widget>
+                <Widget id="topStakers">
                     <h3>Top Bakers by Stake</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -188,7 +200,8 @@ class BakersComponent extends React.Component<Props, States> {
                                         yTooltip= {this.yToolTipForTopBakerByStake}
                                         _ref= {this.topBakersByStakeRef}
                                         isLimitAvailable={true}
-                                        isDateFilter={false}/>
+                                        isDateFilter={false}
+                                        text=''/>
                                 }
                                 
                             </React.Fragment>
@@ -197,17 +210,11 @@ class BakersComponent extends React.Component<Props, States> {
                         
                     </div>
                 </Widget>
-                <Widget>
+                <Widget id="topBlockers">
                     <h3>Top Bakers by Block</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -233,7 +240,8 @@ class BakersComponent extends React.Component<Props, States> {
                                         yTooltip= {this.yToolTipForTopBakerByBLock}
                                         _ref= {this.topBakersByBlockRef}
                                         isLimitAvailable={true}
-                                        isDateFilter={true}/>
+                                        isDateFilter={true}
+                                        text=''/>
                                 }
                                 
                             </React.Fragment>
@@ -243,17 +251,11 @@ class BakersComponent extends React.Component<Props, States> {
                     </div>
                     { isTopBakersByDelegationLoading && <Loader /> }         
                 </Widget>
-                <Widget>
+                <Widget id="topDelegator">
                     <h3>Top Bakers by Delegations</h3>
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">View in Harpoon 
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
-                                        <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
-                                    </svg>
-                                </a>
                                 <a href="">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
@@ -279,7 +281,8 @@ class BakersComponent extends React.Component<Props, States> {
                                         yTooltip= {this.yToolTipForTopBakerByDelegation}
                                         _ref= {this.topBakersByDelegationRef}
                                         isLimitAvailable={true}
-                                        isDateFilter={false}/>
+                                        isDateFilter={false}
+                                        text=''/>
                                 }
                             </React.Fragment>
                         }
