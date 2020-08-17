@@ -84,7 +84,7 @@ class BlocksComponent extends React.Component<Props, States> {
             return moment(d.date).format("YYYY MMM DD, HH:mm");
         }
 
-        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn);
+        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
     }
 
     async fetchPriorityBlock(date: number) {
@@ -105,7 +105,7 @@ class BlocksComponent extends React.Component<Props, States> {
             return moment(d.date).format("YYYY MMM DD, HH:mm");
         }
 
-        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn);
+        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
     }
 
     async fetchEndorsement(date: number) {

@@ -265,6 +265,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 hourlyTransaction.length > 0 && 
                                 <ChartWrapper data= {hourlyTransaction}
                                     color= '#5CBBD4'
+                                    hoverColor='#CEEAF2'
                                     height= {250}
                                     xKey= {this.state.xHourlyTransactionKey}
                                     yKey= {this.state.yHourlyTransactionKey}
@@ -301,6 +302,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 hourlyVolume.length > 0 && 
                                 <ChartWrapper data= {hourlyVolume}
                                     color= '#5CBBD4'
+                                    hoverColor='#CEEAF2'
                                     height= {250}
                                     xKey= {this.state.xHourlyVolumeKey}
                                     yKey= {this.state.yHourlyVolumeKey}
@@ -337,6 +339,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 hourlyGas.length > 0 && 
                                 <ChartWrapper data= {hourlyGas}
                                     color= '#5CBBD4'
+                                    hoverColor='#CEEAF2'
                                     height= {250}
                                     xKey= {this.state.xHourlyGasKey}
                                     yKey= {this.state.yHourlyGasKey}
@@ -373,6 +376,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 hourlyFee.length > 0 && 
                                 <ChartWrapper data= {hourlyFee}
                                     color= '#5CBBD4'
+                                    hoverColor='#CEEAF2'
                                     height= {250}
                                     xKey= {this.state.xHourlyFeeKey}
                                     yKey= {this.state.yHourlyFeeKey}
@@ -409,6 +413,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 dailyActivation.length > 0 && 
                                 <ChartWrapper data= {dailyActivation}
                                     color= '#5CBBD4'
+                                    hoverColor='#CEEAF2'
                                     height= {250}
                                     xKey= {this.state.xHourlyFeeKey}
                                     yKey= {this.state.yHourlyFeeKey}
@@ -445,6 +450,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 dailyOrigination.length > 0 && 
                                 <ChartWrapper data= {dailyOrigination}
                                     color= '#5CBBD4'
+                                    hoverColor='#CEEAF2'
                                     height= {250}
                                     xKey= {this.state.xHourlyFeeKey}
                                     yKey= {this.state.yHourlyFeeKey}

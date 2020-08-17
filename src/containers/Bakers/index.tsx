@@ -191,6 +191,7 @@ class BakersComponent extends React.Component<Props, States> {
                                     this.props.topBakersByStake.length && 
                                     <ChartWrapper data= {this.props.topBakersByStake}
                                         color= '#3371AA'
+                                        hoverColor='#99B8D5'
                                         height= {250}
                                         xKey= "pkh"
                                         yKey= "staking_balance"
@@ -231,6 +232,7 @@ class BakersComponent extends React.Component<Props, States> {
                                     this.props.topBakersByBlock.length && 
                                     <ChartWrapper data= {this.props.topBakersByBlock}
                                         color= '#3371AA'
+                                        hoverColor='#99B8D5'
                                         height= {250}
                                         xKey= "baker"
                                         yKey= "count_hash"
@@ -272,6 +274,7 @@ class BakersComponent extends React.Component<Props, States> {
                                     this.props.topBakersByDelegation.length && 
                                     <ChartWrapper data= {this.props.topBakersByDelegation}
                                         color= '#3371AA'
+                                        hoverColor='#99B8D5'
                                         height= {250}
                                         xKey= "delegate_value"
                                         yKey= "count_account_id"

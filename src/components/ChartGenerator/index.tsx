@@ -18,7 +18,8 @@ interface Props {
     _ref: any,
     isDateFilter: boolean,
     isLimitAvailable: boolean,
-    text: any
+    text: any, 
+    hoverColor: string
 }
 
 interface States {
@@ -54,7 +55,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     generateChart() {
-        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing} = this.props
+        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor} = this.props
         const svg = d3.select(_ref.current);
 
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
@@ -69,7 +70,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
             return yTooltip(d, i);
         }
 
-        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn);
+        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, color, hoverColor);
     }
 
 

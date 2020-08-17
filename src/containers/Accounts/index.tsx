@@ -87,6 +87,7 @@ class AccountsComponent extends React.Component<Props, States> {
                                 this.props.topAccounts.length && 
                                 <ChartWrapper data= {this.props.topAccounts}
                                     color= '#697A21'
+                                    hoverColor='#B4BD90'
                                     height= {250}
                                     xKey= "account_id"
                                     yKey= "balance"

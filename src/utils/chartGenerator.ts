@@ -7,7 +7,7 @@ export class chartGenerator {
          // Clear SVG Elements of old data
          svg.selectAll("*").remove();
 
-        const margin = {top: 0, right: 0, bottom: 50, left: 50};
+        const margin = {top: 0, right: 0, bottom: 50, left: 70};
 
         let xRange: any = d3.range(data.length);
         const constData: any = d3.range(15);
@@ -39,10 +39,16 @@ export class chartGenerator {
        
         const xAxis = (g:any) => g
             .attr("transform", `translate(0,${height - margin.bottom})`)
+            .style('font-family', 'Roboto')
+            .style('font-size', '12px')
+            .style('font-weight', '400')
             .call(d3.axisBottom(xAxisScaleForBottom).ticks(15))
 
         const yAxis = (g:any) => g
             .attr("transform", `translate(${margin.left},0)`)
+            .style('font-family', 'Roboto')
+            .style('font-size', '12px')
+            .style('font-weight', '400')
             .call(d3.axisLeft(y).ticks(5))
             .call((g:any) => g.append("text")
                 .attr("x", -margin.left)
@@ -111,6 +117,9 @@ export class chartGenerator {
 
        const yAxis = (g:any) => g
            .attr("transform", `translate(${margin.left},0)`)
+           .style('font-family', 'Roboto')
+           .style('font-size', '12px')
+           .style('font-weight', '400')
            .call(d3.axisLeft(y).ticks(5));
 
        spacing = yAxisData.length <= 70 ? spacing : 1;
@@ -129,7 +138,7 @@ export class chartGenerator {
            .call(yAxis);
     }
 
-    static barGraphFloatingTooltipGenerator(graphSVGElement: any, xLabelFunction: Function, yLabelFunction: Function) {
+    static barGraphFloatingTooltipGenerator(graphSVGElement: any, xLabelFunction: Function, yLabelFunction: Function, color: string, hoverColor: string) {
         
         //Select all bar graph bar elements
         const bar = graphSVGElement.selectAll("g.svg-columns rect")
@@ -139,7 +148,7 @@ export class chartGenerator {
     
         // Add event listener for tooltip
         bar.on("mousemove", function(this:any, d: any, i: number,) {
-            // d3.select(this).attr("fill", "red");
+            d3.select(this).attr("fill", hoverColor);
             tooltip
                 .style("left", d3.event.pageX + 20 + "px")
                 .style("top", d3.event.pageY - 70 + "px")
@@ -157,7 +166,7 @@ export class chartGenerator {
                 .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
         })
         .on("mouseout", function(this:any, d: any){ 
-            // d3.select(this).attr("fill", "yellow");
+            d3.select(this).attr("fill", color)
             tooltip.style("display", "none");
         });
     }

@@ -125,6 +125,7 @@ class ContractsComponent extends React.Component<Props> {
                                 this.props.topContractsByBalance.length > 0 && 
                                 <ChartWrapper data= {this.props.topContractsByBalance}
                                     color= '#94D2D0'
+                                    hoverColor='#CEEAF2'
                                     height= {250}
                                     xKey= "account_id"
                                     yKey= "balance"
@@ -161,6 +162,7 @@ class ContractsComponent extends React.Component<Props> {
                                 this.props.topContractsByInvocation.length && 
                                 <ChartWrapper data= {this.props.topContractsByInvocation}
                                     color= '#94D2D0'
+                                    hoverColor='#CEEAF2'
                                     height= {250}
                                     xKey= "destination"
                                     yKey= "count_operation_group_hash"
