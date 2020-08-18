@@ -10,6 +10,9 @@ export interface OwnProps {
     isPriorityBlockLoading: boolean;
     endorsement: Blocks[];
     isEndorsementLoading: boolean;
+    hourlyBlockQuery: string,
+    endorsementQuery: string,
+    priorityBlockQuery: string,
     fetchPriorityBlock: (date: number) => void;
     fetchHourlyBlock: (date: number) => void;
     fetchEndorsement: (date: number) => void;

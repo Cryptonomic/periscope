@@ -10,7 +10,14 @@ import {
     SET_DAILY_ACTIVATION,
     SET_DAILY_ACTIVATION_LOADING,
     SET_DAILY_ORIGINATION,
-    SET_DAILY_ORIGINATION_LOADING
+    SET_DAILY_ORIGINATION_LOADING,
+
+    SET_HOURLY_TRANSACTION_QUERY,
+    SET_HOURLY_VOLUME_QUERY,
+    SET_HOURLY_GAS_QUERY,
+    SET_HOURLY_FEE_QUERY,
+    SET_DAILY_ACTIVATION_QUERY,
+    SET_DAILY_ORIGINATION_QUERY
  } from './types';
  
 export function setHourlyTransaction(hourlyTransaction: Array<object>) {
@@ -94,5 +101,47 @@ export function setDailyOriginationLoading(isDailyOriginationLoading: boolean) {
     return {
         type: SET_DAILY_ORIGINATION_LOADING,
         isDailyOriginationLoading,
+    }
+}
+
+export function setHourlyTransactionQuery(hourlyTransactionQuery: string) {
+    return {
+        type: SET_HOURLY_TRANSACTION_QUERY,
+        hourlyTransactionQuery,
+    }
+}
+
+export function setHourlyVolumeQuery(hourlyVolumeQuery: string) {
+    return {
+        type: SET_HOURLY_VOLUME_QUERY,
+        hourlyVolumeQuery,
+    }
+}
+
+export function setHourlyGasQuery(hourlyGasQuery: string) {
+    return {
+        type: SET_HOURLY_GAS_QUERY,
+        hourlyGasQuery,
+    }
+}
+
+export function setHourlyFeeQuery(hourlyFeeQuery: string) {
+    return {
+        type: SET_HOURLY_FEE_QUERY,
+        hourlyFeeQuery,
+    }
+}
+
+export function setDailyActivationQuery(dailyActivationQuery: string) {
+    return {
+        type: SET_DAILY_ACTIVATION_QUERY,
+        dailyActivationQuery,
+    }
+}
+
+export function setDailyOriginationQuery(dailyOriginationQuery: string) {
+    return {
+        type: SET_DAILY_ORIGINATION_QUERY,
+        dailyOriginationQuery,
     }
 }

@@ -2,15 +2,16 @@ import {
     setTopContractsByBalance,
     setTopContractsByBalanceLoading,
     setTopContractsByInvocation,
-    setTopContractsByInvocationLoading
+    setTopContractsByInvocationLoading,
+    setTopContractsByBalanceQuery,
+    setTopContractsByInvocationQuery
 } from './actions';
 import {
     ConseilDataClient,
     ConseilQueryBuilder,
-    ConseilSortDirection,
 } from 'conseiljs';
 
-import { defaultQueries } from '../../utils/defaultQueries';
+import { defaultQueries, generateQueryUrl} from '../../utils/defaultQueries';
 
 export const fetchTopContractsByBalance = (
     limit: number
@@ -30,6 +31,8 @@ export const fetchTopContractsByBalance = (
             element.balance = element.balance / 1000000.0;
         });
         
+        const queryUrl: string = generateQueryUrl(network, 'accounts', query);
+        dispatch(setTopContractsByBalanceQuery(queryUrl));
         dispatch(setTopContractsByBalance(result));
         dispatch(setTopContractsByBalanceLoading(false));
     } catch (e) {
@@ -60,6 +63,8 @@ export const fetchTopContractsByInvocation = (
         let query = {...ConseilQueryBuilder.blankQuery(), ...userQuery };
         const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'operations', query);
 
+        const queryUrl: string = generateQueryUrl(network, 'operations', query);
+        dispatch(setTopContractsByInvocationQuery(queryUrl));
         dispatch(setTopContractsByInvocation(result));
         dispatch(setTopContractsByInvocationLoading(false));
     } catch (e) {

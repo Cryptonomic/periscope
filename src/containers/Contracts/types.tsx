@@ -8,6 +8,8 @@ export interface OwnProps {
     isTopContractsByBalanceLoading: boolean;
     topContractsByInvocation: Array<ContracyByInvocation>;
     isTopContractsByInvocationLoading: boolean;
+    topContractsByInvocationQuery: string,
+    topContractsByBalanceQuery: string,
     fetchTopContractsByBalance: (limit: number) => void;
     fetchTopContractsByInvocation: (limit: number, date: number) => void;
 }

@@ -9,5 +9,8 @@ export const getTopContractsByInvocation = createSelector(getAppState, (contract
 
 export const getTopContractsByBalanceLoading = createSelector(getAppState, (contracts) => contracts.isTopContractsByBalance);
 
-
 export const getTopContractsByInvocationLoading = createSelector(getAppState, (contracts) => contracts.isTopContractsByInvocationLoading);
+
+export const getTopContractsByBalanceQuery = createSelector(getAppState, (contracts) => contracts.topContractsByBalanceQuery);
+
+export const getTopContractsByInvocationQuery = createSelector(getAppState, (contracts) => contracts.topContractsByInvocationQuery);

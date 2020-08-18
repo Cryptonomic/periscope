@@ -1,4 +1,14 @@
-import { setHourlyBlock, setHourlyBlockLoading ,setPriorityBlock, setPriorityBlockLoading, setEndorsement, setEndorsementLoading} from './actions';
+import { 
+    setHourlyBlock, 
+    setHourlyBlockLoading ,
+    setPriorityBlock,
+    setPriorityBlockLoading, 
+    setEndorsement, 
+    setEndorsementLoading,
+    setHourlyBlockQuery,
+    setEndorsementQuery,
+    setPriorityBlockQuery
+} from './actions';
 import {
     ConseilDataClient,
     ConseilQueryBuilder,
@@ -6,6 +16,8 @@ import {
     ConseilOperator,
     ConseilFunction
 } from 'conseiljs';
+
+import { generateQueryUrl} from '../../utils/defaultQueries';
 
 export const fetchHourlyBlock = (date: number) => async (dispatch: any, state: any) => {
     
@@ -46,6 +58,8 @@ export const fetchHourlyBlock = (date: number) => async (dispatch: any, state: a
             data.push({date : label[x].getTime(), value : parseInt(values[x])});
         }
 
+        const queryUrl = generateQueryUrl(network, 'blocks', query);
+        dispatch(setHourlyBlockQuery(queryUrl));
         dispatch(setHourlyBlock(data));
         dispatch(setHourlyBlockLoading(false));
     } catch (e) {
@@ -100,7 +114,9 @@ export const fetchPriorityBlock = (date: number) => async (dispatch: any, state:
         for(var x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), value : parseInt(values[x])});
         }
-    
+
+        const queryUrl = generateQueryUrl(network, 'blocks', query);
+        dispatch(setPriorityBlockQuery(queryUrl));
         dispatch(setPriorityBlock(data));
         dispatch(setPriorityBlockLoading(false));
     } catch (e) {
@@ -180,6 +196,8 @@ export const fetchEndorsement = (date: number) => async (dispatch: any, state: a
             result = data;
         }
 
+        const queryUrl = generateQueryUrl(network, 'operations', query);
+        dispatch(setEndorsementQuery(queryUrl));
         dispatch(setEndorsement(result));
         dispatch(setEndorsementLoading(false));
 

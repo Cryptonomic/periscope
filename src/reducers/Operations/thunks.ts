@@ -10,7 +10,13 @@ import {
     setDailyActivation,
     setDailyActivationLoading,
     setDailyOrigination,
-    setDailyOriginationLoading
+    setDailyOriginationLoading,
+    setHourlyTransactionQuery,
+    setHourlyVolumeQuery,
+    setHourlyGasQuery,
+    setHourlyFeeQuery,
+    setDailyActivationQuery,
+    setDailyOriginationQuery
  } from './actions';
 import {
     ConseilDataClient,
@@ -19,6 +25,8 @@ import {
     ConseilOperator,
     ConseilFunction
 } from 'conseiljs';
+
+import { generateQueryUrl} from '../../utils/defaultQueries';
 
 export const fetchHourlyTransaction = (date: number) => async (dispatch: any, state: any) => {
     
@@ -67,6 +75,8 @@ export const fetchHourlyTransaction = (date: number) => async (dispatch: any, st
             result = data;
         }
         
+        const queryUrl = generateQueryUrl(network, 'operations', query);
+        dispatch(setHourlyTransactionQuery(queryUrl));
         dispatch(setHourlyTransaction(result));
         dispatch(setHourlyTransactionLoading(false));
     } catch (e) {
@@ -124,6 +134,8 @@ export const fetchHourlyVolume = (date: number) => async (dispatch: any, state: 
             result = data;
         }
         
+        const queryUrl = generateQueryUrl(network, 'operations', query);
+        dispatch(setHourlyVolumeQuery(queryUrl));
         dispatch(setHourlyVolume(result));
         dispatch(setHourlyVolumeLoading(false));
     } catch (e) {
@@ -183,6 +195,8 @@ export const fetchHourlyGas = (date: number) => async (dispatch: any, state: any
             result = data;
         }
         
+        const queryUrl = generateQueryUrl(network, 'operations', query);
+        dispatch(setHourlyGasQuery(queryUrl));
         dispatch(setHourlyGas(result));
         dispatch(setHourlyGasLoading(false));
         
@@ -244,6 +258,8 @@ export const fetchHourlyFee = (date: number) => async (dispatch: any, state: any
             result = data;
         }
         
+        const queryUrl = generateQueryUrl(network, 'operations', query);
+        dispatch(setHourlyFeeQuery(queryUrl));
         dispatch(setHourlyFee(result));
         dispatch(setHourlyFeeLoading(false));
         
@@ -289,6 +305,8 @@ export const fetchDailyActivation = (
         if(data[data.length - 1].values === 0) { data.pop(); } 
         result = data;
 
+        const queryUrl = generateQueryUrl(network, 'operations', query);
+        dispatch(setDailyActivationQuery(queryUrl));
         dispatch(setDailyActivation(result));
         dispatch(setDailyActivationLoading(false));
 
@@ -353,6 +371,8 @@ export const fetchDailyOrigination = (
             data.push({date : parseInt(label[x].getTime()), values : parseInt(originations[x])});
         }
 
+        const queryUrl = generateQueryUrl(network, 'operations', query);
+        dispatch(setDailyOriginationQuery(queryUrl));
         dispatch(setDailyOrigination(data));
         dispatch(setDailyOriginationLoading(false));
 

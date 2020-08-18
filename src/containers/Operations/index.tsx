@@ -28,7 +28,13 @@ import {
     getDailyActivation,
     getDailyActivationLoading,
     getDailyOrigination,
-    getDailyOriginationLoading
+    getDailyOriginationLoading,
+    getHourlyTransactionQuery,
+    getHourlyVolumeQuery,
+    getHourlyGasQuery,
+    getHourlyFeeQuery,
+    getDailyActivationQuery,
+    getDailyOriginationQuery
 } from '../../reducers/Operations/selectors';
 
 class OperationsComponent extends React.Component<Props, States> {
@@ -241,6 +247,12 @@ class OperationsComponent extends React.Component<Props, States> {
             isDailyActivationLoading,
             dailyOrigination,
             isDailyOriginationLoading,
+            hourlyTransactionQuery,
+            hourlyVolumeQuery,
+            hourlyGasQuery,
+            hourlyFeeQuery,
+            dailyActivationQuery,
+            dailyOriginationQuery
         } = this.props;
         return (
             <MainContainer>
@@ -250,7 +262,7 @@ class OperationsComponent extends React.Component<Props, States> {
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">Arronax Query
+                                <a href={hourlyTransactionQuery}>Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -287,7 +299,7 @@ class OperationsComponent extends React.Component<Props, States> {
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">Arronax Query
+                                <a href={hourlyVolumeQuery}>Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -324,7 +336,7 @@ class OperationsComponent extends React.Component<Props, States> {
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">Arronax Query
+                                <a href={hourlyGasQuery}>Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -361,7 +373,7 @@ class OperationsComponent extends React.Component<Props, States> {
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">Arronax Query
+                                <a href={hourlyFeeQuery}>Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -398,7 +410,7 @@ class OperationsComponent extends React.Component<Props, States> {
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">Arronax Query
+                                <a href={dailyActivationQuery}>Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -435,7 +447,7 @@ class OperationsComponent extends React.Component<Props, States> {
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href="">Arronax Query
+                                <a href={dailyOriginationQuery}>Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -486,7 +498,13 @@ const mapStateToProps = (state: any) => ({
     dailyActivation: getDailyActivation(state),
     isDailyActivationLoading: getDailyActivationLoading(state),
     dailyOrigination: getDailyOrigination(state),
-    isDailyOriginationLoading: getDailyOriginationLoading(state)
+    isDailyOriginationLoading: getDailyOriginationLoading(state),
+    hourlyTransactionQuery: getHourlyTransactionQuery(state),
+    hourlyVolumeQuery: getHourlyVolumeQuery(state),
+    hourlyGasQuery: getHourlyGasQuery(state),
+    hourlyFeeQuery: getHourlyFeeQuery(state),
+    dailyActivationQuery: getDailyActivationQuery(state),
+    dailyOriginationQuery: getDailyOriginationQuery(state),
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

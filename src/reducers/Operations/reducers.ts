@@ -11,6 +11,12 @@ import {
     SET_DAILY_ACTIVATION_LOADING,
     SET_DAILY_ORIGINATION,
     SET_DAILY_ORIGINATION_LOADING,
+    SET_HOURLY_TRANSACTION_QUERY,
+    SET_HOURLY_VOLUME_QUERY,
+    SET_HOURLY_GAS_QUERY,
+    SET_HOURLY_FEE_QUERY,
+    SET_DAILY_ACTIVATION_QUERY,
+    SET_DAILY_ORIGINATION_QUERY
  } from './types';
 import { getConfigs } from '../../utils/getconfig';
 import { Config } from '../../types';
@@ -32,6 +38,12 @@ export interface AppState {
     isDailyOriginationLoading: boolean,
     configs: Config[];
     selectedConfig: Config;
+    hourlyTransactionQuery: string;
+    hourlyVolumeQuery: string;
+    hourlyGasQuery: string;
+    hourlyFeeQuery: string;
+    dailyActivationQuery: string;
+    dailyOriginationQuery: string;
 }
 let initialState: AppState = {
     configs,
@@ -48,6 +60,12 @@ let initialState: AppState = {
     isDailyActivationLoading: false,
     dailyOrigination: [],
     isDailyOriginationLoading: false,
+    hourlyTransactionQuery: '',
+    hourlyVolumeQuery: '',
+    hourlyGasQuery: '',
+    hourlyFeeQuery: '',
+    dailyActivationQuery: '',
+    dailyOriginationQuery: '',
 }
 
 export const operations = (state = initialState, action: any) => {
@@ -76,6 +94,19 @@ export const operations = (state = initialState, action: any) => {
         return { ...state, dailyOrigination: action.dailyOrigination };
     case SET_DAILY_ORIGINATION_LOADING:
         return { ...state, isDailyOriginationLoading: action.isDailyOriginationLoading };
+
+    case SET_HOURLY_TRANSACTION_QUERY:
+        return { ...state, hourlyTransactionQuery: action.hourlyTransactionQuery };
+    case SET_HOURLY_VOLUME_QUERY:
+        return { ...state, hourlyVolumeQuery: action.hourlyVolumeQuery };
+    case SET_HOURLY_GAS_QUERY:
+        return { ...state, hourlyGasQuery: action.hourlyGasQuery };
+    case SET_HOURLY_FEE_QUERY:
+        return { ...state, hourlyFeeQuery: action.hourlyFeeQuery };
+    case SET_DAILY_ACTIVATION_QUERY:
+        return { ...state, dailyActivationQuery: action.dailyActivationQuery };
+    case SET_DAILY_ORIGINATION_QUERY:
+        return { ...state, dailyOriginationQuery: action.dailyOriginationQuery };
     default:
       return state;
   }

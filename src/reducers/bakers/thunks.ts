@@ -4,7 +4,10 @@ import {
     setTopBakersByDelegationLoading,
     setTopBakersByStake, 
     setTopBakersByStakeLoading,
-    setTopBakersByBlockLoading
+    setTopBakersByBlockLoading,
+    setTopBakersByBlockQuery, 
+    setTopBakersByDelegationsQuery,
+    setTopBakersByStakeQuery, 
 } from './actions';
 import {
     ConseilDataClient,
@@ -12,7 +15,7 @@ import {
     ConseilSortDirection,
 } from 'conseiljs';
 
-import { defaultQueries } from '../../utils/defaultQueries';
+import { defaultQueries, generateQueryUrl} from '../../utils/defaultQueries';
 
 export const fetchTopBakersByStake = (
     limit: number
@@ -31,7 +34,8 @@ export const fetchTopBakersByStake = (
         result.forEach(element => {
             element.staking_balance = element.staking_balance / 1000000.0
         });
-        
+        const queryUrl: string= generateQueryUrl(network, 'bakers', query);
+        dispatch(setTopBakersByStakeQuery(queryUrl));
         dispatch(setTopBakersByStake(result));
         dispatch(setTopBakersByStakeLoading(false));
     } catch (e) {
@@ -60,6 +64,8 @@ export const fetchTopBakersByDelegation = (
         let query = {...ConseilQueryBuilder.blankQuery(), ...userQuery };
         const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'accounts', query);
 
+        const queryUrl: string= generateQueryUrl(network, 'accounts', query);
+        dispatch(setTopBakersByDelegationsQuery(queryUrl));
         dispatch(setTopBakersByDelegations(result));
         dispatch(setTopBakersByDelegationLoading(false));
     } catch (e) {
@@ -90,6 +96,8 @@ export const fetchTopBakersByBlocks = (
         let query = {...ConseilQueryBuilder.blankQuery(), ...userQuery };
         const result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'blocks', query);
 
+        const queryUrl: string= generateQueryUrl(network, 'blocks', query);
+        dispatch(setTopBakersByBlockQuery(queryUrl));
         dispatch(setTopBakersByBlock(result));
         dispatch(setTopBakersByBlockLoading(false));
     } catch (e) {

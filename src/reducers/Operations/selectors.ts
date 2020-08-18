@@ -26,3 +26,15 @@ export const getDailyActivationLoading = createSelector(getAppState, (operations
 export const getDailyOrigination = createSelector(getAppState, (operations) => operations.dailyOrigination);
 
 export const getDailyOriginationLoading = createSelector(getAppState, (operations) => operations.isDailyOriginationLoading);
+
+export const getHourlyTransactionQuery = createSelector(getAppState, (operations) => operations.hourlyTransactionQuery);
+
+export const getHourlyVolumeQuery = createSelector(getAppState, (operations) => operations.hourlyVolumeQuery);
+
+export const getHourlyGasQuery = createSelector(getAppState, (operations) => operations.hourlyGasQuery);
+
+export const getHourlyFeeQuery = createSelector(getAppState, (operations) => operations.hourlyFeeQuery);
+
+export const getDailyActivationQuery = createSelector(getAppState, (operations) => operations.dailyActivationQuery);
+
+export const getDailyOriginationQuery = createSelector(getAppState, (operations) => operations.dailyOriginationQuery);

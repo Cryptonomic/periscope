@@ -106,3 +106,8 @@ export const defaultQueries: any = {
 };
 
 export const CARDINALITY_NUMBER = 25;
+
+export const generateQueryUrl = (network: string, entity: string, query: object) => {
+    const encodedUrl = btoa(JSON.stringify(query));
+    return `https://arronax.io/tezos/${network}/${entity}/query/${encodedUrl}`;
+};

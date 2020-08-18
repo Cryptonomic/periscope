@@ -10,6 +10,9 @@ export interface OwnProps {
     topBakersByBlock: Array<BakerByBlock>;
     isTopBakersByBlockLoading: boolean;
     isTopBakerByStateLoading: boolean;
+    topBakersByDelegationQuery: string;
+    topBakersByStakeQuery: string;
+    topBakersByBlockQuery: string;
     fetchTopBakersByDelegation: (limit: number) => void;
     fetchTopBakersByStake: (limit: number) => void;
     fetchTopBakersByBlocks: (limit: number, date: number) => void;

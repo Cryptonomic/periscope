@@ -4,7 +4,10 @@ import {
     SET_TOP_BAKERS_BY_STAKE,
     SET_TOP_BAKERS_BY_STAKE_LOADING,
     SET_TOP_BAKERS_BY_DELEGATION_LOADING,
-    SET_TOP_BAKERS_BY_BLOCK_LOADING
+    SET_TOP_BAKERS_BY_BLOCK_LOADING,
+    SET_TOP_BAKERS_BY_BLOCK_QUERY,
+    SET_TOP_BAKERS_BY_DELEGATION_QUERY,
+    SET_TOP_BAKERS_BY_STAKE_QUERY,
 } from './types';
 
 export function setTopBakersByBlock(topBakersByBlock: Array<object>) {
@@ -46,5 +49,26 @@ export function setTopBakersByBlockLoading(isTopBakersByBlockLoading: boolean) {
     return {
         type: SET_TOP_BAKERS_BY_BLOCK_LOADING,
         isTopBakersByBlockLoading,
+    }
+}
+
+export function setTopBakersByBlockQuery(topBakersByBlockQuery: string) {
+    return {
+        type: SET_TOP_BAKERS_BY_BLOCK_QUERY,
+        topBakersByBlockQuery,
+    }
+}
+
+export function setTopBakersByStakeQuery(topBakersByStakeQuery: string) {
+    return {
+        type: SET_TOP_BAKERS_BY_STAKE_QUERY,
+        topBakersByStakeQuery,
+    }
+}
+
+export function setTopBakersByDelegationsQuery(topBakersByDelegationQuery: string) {
+    return {
+        type: SET_TOP_BAKERS_BY_DELEGATION_QUERY,
+        topBakersByDelegationQuery,
     }
 }

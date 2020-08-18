@@ -16,6 +16,12 @@ export interface OwnProps {
     isDailyActivationLoading: boolean;
     dailyOrigination: Array<Operations>;
     isDailyOriginationLoading: boolean;
+    hourlyTransactionQuery: string,                 
+    hourlyVolumeQuery: string;
+    hourlyGasQuery: string;
+    hourlyFeeQuery:string;
+    dailyActivationQuery: string;
+    dailyOriginationQuery: string;
     fetchHourlyTransaction: (date: number) => void;
     fetchHourlyVolume: (date: number) => void;
     fetchHourlyGas: (date: number) => void;

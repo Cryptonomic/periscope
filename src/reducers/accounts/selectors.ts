@@ -7,3 +7,4 @@ export const getTopAccounts = createSelector(getAppState, (accounts) => accounts
 
 export const getTopAccountsLoading = createSelector(getAppState, (accounts) => accounts.isLoading);
 
+export const getTopAccountsQuery = createSelector(getAppState, (accounts) => accounts.topAccountsQuery);

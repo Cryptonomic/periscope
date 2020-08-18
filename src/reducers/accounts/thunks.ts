@@ -1,11 +1,11 @@
-import { setTopAccounts, setLoading } from './actions';
+import { setTopAccounts, setLoading, setTopAccountsQuery } from './actions';
 import {
     ConseilDataClient,
     ConseilQueryBuilder,
     ConseilSortDirection,
 } from 'conseiljs';
 
-import { defaultQueries } from '../../utils/defaultQueries';
+import { defaultQueries, generateQueryUrl } from '../../utils/defaultQueries';
 
 export const fetchTopAccounts = (limit: number) => async (dispatch: any, state: any) => {
     
@@ -27,6 +27,8 @@ export const fetchTopAccounts = (limit: number) => async (dispatch: any, state: 
             element.balance = Math.floor(element.balance / 1000000.0)
         });
 
+        let queryUrl= generateQueryUrl(network, 'accounts', query );
+        dispatch(setTopAccountsQuery(queryUrl));
         dispatch(setTopAccounts(result));
         dispatch(setLoading(false));
     } catch (e) {
@@ -39,3 +41,4 @@ export const fetchTopAccounts = (limit: number) => async (dispatch: any, state: 
         setLoading(true);
     }
 };
+

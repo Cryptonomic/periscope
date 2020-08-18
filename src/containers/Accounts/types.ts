@@ -6,6 +6,7 @@ import { Config } from '../../types';
 export interface OwnProps {
     topAccounts: AccountsType[];
     isLoading: boolean;
+    topAccountsQuery: string;
     fetchTopAccounts: (limit: number) => void;
 }
 
