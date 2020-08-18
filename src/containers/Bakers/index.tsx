@@ -187,32 +187,26 @@ class BakersComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
+                    <React.Fragment>
                         {
-                            <React.Fragment>
-                                {
-                                    this.props.topBakersByStake.length && 
-                                    <ChartWrapper data= {this.props.topBakersByStake}
-                                        color= '#3371AA'
-                                        hoverColor='#99B8D5'
-                                        height= {250}
-                                        xKey= "pkh"
-                                        yKey= "staking_balance"
-                                        spacing= {10}
-                                        onLimitChange= {this.onTopBakerByStakeLimitChange}
-                                        xTooltip= {this.xToolTipForTopBakerByStake}
-                                        yTooltip= {this.yToolTipForTopBakerByStake}
-                                        _ref= {this.topBakersByStakeRef}
-                                        isLimitAvailable={true}
-                                        isDateFilter={false}
-                                        text=''/>
-                                }
-                                
-                            </React.Fragment>
-                            
+                            this.props.topBakersByStake.length && 
+                            <ChartWrapper data= {this.props.topBakersByStake}
+                                color= '#3371AA'
+                                hoverColor='#99B8D5'
+                                height= {250}
+                                xKey= "pkh"
+                                yKey= "staking_balance"
+                                spacing= {10}
+                                onLimitChange= {this.onTopBakerByStakeLimitChange}
+                                xTooltip= {this.xToolTipForTopBakerByStake}
+                                yTooltip= {this.yToolTipForTopBakerByStake}
+                                _ref= {this.topBakersByStakeRef}
+                                isLimitAvailable={true}
+                                isDateFilter={false}
+                                text=''/>
                         }
                         
-                    </div>
+                    </React.Fragment>
                 </Widget>
                 <Widget id="topBlockers">
                     <h3>Top Bakers by Block</h3>
@@ -228,32 +222,26 @@ class BakersComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
+                    <React.Fragment>
                         {
-                            <React.Fragment>
-                                {
-                                    this.props.topBakersByBlock.length && 
-                                    <ChartWrapper data= {this.props.topBakersByBlock}
-                                        color= '#3371AA'
-                                        hoverColor='#99B8D5'
-                                        height= {250}
-                                        xKey= "baker"
-                                        yKey= "count_hash"
-                                        spacing= {10}
-                                        onLimitChange= {this.onTopBakerByBlockLimitChange}
-                                        xTooltip= {this.xToolTipForTopBakerByBLock}
-                                        yTooltip= {this.yToolTipForTopBakerByBLock}
-                                        _ref= {this.topBakersByBlockRef}
-                                        isLimitAvailable={true}
-                                        isDateFilter={true}
-                                        text=''/>
-                                }
-                                
-                            </React.Fragment>
-                            
+                            this.props.topBakersByBlock.length && 
+                            <ChartWrapper data= {this.props.topBakersByBlock}
+                                color= '#3371AA'
+                                hoverColor='#99B8D5'
+                                height= {250}
+                                xKey= "baker"
+                                yKey= "count_hash"
+                                spacing= {10}
+                                onLimitChange= {this.onTopBakerByBlockLimitChange}
+                                xTooltip= {this.xToolTipForTopBakerByBLock}
+                                yTooltip= {this.yToolTipForTopBakerByBLock}
+                                _ref= {this.topBakersByBlockRef}
+                                isLimitAvailable={true}
+                                isDateFilter={true}
+                                text=''/>
                         }
                         
-                    </div>
+                    </React.Fragment>
                     { isTopBakersByDelegationLoading && <Loader /> }         
                 </Widget>
                 <Widget id="topDelegator">
@@ -270,30 +258,25 @@ class BakersComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
+                    <React.Fragment>
                         {
-                            <React.Fragment>
-                                {
-                                    this.props.topBakersByDelegation.length && 
-                                    <ChartWrapper data= {this.props.topBakersByDelegation}
-                                        color= '#3371AA'
-                                        hoverColor='#99B8D5'
-                                        height= {250}
-                                        xKey= "delegate_value"
-                                        yKey= "count_account_id"
-                                        spacing= {10}
-                                        onLimitChange= {this.onTopBakerByDelegationLimitChange}
-                                        xTooltip= {this.xToolTipForTopBakerByDelegation}
-                                        yTooltip= {this.yToolTipForTopBakerByDelegation}
-                                        _ref= {this.topBakersByDelegationRef}
-                                        isLimitAvailable={true}
-                                        isDateFilter={false}
-                                        text=''/>
-                                }
-                            </React.Fragment>
+                            this.props.topBakersByDelegation.length && 
+                            <ChartWrapper data= {this.props.topBakersByDelegation}
+                                color= '#3371AA'
+                                hoverColor='#99B8D5'
+                                height= {250}
+                                xKey= "delegate_value"
+                                yKey= "count_account_id"
+                                spacing= {10}
+                                onLimitChange= {this.onTopBakerByDelegationLimitChange}
+                                xTooltip= {this.xToolTipForTopBakerByDelegation}
+                                yTooltip= {this.yToolTipForTopBakerByDelegation}
+                                _ref= {this.topBakersByDelegationRef}
+                                isLimitAvailable={true}
+                                isDateFilter={false}
+                                text=''/>
                         }
-                        
-                    </div>        
+                    </React.Fragment>
                 </Widget>
                 { (isTopBakersByDelegationLoading || isTopBakersByBlockLoading || isTopBakerByStateLoading) && <Loader /> }
             </MainContainer>

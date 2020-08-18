@@ -82,28 +82,26 @@ class AccountsComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                this.props.topAccounts.length && 
-                                <ChartWrapper data= {this.props.topAccounts}
-                                    color= '#697A21'
-                                    hoverColor='#B4BD90'
-                                    height= {250}
-                                    xKey= "account_id"
-                                    yKey= "balance"
-                                    spacing= {10}
-                                    onLimitChange= {this.onLimitUpdate}
-                                    xTooltip= {this.xTooltip}
-                                    yTooltip= {this.yTooltip}
-                                    _ref= {this.topAccountsRef}
-                                    isLimitAvailable={true}
-                                    isDateFilter={false}
-                                    text=''/>
-                            }
-                        </React.Fragment>
+                    <React.Fragment>
+                        {
+                            this.props.topAccounts.length && 
+                            <ChartWrapper data= {this.props.topAccounts}
+                                color= '#697A21'
+                                hoverColor='#B4BD90'
+                                height= {250}
+                                xKey= "account_id"
+                                yKey= "balance"
+                                spacing= {10}
+                                onLimitChange= {this.onLimitUpdate}
+                                xTooltip= {this.xTooltip}
+                                yTooltip= {this.yTooltip}
+                                _ref= {this.topAccountsRef}
+                                isLimitAvailable={true}
+                                isDateFilter={false}
+                                text=''/>
+                        }
+                    </React.Fragment>
                         
-                    </div>
                     { isLoading && <Loader /> }         
                     </Widget>
             </MainContainer>

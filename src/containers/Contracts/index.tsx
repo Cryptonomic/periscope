@@ -121,28 +121,26 @@ class ContractsComponent extends React.Component<Props> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                this.props.topContractsByBalance.length > 0 && 
-                                <ChartWrapper data= {this.props.topContractsByBalance}
-                                    color= '#94D2D0'
-                                    hoverColor='#CEEAF2'
-                                    height= {250}
-                                    xKey= "account_id"
-                                    yKey= "balance"
-                                    spacing= {10}
-                                    onLimitChange= {this.onTopContractsByBalanceLimitChange}
-                                    xTooltip= {this.xToolTipForTopContractsByBalance}
-                                    yTooltip= {this.yToolTipForTopContractsByBalance}
-                                    _ref= {this.topContractsByBalanceRef}
-                                    isLimitAvailable={true}
-                                    isDateFilter={false}
-                                    text=''/>
-                            }
-                            
-                        </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                        {
+                            this.props.topContractsByBalance.length > 0 && 
+                            <ChartWrapper data= {this.props.topContractsByBalance}
+                                color= '#94D2D0'
+                                hoverColor='#CEEAF2'
+                                height= {250}
+                                xKey= "account_id"
+                                yKey= "balance"
+                                spacing= {10}
+                                onLimitChange= {this.onTopContractsByBalanceLimitChange}
+                                xTooltip= {this.xToolTipForTopContractsByBalance}
+                                yTooltip= {this.yToolTipForTopContractsByBalance}
+                                _ref= {this.topContractsByBalanceRef}
+                                isLimitAvailable={true}
+                                isDateFilter={false}
+                                text=''/>
+                        }
+                        
+                    </React.Fragment>
                 </Widget>
                 <Widget id="contractsByInvocation">
                     <h3>Top Contracts by Invocation</h3>
@@ -158,28 +156,26 @@ class ContractsComponent extends React.Component<Props> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                this.props.topContractsByInvocation.length && 
-                                <ChartWrapper data= {this.props.topContractsByInvocation}
-                                    color= '#94D2D0'
-                                    hoverColor='#CEEAF2'
-                                    height= {250}
-                                    xKey= "destination"
-                                    yKey= "count_operation_group_hash"
-                                    spacing= {10}
-                                    onLimitChange= {this.onTopContractsBYInvocationLimitChange}
-                                    xTooltip= {this.xToolTipForTopContractsByInvocation}
-                                    yTooltip= {this.yToolTipForTopContractsByInvocation}
-                                    _ref= {this.topContractsByInvocationRef}
-                                    isLimitAvailable={true}
-                                    isDateFilter={true}
-                                    text=''/>
-                            }
-                            
-                        </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                        {
+                            this.props.topContractsByInvocation.length && 
+                            <ChartWrapper data= {this.props.topContractsByInvocation}
+                                color= '#94D2D0'
+                                hoverColor='#CEEAF2'
+                                height= {250}
+                                xKey= "destination"
+                                yKey= "count_operation_group_hash"
+                                spacing= {10}
+                                onLimitChange= {this.onTopContractsBYInvocationLimitChange}
+                                xTooltip= {this.xToolTipForTopContractsByInvocation}
+                                yTooltip= {this.yToolTipForTopContractsByInvocation}
+                                _ref= {this.topContractsByInvocationRef}
+                                isLimitAvailable={true}
+                                isDateFilter={true}
+                                text=''/>
+                        }
+                        
+                    </React.Fragment>
                 </Widget>
                 { (isTopContractsByBalanceLoading || isTopContractsByInvocationLoading) && <Loader /> }         
             </MainContainer>

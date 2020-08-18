@@ -271,28 +271,26 @@ class OperationsComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                hourlyTransaction.length > 0 && 
-                                <ChartWrapper data= {hourlyTransaction}
-                                    color= '#5CBBD4'
-                                    hoverColor='#CEEAF2'
-                                    height= {250}
-                                    xKey= {this.state.xHourlyTransactionKey}
-                                    yKey= {this.state.yHourlyTransactionKey}
-                                    spacing= {10}
-                                    onLimitChange= {this.onHourlyTransactionChange}
-                                    xTooltip= {this.xToolTipForHourlyTransaction}
-                                    yTooltip= {this.yToolTipForHourlyTransaction}
-                                    _ref= {this.hourlyTransactionRef}
-                                    isLimitAvailable={false}
-                                    isDateFilter={true}
-                                    text={moment().format("YYYY MMMM Do")}/>
-                            }
-                            
-                        </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                        {
+                            hourlyTransaction.length > 0 && 
+                            <ChartWrapper data= {hourlyTransaction}
+                                color= '#5CBBD4'
+                                hoverColor='#CEEAF2'
+                                height= {250}
+                                xKey= {this.state.xHourlyTransactionKey}
+                                yKey= {this.state.yHourlyTransactionKey}
+                                spacing= {10}
+                                onLimitChange= {this.onHourlyTransactionChange}
+                                xTooltip= {this.xToolTipForHourlyTransaction}
+                                yTooltip= {this.yToolTipForHourlyTransaction}
+                                _ref= {this.hourlyTransactionRef}
+                                isLimitAvailable={false}
+                                isDateFilter={true}
+                                text={moment().format("YYYY MMMM Do")}/>
+                        }
+                        
+                    </React.Fragment>
                 </Widget>
                 <Widget id="trancationsVolume">
                     <h3>Transaction Volume per Hour</h3>
@@ -308,28 +306,26 @@ class OperationsComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                hourlyVolume.length > 0 && 
-                                <ChartWrapper data= {hourlyVolume}
-                                    color= '#5CBBD4'
-                                    hoverColor='#CEEAF2'
-                                    height= {250}
-                                    xKey= {this.state.xHourlyVolumeKey}
-                                    yKey= {this.state.yHourlyVolumeKey}
-                                    spacing= {10}
-                                    onLimitChange= {this.onHourlyVolumeChange}
-                                    xTooltip= {this.xToolTipForHourlyVolume}
-                                    yTooltip= {this.yToolTipForHourlyVolume}
-                                    _ref= {this.hourlyVolumeRef}
-                                    isLimitAvailable={false}
-                                    isDateFilter={true}
-                                    text=''/>
-                            }
-                            
-                        </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                        {
+                            hourlyVolume.length > 0 && 
+                            <ChartWrapper data= {hourlyVolume}
+                                color= '#5CBBD4'
+                                hoverColor='#CEEAF2'
+                                height= {250}
+                                xKey= {this.state.xHourlyVolumeKey}
+                                yKey= {this.state.yHourlyVolumeKey}
+                                spacing= {10}
+                                onLimitChange= {this.onHourlyVolumeChange}
+                                xTooltip= {this.xToolTipForHourlyVolume}
+                                yTooltip= {this.yToolTipForHourlyVolume}
+                                _ref= {this.hourlyVolumeRef}
+                                isLimitAvailable={false}
+                                isDateFilter={true}
+                                text=''/>
+                        }
+                        
+                    </React.Fragment>
                 </Widget>
                 <Widget id="gasConsumed">
                     <h3>Gas Consumed per Hour</h3>
@@ -345,28 +341,26 @@ class OperationsComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                hourlyGas.length > 0 && 
-                                <ChartWrapper data= {hourlyGas}
-                                    color= '#5CBBD4'
-                                    hoverColor='#CEEAF2'
-                                    height= {250}
-                                    xKey= {this.state.xHourlyGasKey}
-                                    yKey= {this.state.yHourlyGasKey}
-                                    spacing= {10}
-                                    onLimitChange= {this.onHourlyGasChange}
-                                    xTooltip= {this.xToolTipForHourlyGas}
-                                    yTooltip= {this.yToolTipForHourlyGas}
-                                    _ref= {this.hourlyGasRef}
-                                    isLimitAvailable={false}
-                                    isDateFilter={true}
-                                    text=''/>
-                            }
-                            
-                        </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                        {
+                            hourlyGas.length > 0 && 
+                            <ChartWrapper data= {hourlyGas}
+                                color= '#5CBBD4'
+                                hoverColor='#CEEAF2'
+                                height= {250}
+                                xKey= {this.state.xHourlyGasKey}
+                                yKey= {this.state.yHourlyGasKey}
+                                spacing= {10}
+                                onLimitChange= {this.onHourlyGasChange}
+                                xTooltip= {this.xToolTipForHourlyGas}
+                                yTooltip= {this.yToolTipForHourlyGas}
+                                _ref= {this.hourlyGasRef}
+                                isLimitAvailable={false}
+                                isDateFilter={true}
+                                text=''/>
+                        }
+                        
+                    </React.Fragment>
                 </Widget>
                 <Widget id="feesPaid">
                     <h3>Fees Paid per Hour</h3>
@@ -382,28 +376,26 @@ class OperationsComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                hourlyFee.length > 0 && 
-                                <ChartWrapper data= {hourlyFee}
-                                    color= '#5CBBD4'
-                                    hoverColor='#CEEAF2'
-                                    height= {250}
-                                    xKey= {this.state.xHourlyFeeKey}
-                                    yKey= {this.state.yHourlyFeeKey}
-                                    spacing= {10}
-                                    onLimitChange= {this.onHourlyFeeChange}
-                                    xTooltip= {this.xToolTipForHourlyFee}
-                                    yTooltip= {this.yToolTipForHourlyFee}
-                                    _ref= {this.hourlyFeeRef}
-                                    isLimitAvailable={false}
-                                    isDateFilter={true}
-                                    text={moment().format("YYYY MMMM Do")}/>
-                            }
-                            
-                        </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                        {
+                            hourlyFee.length > 0 && 
+                            <ChartWrapper data= {hourlyFee}
+                                color= '#5CBBD4'
+                                hoverColor='#CEEAF2'
+                                height= {250}
+                                xKey= {this.state.xHourlyFeeKey}
+                                yKey= {this.state.yHourlyFeeKey}
+                                spacing= {10}
+                                onLimitChange= {this.onHourlyFeeChange}
+                                xTooltip= {this.xToolTipForHourlyFee}
+                                yTooltip= {this.yToolTipForHourlyFee}
+                                _ref= {this.hourlyFeeRef}
+                                isLimitAvailable={false}
+                                isDateFilter={true}
+                                text={moment().format("YYYY MMMM Do")}/>
+                        }
+                        
+                    </React.Fragment>
                 </Widget>
                 <Widget id="activations">
                     <h3>Activations per Day</h3>
@@ -419,28 +411,26 @@ class OperationsComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                dailyActivation.length > 0 && 
-                                <ChartWrapper data= {dailyActivation}
-                                    color= '#5CBBD4'
-                                    hoverColor='#CEEAF2'
-                                    height= {250}
-                                    xKey= {this.state.xHourlyFeeKey}
-                                    yKey= {this.state.yHourlyFeeKey}
-                                    spacing= {10}
-                                    onLimitChange= {this.onDailyActivationChange}
-                                    xTooltip= {this.xToolTipForDailyActivation}
-                                    yTooltip= {this.yToolTipForDailyActivation}
-                                    _ref= {this.dailyActivationRef}
-                                    isLimitAvailable={false}
-                                    isDateFilter={false}
-                                    text={`${moment(new Date().getTime() - constants.one_year_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
-                            }
-                            
-                        </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                        {
+                            dailyActivation.length > 0 && 
+                            <ChartWrapper data= {dailyActivation}
+                                color= '#5CBBD4'
+                                hoverColor='#CEEAF2'
+                                height= {250}
+                                xKey= {this.state.xHourlyFeeKey}
+                                yKey= {this.state.yHourlyFeeKey}
+                                spacing= {10}
+                                onLimitChange= {this.onDailyActivationChange}
+                                xTooltip= {this.xToolTipForDailyActivation}
+                                yTooltip= {this.yToolTipForDailyActivation}
+                                _ref= {this.dailyActivationRef}
+                                isLimitAvailable={false}
+                                isDateFilter={false}
+                                text={`${moment(new Date().getTime() - constants.one_year_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
+                        }
+                        
+                    </React.Fragment>
                 </Widget>
                 <Widget id="originations">
                     <h3>Originations per Day</h3>
@@ -456,28 +446,26 @@ class OperationsComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
-                        <React.Fragment>
-                            {
-                                dailyOrigination.length > 0 && 
-                                <ChartWrapper data= {dailyOrigination}
-                                    color= '#5CBBD4'
-                                    hoverColor='#CEEAF2'
-                                    height= {250}
-                                    xKey= {this.state.xHourlyFeeKey}
-                                    yKey= {this.state.yHourlyFeeKey}
-                                    spacing= {10}
-                                    onLimitChange= {this.onDailyOriginationChange}
-                                    xTooltip= {this.xToolTipForDailyOrigination}
-                                    yTooltip= {this.yToolTipForDailyOrigination}
-                                    _ref= {this.dailyActivationRef}
-                                    isLimitAvailable={false}
-                                    isDateFilter={false}
-                                    text={`${moment(new Date().getTime() - constants.one_year_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
-                            }
-                            
-                        </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                        {
+                            dailyOrigination.length > 0 && 
+                            <ChartWrapper data= {dailyOrigination}
+                                color= '#5CBBD4'
+                                hoverColor='#CEEAF2'
+                                height= {250}
+                                xKey= {this.state.xHourlyFeeKey}
+                                yKey= {this.state.yHourlyFeeKey}
+                                spacing= {10}
+                                onLimitChange= {this.onDailyOriginationChange}
+                                xTooltip= {this.xToolTipForDailyOrigination}
+                                yTooltip= {this.yToolTipForDailyOrigination}
+                                _ref= {this.dailyActivationRef}
+                                isLimitAvailable={false}
+                                isDateFilter={false}
+                                text={`${moment(new Date().getTime() - constants.one_year_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
+                        }
+                        
+                    </React.Fragment>
                 </Widget>
                 { (isHourlyTransactionLoading || isHourlyVolumeLoading || isHourlyGasLoading || isHourlyFeeLoading || isDailyActivationLoading || isDailyOriginationLoading) && <Loader /> }         
             </MainContainer>
