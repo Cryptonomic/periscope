@@ -7,6 +7,7 @@ import { Bakers } from '../containers/Bakers';
 import { Contracts } from '../containers/Contracts';
 import { Operations } from '../containers/Operations';
 import { Blocks } from '../containers/Blocks';
+import { Home } from '../containers/Home';
 
 export default () => {
 
@@ -18,6 +19,7 @@ export default () => {
         <Route exact path="/contracts" component={Contracts} />
         <Route exact path="/operations" component={Operations} />
         <Route exact path="/blocks" component={Blocks} />
+        <Route exact path="/home" component={Home} />
         {/* <Redirect to="/" /> */}
       </Layout>
     </Switch>
