@@ -163,7 +163,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 <ChartWithoutAxisWrapper data= {this.props.endorsement}
                                     color= '#CEE6CA'
                                     hoverColor='#677365'
-                                    height= {200}
+                                    height= {175}
                                     xKey= {this.state.endorsementXKey}
                                     yKey= {this.state.endorsementYKey}
                                     spacing= {5}
@@ -200,7 +200,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 <ChartWithoutAxisWrapper data= {this.props.hourlyBlock}
                                     color= '#CEE6CA'
                                     hoverColor='#677365'
-                                    height= {200}
+                                    height= {175}
                                     xKey= "date"
                                     yKey= "value"
                                     spacing= {5}
@@ -238,7 +238,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 <ChartWithoutAxisWrapper data= {this.props.priorityBlock}
                                     color= '#CEE6CA'
                                     hoverColor='#677365'
-                                    height= {200}
+                                    height= {175}
                                     xKey= "date"
                                     yKey= "value"
                                     spacing= {5}

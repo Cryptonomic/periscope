@@ -124,7 +124,6 @@ export class chartGenerator {
            .style('font-weight', '400')
            .call(d3.axisLeft(y).ticks(5));
 
-       svg.attr("height", height + margin.top + margin.bottom);
        spacing = yAxisData.length <= 70 ? spacing : 1;
        svg.append("g")
            .attr("class", "svg-columns")

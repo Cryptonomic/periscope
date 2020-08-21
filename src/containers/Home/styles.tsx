@@ -37,5 +37,8 @@ export const Widget = styled.div`
   }
   .mapHolder {
     min-height: 300px;
+    .graph-holder {
+      padding: 0
+    }
   }
 `;
