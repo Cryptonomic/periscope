@@ -204,7 +204,7 @@ class HomeComponent extends React.Component<Props, States> {
                                     <ChartWithoutAxisWrapper data= {hourlyTransaction}
                                         color= '#5CBBD4'
                                         hoverColor='#CEEAF2'
-                                        height= {250}
+                                        height= {200}
                                         xKey= {this.state.xHourlyTransactionKey}
                                         yKey= {this.state.yHourlyTransactionKey}
                                         spacing= {5}
@@ -241,7 +241,7 @@ class HomeComponent extends React.Component<Props, States> {
                                     <ChartWithoutAxisWrapper data= {hourlyVolume}
                                         color= '#5CBBD4'
                                         hoverColor='#CEEAF2'
-                                        height= {250}
+                                        height= {200}
                                         xKey= {this.state.xHourlyVolumeKey}
                                         yKey= {this.state.yHourlyVolumeKey}
                                         spacing= {5}
@@ -279,7 +279,7 @@ class HomeComponent extends React.Component<Props, States> {
                                     <ChartWithoutAxisWrapper data= {hourlyGas}
                                         color= '#5CBBD4'
                                         hoverColor='#CEEAF2'
-                                        height= {250}
+                                        height= {200}
                                         xKey= {this.state.xHourlyGasKey}
                                         yKey= {this.state.yHourlyGasKey}
                                         spacing= {5}
