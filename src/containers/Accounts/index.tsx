@@ -13,6 +13,8 @@ import {
 
 import { Props, States, AccountsType } from './types';
 
+import { ErrorDialog } from '../../components/ErrorDialog';
+
 import { fetchTopAccounts} from '../../reducers/accounts/thunks';
 import {
     getTopAccounts,
@@ -100,8 +102,8 @@ class AccountsComponent extends React.Component<Props, States> {
                                 isDateFilter={false}
                                 text=''/>
                         }
-                    </React.Fragment>
-                        
+                    </React.Fragment>   
+                    <ErrorDialog/>
                     { isLoading && <Loader /> }         
                     </Widget>
             </MainContainer>

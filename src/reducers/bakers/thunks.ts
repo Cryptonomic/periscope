@@ -16,6 +16,7 @@ import {
 } from 'conseiljs';
 
 import { defaultQueries, generateQueryUrl} from '../../utils/defaultQueries';
+import { createMessageAction } from '../message/actions';
 
 export const fetchTopBakersByStake = (
     limit: number
@@ -43,9 +44,9 @@ export const fetchTopBakersByStake = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(e.message, true));
         }
-        setTopBakersByStakeLoading(true);
+        setTopBakersByStakeLoading(false);
     }
 
 }
@@ -73,9 +74,9 @@ export const fetchTopBakersByDelegation = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(e.message, true));
         }
-        setTopBakersByStakeLoading(true);
+        setTopBakersByStakeLoading(false);
     }
 
 }
@@ -105,9 +106,9 @@ export const fetchTopBakersByBlocks = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(e.message, true));
         }
-        setTopBakersByStakeLoading(true);
+        setTopBakersByStakeLoading(false);
     }
 
 }

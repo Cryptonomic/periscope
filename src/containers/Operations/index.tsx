@@ -7,6 +7,8 @@ import Loader from '../../components/Loader';
 import ChartWrapper from '../../components/ChartGenerator';
 import moment from 'moment';
 
+import { ErrorDialog } from '../../components/ErrorDialog';
+
 import {
     MainContainer,
     Title,
@@ -467,6 +469,7 @@ class OperationsComponent extends React.Component<Props, States> {
                         
                     </React.Fragment>
                 </Widget>
+                <ErrorDialog/>
                 { (isHourlyTransactionLoading || isHourlyVolumeLoading || isHourlyGasLoading || isHourlyFeeLoading || isDailyActivationLoading || isDailyOriginationLoading) && <Loader /> }         
             </MainContainer>
         );

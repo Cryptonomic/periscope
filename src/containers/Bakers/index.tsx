@@ -15,6 +15,8 @@ import {
 
 import { Props, States, BakerByDelegation } from './types';
 
+import { ErrorDialog } from '../../components/ErrorDialog';
+
 import { fetchTopBakersByDelegation, fetchTopBakersByBlocks, fetchTopBakersByStake} from '../../reducers/bakers/thunks';
 import {
     getTopBakersByDelegation,
@@ -55,13 +57,6 @@ class BakersComponent extends React.Component<Props, States> {
         const defaultTimestamp = new Date().getTime() - constants.one_day_in_milliseconds;
         this.fetchTopBakerByBlockData(15, defaultTimestamp);
         this.fetchTopBakersByStakeData(15);
-        // const params = new URLSearchParams(this.props.history.location.search);
-        // const id = params.get('q') ? params.get('q') : 'topStakers';
-        // if(id) {
-        //     const element: any = document.getElementById(id)
-        //     window.scrollTo(0, element.offsetTop);
-        // }
-        
     }
 
     componentDidUpdate(prevProps: Props) {
@@ -278,6 +273,7 @@ class BakersComponent extends React.Component<Props, States> {
                         }
                     </React.Fragment>
                 </Widget>
+                <ErrorDialog/>
                 { (isTopBakersByDelegationLoading || isTopBakersByBlockLoading || isTopBakerByStateLoading) && <Loader /> }
             </MainContainer>
         );

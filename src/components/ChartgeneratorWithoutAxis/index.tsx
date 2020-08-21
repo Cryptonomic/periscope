@@ -19,7 +19,8 @@ interface Props {
     isDateFilter: boolean,
     isLimitAvailable: boolean,
     text: any, 
-    hoverColor: string
+    hoverColor: string,
+    marginLeft: number,
 }
 
 interface States {
@@ -28,7 +29,7 @@ interface States {
     xLabel: any
 }
 
-export default class ChartWrapper extends React.Component<Props, States> {
+export default class ChartWithoutAxisWrapper extends React.Component<Props, States> {
     updateLimitDebounce: Function;
     graphContainer: any = null;
 
@@ -55,12 +56,15 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     generateChart() {
-        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor} = this.props
+        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor, marginLeft} = this.props
         const svg = d3.select(_ref.current);
 
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 532
+        let width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0;
+        if(width <= 0) {
+            width = 786;
+        }
 
-        chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing);
+        chartGenerator.seperateAxisPrioritizedBarChartGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft);
         
         const xTooltipFn = function(d: any, i: number) {
             return xTooltip(d, i);
@@ -108,7 +112,10 @@ export default class ChartWrapper extends React.Component<Props, States> {
 
     render() {
         const { height, _ref, isDateFilter, isLimitAvailable } = this.props;
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 1295
+        let width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0;
+        if(width <= 0) {
+            width = 786;
+        }
         const { limit, selectedDateFilter, xLabel } = this.state;
         const svgLength = `0,0,${width},${height}`;
 

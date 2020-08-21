@@ -25,6 +25,8 @@ import {
 
 } from '../../reducers/contracts/selectors';
 
+import { ErrorDialog } from '../../components/ErrorDialog';
+
 class ContractsComponent extends React.Component<Props> {
 
     topContractsByBalanceRef: any = null;
@@ -177,6 +179,7 @@ class ContractsComponent extends React.Component<Props> {
                         
                     </React.Fragment>
                 </Widget>
+                <ErrorDialog/>
                 { (isTopContractsByBalanceLoading || isTopContractsByInvocationLoading) && <Loader /> }         
             </MainContainer>
         );

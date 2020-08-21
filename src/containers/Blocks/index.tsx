@@ -14,6 +14,8 @@ import {
     Widget
 } from './styles';
 
+import { ErrorDialog } from '../../components/ErrorDialog';
+
 import { Props, States } from './types';
 
 import { fetchHourlyBlock, fetchPriorityBlock, fetchEndorsement} from '../../reducers/blocks/thunks';
@@ -78,7 +80,7 @@ class BlocksComponent extends React.Component<Props, States> {
         const svg = d3.select(this.hourlyBlockRef.current);
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA" ,5);
+        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA" ,5, 100);
         
         const xTooltipFn = function(d: any, i: number) {
             return d.value.toLocaleString() + " Blocks per Hour";
@@ -99,7 +101,7 @@ class BlocksComponent extends React.Component<Props, States> {
         const svg = d3.select(this.priorityBlockRef.current);
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA" ,5);
+        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA" ,5, 100);
         
         const xTooltipFn = function(d: any, i: number) {
             return d.value.toLocaleString() + " Priority Zero Blocks per Hour";
@@ -120,9 +122,9 @@ class BlocksComponent extends React.Component<Props, States> {
         const svg = d3.select(this.endorsementRef.current);
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
         if(this.props.endorsement[0].hasOwnProperty('cycle')) {
-            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5);
+            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5, 100);
         } else {
-            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5);
+            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5, 100);
         }
         
     }
@@ -285,6 +287,7 @@ class BlocksComponent extends React.Component<Props, States> {
                         }
                     </div>      
                     </Widget>
+                    <ErrorDialog/>
                     { (isHourlyBlockLoading || isPriorityBlockLoading || isEndorsementLoading) && <Loader /> }      
             </MainContainer>
         );

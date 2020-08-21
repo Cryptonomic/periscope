@@ -17,6 +17,8 @@ import {
     ConseilFunction
 } from 'conseiljs';
 
+import { createMessageAction } from '../message/actions';
+
 import { generateQueryUrl} from '../../utils/defaultQueries';
 
 export const fetchHourlyBlock = (date: number) => async (dispatch: any, state: any) => {
@@ -67,9 +69,9 @@ export const fetchHourlyBlock = (date: number) => async (dispatch: any, state: a
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(e.message, true));
         }
-        setHourlyBlockLoading(true);
+        setHourlyBlockLoading(false);
     }
 };
 
@@ -124,9 +126,9 @@ export const fetchPriorityBlock = (date: number) => async (dispatch: any, state:
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(e.message, true));
         }
-        setPriorityBlockLoading(true);
+        setPriorityBlockLoading(false);
     }
 };
 
@@ -206,7 +208,7 @@ export const fetchEndorsement = (date: number) => async (dispatch: any, state: a
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(e.message, true));
         }
         dispatch(setEndorsementLoading(false));
     }

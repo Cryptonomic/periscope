@@ -43,6 +43,7 @@ export class chartGenerator {
             .style('font-size', '12px')
             .style('font-weight', '400')
             .call(d3.axisBottom(xAxisScaleForBottom).ticks(15))
+            .attr("class", "xAxis");
 
         const yAxis = (g:any) => g
             .attr("transform", `translate(${margin.left},0)`)
@@ -54,7 +55,8 @@ export class chartGenerator {
                 .attr("x", -margin.left)
                 .attr("y", 10)
                 .attr("fill", "currentColor")
-                .attr("text-anchor", "middle"));
+                .attr("text-anchor", "middle"))
+                .attr("class", "yAxis");
     
 
         spacing = yAxisData.length <= 70 ? spacing : 1;
@@ -76,12 +78,12 @@ export class chartGenerator {
                 .call(yAxis);
     }
 
-    static seperateAxisPrioritizedBarChartGenerator(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", spacing: number) {
+    static seperateAxisPrioritizedBarChartGenerator(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", spacing: number, marginLeft: number, marginRight: number = 100) {
         
        // Clear SVG Elements of old data
        svg.selectAll("*").remove();
 
-       const margin = {top: 0, right: 0, bottom: 50, left: 100};
+       const margin = {top: 0, right: 0, bottom: 50, left: marginLeft};
 
        let xRange: any = d3.range(data.length);
        const constData: any = d3.range(15);

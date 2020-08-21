@@ -10,6 +10,7 @@ import {
     ConseilDataClient,
     ConseilQueryBuilder,
 } from 'conseiljs';
+import { createMessageAction } from '../message/actions';
 
 import { defaultQueries, generateQueryUrl} from '../../utils/defaultQueries';
 
@@ -40,9 +41,9 @@ export const fetchTopContractsByBalance = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(e.message, true));
         }
-        setTopContractsByBalanceLoading(true);
+        setTopContractsByBalanceLoading(false);
     }
 
 }
@@ -72,9 +73,9 @@ export const fetchTopContractsByInvocation = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            // await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(e.message, true));
         }
-        setTopContractsByInvocationLoading(true);
+        setTopContractsByInvocationLoading(false);
     }
 
 }
