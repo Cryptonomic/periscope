@@ -352,14 +352,14 @@ div[class^="Footer"] a {
 }
 
 .year-text {
-    margin: 10px 0 0;
+    margin: 0;
     font-family: 'Nunito';
     font-weight: normal;
     font-size: 11px;
     line-height: 16px;
     text-align: center;
     color: #8492A4;
-    padding: 10px 0 20px 0;
+    padding: 0px 0 20px 0;
 }
 
 g.y-axis > path {

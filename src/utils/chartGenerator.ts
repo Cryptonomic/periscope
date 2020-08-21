@@ -39,16 +39,16 @@ export class chartGenerator {
        
         const xAxis = (g:any) => g
             .attr("transform", `translate(0,${height - margin.bottom})`)
-            .style('font-family', 'Roboto')
-            .style('font-size', '12px')
+            .style('font-family', 'Nunito')
+            .style('font-size', '10px')
             .style('font-weight', '400')
             .call(d3.axisBottom(xAxisScaleForBottom).ticks(15))
             .attr("class", "xAxis");
 
         const yAxis = (g:any) => g
             .attr("transform", `translate(${margin.left},0)`)
-            .style('font-family', 'Roboto')
-            .style('font-size', '12px')
+            .style('font-family', 'Nunito')
+            .style('font-size', '10px')
             .style('font-weight', '400')
             .call(d3.axisLeft(y).ticks(5))
             .call((g:any) => g.append("text")
@@ -119,8 +119,8 @@ export class chartGenerator {
 
        const yAxis = (g:any) => g
            .attr("transform", `translate(${margin.left},0)`)
-           .style('font-family', 'Roboto')
-           .style('font-size', '12px')
+           .style('font-family', 'Nunito')
+           .style('font-size', '10px')
            .style('font-weight', '400')
            .call(d3.axisLeft(y).ticks(5));
 

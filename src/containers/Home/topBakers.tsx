@@ -137,7 +137,7 @@ class TopBakersComponent extends React.Component<Props, States> {
                                 isLimitAvailable={true}
                                 isDateFilter={false}
                                 text=''
-                                marginLeft={70}/>
+                                marginLeft={90}/>
                         }
                         
                     </React.Fragment>

@@ -290,7 +290,7 @@ class HomeComponent extends React.Component<Props, States> {
                                         isLimitAvailable={false}
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
-                                        marginLeft={70}/>
+                                        marginLeft={90}/>
                                 }
                                 
                             </React.Fragment>

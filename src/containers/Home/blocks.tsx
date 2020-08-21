@@ -161,8 +161,8 @@ class BlocksComponent extends React.Component<Props, States> {
                             {
                                 this.props.endorsement.length && 
                                 <ChartWithoutAxisWrapper data= {this.props.endorsement}
-                                    color= '#697A21'
-                                    hoverColor='#B4BD90'
+                                    color= '#CEE6CA'
+                                    hoverColor='#677365'
                                     height= {250}
                                     xKey= {this.state.endorsementXKey}
                                     yKey= {this.state.endorsementYKey}
@@ -198,8 +198,8 @@ class BlocksComponent extends React.Component<Props, States> {
                             {
                                 this.props.hourlyBlock.length && 
                                 <ChartWithoutAxisWrapper data= {this.props.hourlyBlock}
-                                    color= '#697A21'
-                                    hoverColor='#B4BD90'
+                                    color= '#CEE6CA'
+                                    hoverColor='#677365'
                                     height= {250}
                                     xKey= "date"
                                     yKey= "value"
@@ -236,8 +236,8 @@ class BlocksComponent extends React.Component<Props, States> {
                             {
                                 this.props.priorityBlock.length && 
                                 <ChartWithoutAxisWrapper data= {this.props.priorityBlock}
-                                    color= '#697A21'
-                                    hoverColor='#B4BD90'
+                                    color= '#CEE6CA'
+                                    hoverColor='#677365'
                                     height= {250}
                                     xKey= "date"
                                     yKey= "value"
