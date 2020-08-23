@@ -243,8 +243,6 @@ class BlocksComponent extends React.Component<Props, States> {
                                     yKey= "value"
                                     spacing= {5}
                                     onLimitChange= {this.onPriorityBlockDateChange}
-                                    xTooltip= {()=> {}}
-                                    yTooltip= {()=> {}}
                                     _ref= {this.priorityBlockRef}
                                     isLimitAvailable={false}
                                     isDateFilter={true}

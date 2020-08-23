@@ -13,8 +13,8 @@ interface Props {
     yKey: string,
     spacing: number,
     onLimitChange: Function,  
-    xTooltip: Function,
-    yTooltip: Function,
+    xTooltip?: Function,
+    yTooltip?: Function,
     _ref: any,
     isDateFilter: boolean,
     isLimitAvailable: boolean,
@@ -65,16 +65,19 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
         }
 
         chartGenerator.seperateAxisPrioritizedBarChartGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft);
-        
-        const xTooltipFn = function(d: any, i: number) {
-            return xTooltip(d, i);
-        }
-    
-        const yTooltipFn = function(d: any, i: number) {
-            return yTooltip(d, i);
-        }
 
-        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, color, hoverColor);
+        if(xTooltip && yTooltip) {
+            const xTooltipFn = function(d: any, i: number) {
+                return xTooltip(d, i);
+            }
+
+            const yTooltipFn = function(d: any, i: number) {
+                return yTooltip(d, i);
+            }
+            
+            chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, color, hoverColor);
+        }
+        
     }
 
 
