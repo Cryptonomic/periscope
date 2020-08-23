@@ -106,6 +106,11 @@ export class chartGenerator {
            xAxisScaleForBottom = x; 
        }
 
+       function make_y_gridlines() {		
+            return d3.axisLeft(y)
+                .ticks(5)
+        }
+
        if(x.bandwidth() <= 3) {
            let rangeData: any = d3.range(xAxisData.length)
            x = d3.scaleBand()
@@ -123,6 +128,17 @@ export class chartGenerator {
            .style('font-size', '10px')
            .style('font-weight', '400')
            .call(d3.axisLeft(y).ticks(5));
+        // add the Y gridlines
+        svg.append("g")			
+        .attr("class", "grid")
+        .attr("transform", `translate(${margin.left},0)`)
+        .style('font-family', 'Nunito')
+        .style('font-size', '10px')
+        .style('font-weight', '400')
+        .call(make_y_gridlines()
+            .tickSize(-width+marginLeft)
+            .tickFormat(null)
+        ).attr("opacity", '.6')  
 
        spacing = yAxisData.length <= 70 ? spacing : 1;
        svg.append("g")

@@ -238,7 +238,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 <ChartWithoutAxisWrapper data= {this.props.priorityBlock}
                                     color= '#CEE6CA'
                                     hoverColor='#677365'
-                                    height= {175}
+                                    height= {200}
                                     xKey= "date"
                                     yKey= "value"
                                     spacing= {5}

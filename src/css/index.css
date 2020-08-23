@@ -369,3 +369,12 @@ g.y-axis > path {
 g.y-axis > g > line {
     display: none !important;
 }
+
+g.grid > g.tick {
+    opacity: .6 !important;
+    color: #dce1e6;
+}
+
+g.grid > path {
+    display: none;
+}
