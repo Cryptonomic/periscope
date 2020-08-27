@@ -7,7 +7,7 @@ export class chartGenerator {
          // Clear SVG Elements of old data
          svg.selectAll("*").remove();
 
-        const margin = {top: 0, right: 0, bottom: 50, left: 70};
+        const margin = {top: 0, right: 20, bottom: 50, left: 70};
 
         let xRange: any = d3.range(data.length);
         const constData: any = d3.range(15);
@@ -46,7 +46,7 @@ export class chartGenerator {
             .attr("class", "xAxis");
 
         const yAxis = (g:any) => g
-            .attr("transform", `translate(${margin.left},0)`)
+            .attr("transform", `translate(${margin.left},${margin.right})`)
             .style('font-family', 'Nunito')
             .style('font-size', '10px')
             .style('font-weight', '400')
@@ -83,7 +83,7 @@ export class chartGenerator {
        // Clear SVG Elements of old data
        svg.selectAll("*").remove();
 
-       const margin = {top: 0, right: 0, bottom: 50, left: marginLeft};
+       const margin = {top: 0, right: 20, bottom: 50, left: marginLeft};
 
        let xRange: any = d3.range(data.length);
        const constData: any = d3.range(15);
@@ -131,7 +131,7 @@ export class chartGenerator {
         // add the Y gridlines
         svg.append("g")			
         .attr("class", "grid")
-        .attr("transform", `translate(${margin.left},0)`)
+        .attr("transform", `translate(${margin.left},50)`)
         .style('font-family', 'Nunito')
         .style('font-size', '10px')
         .style('font-weight', '400')

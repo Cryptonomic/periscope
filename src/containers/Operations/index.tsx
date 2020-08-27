@@ -75,9 +75,9 @@ class OperationsComponent extends React.Component<Props, States> {
         this.fetchHourlyTransactionData(defaultTimestamp);
         this.fetchHourlyGasData(defaultTimestamp);
         this.fetchHourlyFeeData(defaultTimestamp);
-        const oneYear = new Date().getTime() - constants.one_year_in_milliseconds;
-        this.fetchDailyActivationData(oneYear);
-        this.fetchDailyOriginationData(oneYear);
+        const oneMonth = new Date().getTime() - constants.one_month_in_milliseconds;
+        this.fetchDailyActivationData(oneMonth);
+        this.fetchDailyOriginationData(oneMonth);
     }
 
     componentDidUpdate(prevProps: Props) {
@@ -429,7 +429,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.dailyActivationRef}
                                 isLimitAvailable={false}
                                 isDateFilter={false}
-                                text={`${moment(new Date().getTime() - constants.one_year_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
+                                text={`${moment(new Date().getTime() - constants.one_month_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                         }
                         
                     </React.Fragment>
@@ -464,7 +464,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.dailyActivationRef}
                                 isLimitAvailable={false}
                                 isDateFilter={false}
-                                text={`${moment(new Date().getTime() - constants.one_year_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
+                                text={`${moment(new Date().getTime() - constants.one_month_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                         }
                         
                     </React.Fragment>

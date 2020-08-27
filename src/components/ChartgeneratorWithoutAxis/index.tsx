@@ -143,8 +143,8 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
                                 <span onClick={e=> this.filterResult(constants.one_day_filter)} className={selectedDateFilter=== constants.one_day_filter ? 'selected': ' '} >Day</span>
                                 <span onClick={e=> this.filterResult(constants.one_week_filter)} className={selectedDateFilter=== constants.one_week_filter ? 'selected': ' '}>Week</span>
                                 <span onClick={e=> this.filterResult(constants.one_month_filter)} className={selectedDateFilter=== constants.one_month_filter ? 'selected': ' '}>Month</span>
-                                <span onClick={e=> this.filterResult(constants.one_year_filter)} className={selectedDateFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
-                                <span onClick={e=> this.filterResult(constants.all_time_filter)} className={selectedDateFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span>
+                                {/* <span onClick={e=> this.filterResult(constants.one_year_filter)} className={selectedDateFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
+                                <span onClick={e=> this.filterResult(constants.all_time_filter)} className={selectedDateFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span> */}
                             </div>
                         }
                         
