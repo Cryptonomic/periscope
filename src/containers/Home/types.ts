@@ -44,6 +44,9 @@ export interface States {
     yHourlyVolumeKey: string,
     xHourlyGasKey: string,
     yHourlyGasKey: string,
+    hourlyTransactionFilter: string,
+    HourlyVolumeFilter: string,
+    hourlyGasFilter: string,
 }
 
 export interface AccountsType {

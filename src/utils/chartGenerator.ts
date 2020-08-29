@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { color } from "d3";
 
 export class chartGenerator {
 
@@ -194,7 +195,7 @@ export class chartGenerator {
         svg.selectAll("*").remove();
 
         // set the dimensions and margins of the graph
-        var margin = {top: 10, right: 30, bottom: 30, left: 60},
+        var margin = {top: 0, right: 0, bottom: 50, left: 70},
         width = width - margin.left - margin.right,
         height = height - margin.top - margin.bottom;
         data.forEach((item:any, index:number) => { 
@@ -293,8 +294,8 @@ export class chartGenerator {
         svg.selectAll("*").remove();
 
         // set the dimensions and margins of the graph
-        var margin = {top: 10, right: 30, bottom: 30, left: 60},
-        width = width - margin.left - margin.right,
+        const margin = {top: 0, right: 0, bottom: 50, left: 70};
+        width = (width - margin.left - margin.right);
         height = height - margin.top - margin.bottom;
         data.forEach((item:any, index:number) => { 
             item.x = index+1;

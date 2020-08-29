@@ -21,6 +21,7 @@ interface Props {
     text: any, 
     hoverColor: string,
     marginLeft: number,
+    selectedFilter?: string,
 }
 
 interface States {
@@ -51,7 +52,11 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
 
     componentDidUpdate(prevProps: Props) {
         if (JSON.stringify(prevProps.data) !== JSON.stringify(this.props.data)) {
-          this.generateChart();
+            if(this.props.selectedFilter && this.props.selectedFilter === constants.one_month_filter) {
+                this.generateLineChart();
+            } else {
+                this.generateChart();        
+            }
         }
     }
 
@@ -80,6 +85,28 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
         
     }
 
+    generateLineChart() {
+        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor, marginLeft} = this.props
+        const svg = d3.select(_ref.current);
+
+        let width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0;
+        if(width <= 0) {
+            width = 786;
+        }
+
+        if(xTooltip && yTooltip) {
+            const xTooltipFn = function(d: any, i: number) {
+                return xTooltip(d, i);
+            }
+
+            const yTooltipFn = function(d: any, i: number) {
+                return yTooltip(d, i);
+            }
+            
+            chartGenerator.generateLineChartWithoutXAxis(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn);
+        }
+    }
+
 
     updateLimit = (limit: number) => {
         limit = limit ? limit : 15;
@@ -105,7 +132,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
         if(this.state.xLabel) {
             this.changeLabelText(timestamp);
         }
-        this.props.onLimitChange(this.state.limit, timestamp);
+        this.props.onLimitChange(this.state.limit, timestamp, filter);
     }
 
     changeLabelText(timestamp: number) {

@@ -26,8 +26,7 @@ interface Props {
 interface States {
     limit: number,
     selectedDateFilter: string,
-    xLabel: any, 
-    graphBuilder: string,
+    xLabel: any,
 }
 
 export default class ChartWrapper extends React.Component<Props, States> {
@@ -43,7 +42,6 @@ export default class ChartWrapper extends React.Component<Props, States> {
             limit: 15,
             selectedDateFilter: props.selectedFilter ? props.selectedFilter : 'one_day_in_milliseconds',
             xLabel: props.text ? props.text : '',
-            graphBuilder: ''
         }
     }
 
@@ -93,14 +91,8 @@ export default class ChartWrapper extends React.Component<Props, States> {
         const yTooltipFn = function(d: any, i: number) {
             return yTooltip(d, i);
         }
-        this.setState({graphBuilder: this.generateRandomGraphBuilder()});
         chartGenerator.generateLineChart(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn);
         
-    }
-
-    generateRandomGraphBuilder() {
-        const number: number = Math.floor(Math.random()*10000000);
-        return number.toString();
     }
 
 

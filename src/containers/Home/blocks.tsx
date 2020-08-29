@@ -38,7 +38,7 @@ export interface States {
     priorityBlockGraphText: string,
     endorsementGraphText: string,
     endorsementXKey: string,
-    endorsementYKey: string
+    endorsementYKey: string,
 }
 
 export interface Blocks {
@@ -61,14 +61,14 @@ class BlocksComponent extends React.Component<Props, States> {
         this.priorityBlockRef = React.createRef();
         this.endorsementRef = React.createRef();
         this.state = {
-            hourlyBlocksFilter: constants.one_day_filter,
-            priorityBlockFilter: constants.one_day_filter,
-            endorsementFilter: constants.one_day_filter,
+            hourlyBlocksFilter: '',
+            priorityBlockFilter: '',
+            endorsementFilter: '',
             hourlyBlockGraphText: moment().format("YYYY MMMM Do"),
             priorityBlockGraphText: moment().format("YYYY MMMM Do"),
             endorsementGraphText: moment().format("YYYY MMMM Do"),
             endorsementXKey: 'date',
-            endorsementYKey: 'value'
+            endorsementYKey: 'value',
         }
     }
 
@@ -90,6 +90,14 @@ class BlocksComponent extends React.Component<Props, States> {
     }
 
     yTooltipFnHourlyBlock = (d: any, i: number) => {
+        return moment(d.date).format("YYYY MMM DD, HH:mm");
+    }
+
+    xTooltipForEndorsementFn = (d: any, i: number) => {
+        return d.value.toLocaleString() + " Endorsement per Hour";
+    }
+
+    yTooltipForEndorsementFn = (d: any, i: number) => {
         return moment(d.date).format("YYYY MMM DD, HH:mm");
     }
 
@@ -119,17 +127,19 @@ class BlocksComponent extends React.Component<Props, States> {
         
     }
 
-    onHourlyBlockDateChange = (limit: string, timestamp: number) => {
-       this.fetchHourlyBlockData(timestamp);
+    onHourlyBlockDateChange = (limit: string, timestamp: number, filter: string) => {
+        this.setState({hourlyBlocksFilter: filter});
+        this.fetchHourlyBlockData(timestamp);
     }
 
 
-    onPriorityBlockDateChange = (limit: string, timestamp: number) => {
-        
+    onPriorityBlockDateChange = (limit: string, timestamp: number, filter: string) => {
+        this.setState({priorityBlockFilter: filter});
         this.fetchPriorityBlock(timestamp);
     }
 
-    onEndorsementDateChange =  (limit: string, timestamp: number) => {
+    onEndorsementDateChange =  (limit: string, timestamp: number, filter: string) => {
+        this.setState({endorsementFilter: filter});
         this.fetchEndorsement(timestamp);
     }
 
@@ -168,12 +178,13 @@ class BlocksComponent extends React.Component<Props, States> {
                                     yKey= {this.state.endorsementYKey}
                                     spacing= {5}
                                     onLimitChange= {this.onEndorsementDateChange}
-                                    xTooltip= {this.xTooltipFnPriorityBlock}
-                                    yTooltip= {this.yTooltipFnPriorityBlock}
+                                    xTooltip= {this.xTooltipForEndorsementFn}
+                                    yTooltip= {this.yTooltipForEndorsementFn}
                                     _ref= {this.endorsementRef}
                                     isLimitAvailable={false}
                                     isDateFilter={true}
                                     marginLeft={50}
+                                    selectedFilter={this.state.endorsementFilter}
                                     text={endorsementGraphText}/>
                             }
                         </React.Fragment>
@@ -211,6 +222,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                     isLimitAvailable={false}
                                     isDateFilter={true}
                                     marginLeft={50}
+                                    selectedFilter={this.state.hourlyBlocksFilter}
                                     text={hourlyBlockGraphText}/>
                             }
                         </React.Fragment>
@@ -242,11 +254,14 @@ class BlocksComponent extends React.Component<Props, States> {
                                     xKey= "date"
                                     yKey= "value"
                                     spacing= {5}
+                                    xTooltip= {this.xTooltipFnPriorityBlock}
+                                    yTooltip= {this.yTooltipFnPriorityBlock}
                                     onLimitChange= {this.onPriorityBlockDateChange}
                                     _ref= {this.priorityBlockRef}
                                     isLimitAvailable={false}
                                     isDateFilter={true}
                                     marginLeft={50}
+                                    selectedFilter={this.state.priorityBlockFilter}
                                     text={priorityBlockGraphText}/>
                             }
                         </React.Fragment>

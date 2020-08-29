@@ -67,6 +67,9 @@ class HomeComponent extends React.Component<Props, States> {
             yHourlyVolumeKey: 'values',
             xHourlyGasKey: 'date',
             yHourlyGasKey: 'values',
+            hourlyTransactionFilter: '',
+            HourlyVolumeFilter: '',
+            hourlyGasFilter: ''
         }
     }
 
@@ -85,7 +88,8 @@ class HomeComponent extends React.Component<Props, States> {
         }
     }
     
-    onHourlyTransactionChange = (limit: any, date: number) => {
+    onHourlyTransactionChange = (limit: any, date: number, filter: string) => {
+        this.setState({hourlyTransactionFilter: filter});
         this.fetchHourlyTransactionData(date);
     }
 
@@ -117,7 +121,8 @@ class HomeComponent extends React.Component<Props, States> {
         return `${subStr1}...${subStr2}`;
     }
 
-    onHourlyVolumeChange = (limit: any, date: number) => {
+    onHourlyVolumeChange = (limit: any, date: number, filter: string) => {
+        this.setState({HourlyVolumeFilter: filter})
         this.fetchHourlyVolumeData(date);
     }
 
@@ -143,7 +148,8 @@ class HomeComponent extends React.Component<Props, States> {
         }
     }
 
-    onHourlyGasChange = (limit: any, date: number) => {
+    onHourlyGasChange = (limit: any, date: number, filter: string) => {
+        this.setState({hourlyGasFilter: filter});
         this.fetchHourlyGasData(date);
     }
 
@@ -215,6 +221,7 @@ class HomeComponent extends React.Component<Props, States> {
                                         isLimitAvailable={false}
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
+                                        selectedFilter={this.state.hourlyTransactionFilter}
                                         marginLeft={50}/>
                                 }
                                 </React.Fragment>
@@ -252,6 +259,7 @@ class HomeComponent extends React.Component<Props, States> {
                                         isLimitAvailable={false}
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
+                                        selectedFilter={this.state.HourlyVolumeFilter}
                                         marginLeft={70}/>
                                 }
                                 </React.Fragment>
@@ -290,7 +298,8 @@ class HomeComponent extends React.Component<Props, States> {
                                         isLimitAvailable={false}
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
-                                        marginLeft={90}/>
+                                        selectedFilter={this.state.hourlyGasFilter}
+                                        marginLeft={100}/>
                                 }
                                 
                             </React.Fragment>
