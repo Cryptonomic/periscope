@@ -73,15 +73,13 @@ class BlocksComponent extends React.Component<Props, States> {
         }
     }
 
-    async fetchHourlyBlockData(date: number){
+    async fetchHourlyBlockData(date: number, filter?: string){
         const { fetchHourlyBlock } = this.props;
         // Fetch top ten
         await fetchHourlyBlock(date);
         const svg = d3.select(this.hourlyBlockRef.current);
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA" ,5, 100);
-        
         const xTooltipFn = function(d: any, i: number) {
             return d.value.toLocaleString() + " Blocks per Hour";
         }
@@ -90,10 +88,18 @@ class BlocksComponent extends React.Component<Props, States> {
             return moment(d.date).format("YYYY MMM DD, HH:mm");
         }
 
-        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
+        if(filter && filter === constants.one_month_filter) {
+
+            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn);
+        } else {
+            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA" ,5, 100);
+        
+            chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
+        }
+        
     }
 
-    async fetchPriorityBlock(date: number) {
+    async fetchPriorityBlock(date: number, filter?: string) {
         const { fetchPriorityBlock } = this.props;
 
         // Fetch top ten
@@ -101,7 +107,7 @@ class BlocksComponent extends React.Component<Props, States> {
         const svg = d3.select(this.priorityBlockRef.current);
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA" ,5, 100);
+        
         
         const xTooltipFn = function(d: any, i: number) {
             return d.value.toLocaleString() + " Priority Zero Blocks per Hour";
@@ -111,20 +117,36 @@ class BlocksComponent extends React.Component<Props, States> {
             return moment(d.date).format("YYYY MMM DD, HH:mm");
         }
 
-        chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
+        if(filter && filter === constants.one_month_filter) {
+            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn);
+        } else {
+            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA" ,5, 100);
+            chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
+        }
     }
 
-    async fetchEndorsement(date: number) {
+    async fetchEndorsement(date: number, filter?: string) {
         const { fetchEndorsement } = this.props;
 
         // Fetch top ten
         await fetchEndorsement(date);
         const svg = d3.select(this.endorsementRef.current);
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
-        if(this.props.endorsement[0].hasOwnProperty('cycle')) {
-            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5, 100);
+        const xTooltipFn = function(d: any, i: number) {
+            return d.value.toLocaleString() + " Endorsements";
+        }
+    
+        const yTooltipFn = function(d: any, i: number) {
+            return moment(d.date).format("YYYY MMM DD, HH:mm");
+        }
+        if(filter && filter === constants.one_month_filter) {
+            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn);
         } else {
-            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5, 100);
+            if(this.props.endorsement[0].hasOwnProperty('cycle')) {
+                chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5, 100);
+            } else {
+                chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5, 100);
+            }
         }
         
     }
@@ -140,7 +162,7 @@ class BlocksComponent extends React.Component<Props, States> {
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
         this.setState({hourlyBlockGraphText: text, hourlyBlocksFilter: filter});
-        this.fetchHourlyBlockData(timestamp);
+        this.fetchHourlyBlockData(timestamp, filter);
     }
 
 
@@ -155,7 +177,7 @@ class BlocksComponent extends React.Component<Props, States> {
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
         this.setState({priorityBlockGraphText: text, priorityBlockFilter: filter});
-        this.fetchPriorityBlock(timestamp);
+        this.fetchPriorityBlock(timestamp, filter);
     }
 
     onEndorsementDateChange (filter: string) {
@@ -169,7 +191,7 @@ class BlocksComponent extends React.Component<Props, States> {
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
         this.setState({endorsementGraphText: text, endorsementFilter: filter});
-        this.fetchEndorsement(timestamp);
+        this.fetchEndorsement(timestamp, filter);
     }
 
     render() {
@@ -208,8 +230,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     <span onClick={e=> this.onHourlyBlockDateChange(constants.one_day_filter)} className={hourlyBlocksFilter=== constants.one_day_filter ? 'selected': ' '} >Day</span>
                                     <span onClick={e=> this.onHourlyBlockDateChange(constants.one_week_filter)} className={hourlyBlocksFilter=== constants.one_week_filter ? 'selected': ' '}>Week</span>
                                     <span onClick={e=> this.onHourlyBlockDateChange(constants.one_month_filter)} className={hourlyBlocksFilter=== constants.one_month_filter ? 'selected': ' '}>Month</span>
-                                    <span onClick={e=> this.onHourlyBlockDateChange(constants.one_year_filter)} className={hourlyBlocksFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
-                                    <span onClick={e=> this.onHourlyBlockDateChange(constants.all_time_filter)} className={hourlyBlocksFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span>
+                                    {/* <span onClick={e=> this.onHourlyBlockDateChange(constants.one_year_filter)} className={hourlyBlocksFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
+                                    <span onClick={e=> this.onHourlyBlockDateChange(constants.all_time_filter)} className={hourlyBlocksFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span> */}
                                 </div>
                                 
                                 <div className="graph-holder" ref={this.graphContainer}>
@@ -242,8 +264,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     <span onClick={e=> this.onPriorityBlockDateChange(constants.one_day_filter)} className={priorityBlockFilter=== constants.one_day_filter ? 'selected': ' '} >Day</span>
                                     <span onClick={e=> this.onPriorityBlockDateChange(constants.one_week_filter)} className={priorityBlockFilter=== constants.one_week_filter ? 'selected': ' '}>Week</span>
                                     <span onClick={e=> this.onPriorityBlockDateChange(constants.one_month_filter)} className={priorityBlockFilter=== constants.one_month_filter ? 'selected': ' '}>Month</span>
-                                    <span onClick={e=> this.onPriorityBlockDateChange(constants.one_year_filter)} className={priorityBlockFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
-                                    <span onClick={e=> this.onPriorityBlockDateChange(constants.all_time_filter)} className={priorityBlockFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span>
+                                    {/* <span onClick={e=> this.onPriorityBlockDateChange(constants.one_year_filter)} className={priorityBlockFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
+                                    <span onClick={e=> this.onPriorityBlockDateChange(constants.all_time_filter)} className={priorityBlockFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span> */}
                                 </div>
                                 
                                 <div className="graph-holder" ref={this.graphContainer}>
@@ -275,8 +297,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     <span onClick={e=> this.onEndorsementDateChange(constants.one_day_filter)} className={endorsementFilter=== constants.one_day_filter ? 'selected': ' '} >Day</span>
                                     <span onClick={e=> this.onEndorsementDateChange(constants.one_week_filter)} className={endorsementFilter=== constants.one_week_filter ? 'selected': ' '}>Week</span>
                                     <span onClick={e=> this.onEndorsementDateChange(constants.one_month_filter)} className={endorsementFilter=== constants.one_month_filter ? 'selected': ' '}>Month</span>
-                                    <span onClick={e=> this.onEndorsementDateChange(constants.one_year_filter)} className={endorsementFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
-                                    <span onClick={e=> this.onEndorsementDateChange(constants.all_time_filter)} className={endorsementFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span>
+                                    {/* <span onClick={e=> this.onEndorsementDateChange(constants.one_year_filter)} className={endorsementFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
+                                    <span onClick={e=> this.onEndorsementDateChange(constants.all_time_filter)} className={endorsementFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span> */}
                                 </div>
                                 
                                 <div className="graph-holder" ref={this.graphContainer}>

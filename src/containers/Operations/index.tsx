@@ -59,6 +59,10 @@ class OperationsComponent extends React.Component<Props, States> {
             yHourlyGasKey: 'values',
             xHourlyFeeKey: 'date',
             yHourlyFeeKey: 'values',
+            selectedHourlyTransactionFilter: '',
+            selectedHourlyVolumeFilter: '',
+            selectedHourlyGasFilter: '',
+            selectedHourlyFeeFilter: '',
         }
         this.hourlyTransactionRef = React.createRef();
         this.hourlyVolumeRef = React.createRef();
@@ -98,7 +102,8 @@ class OperationsComponent extends React.Component<Props, States> {
         }
     }
 
-    onHourlyTransactionChange = (limit: any, date: number) => {
+    onHourlyTransactionChange = (limit: any, date: number, filter: string) => {
+        this.setState({selectedHourlyTransactionFilter: filter});
         this.fetchHourlyTransactionData(date);
     }
 
@@ -130,7 +135,8 @@ class OperationsComponent extends React.Component<Props, States> {
         return `${subStr1}...${subStr2}`;
     }
 
-    onHourlyVolumeChange = (limit: any, date: number) => {
+    onHourlyVolumeChange = (limit: any, date: number, filter: string) => {
+        this.setState({selectedHourlyVolumeFilter: filter});
         this.fetchHourlyVolumeData(date);
     }
 
@@ -156,7 +162,8 @@ class OperationsComponent extends React.Component<Props, States> {
         }
     }
     
-    onHourlyGasChange = (limit: any, date: number) => {
+    onHourlyGasChange = (limit: any, date: number, filter: string) => {
+        this.setState({selectedHourlyGasFilter: filter});
         this.fetchHourlyGasData(date);
     }
 
@@ -184,7 +191,8 @@ class OperationsComponent extends React.Component<Props, States> {
         }
     }
     
-    onHourlyFeeChange = (limit: any, date: number) => {
+    onHourlyFeeChange = (limit: any, date: number, filter: string) => {
+        this.setState({selectedHourlyFeeFilter: filter});
         this.fetchHourlyFeeData(date);
     }
 
@@ -289,7 +297,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.hourlyTransactionRef}
                                 isLimitAvailable={false}
                                 isDateFilter={true}
-                                text={moment().format("YYYY MMMM Do")}/>
+                                text={moment().format("YYYY MMMM Do")}
+                                selectedFilter={this.state.selectedHourlyTransactionFilter}/>
                         }
                         
                     </React.Fragment>
@@ -324,7 +333,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.hourlyVolumeRef}
                                 isLimitAvailable={false}
                                 isDateFilter={true}
-                                text=''/>
+                                text=''
+                                selectedFilter={this.state.selectedHourlyVolumeFilter}/>
                         }
                         
                     </React.Fragment>
@@ -359,7 +369,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.hourlyGasRef}
                                 isLimitAvailable={false}
                                 isDateFilter={true}
-                                text=''/>
+                                text=''
+                                selectedFilter={this.state.selectedHourlyGasFilter}/>
                         }
                         
                     </React.Fragment>
@@ -394,7 +405,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.hourlyFeeRef}
                                 isLimitAvailable={false}
                                 isDateFilter={true}
-                                text={moment().format("YYYY MMMM Do")}/>
+                                text={moment().format("YYYY MMMM Do")}
+                                selectedFilter={this.state.selectedHourlyFeeFilter}/>
                         }
                         
                     </React.Fragment>

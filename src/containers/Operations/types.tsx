@@ -50,6 +50,10 @@ export interface States {
     yHourlyGasKey: string,
     xHourlyFeeKey: string,
     yHourlyFeeKey: string,
+    selectedHourlyTransactionFilter: string,
+    selectedHourlyVolumeFilter: string,
+    selectedHourlyGasFilter: string,
+    selectedHourlyFeeFilter: string,
 }
 
 export interface Operations {

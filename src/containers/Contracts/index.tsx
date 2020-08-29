@@ -12,7 +12,7 @@ import {
     Widget
 } from './styles';
 
-import { Props } from './types';
+import { Props, States } from './types';
 
 import { fetchTopContractsByBalance, fetchTopContractsByInvocation} from '../../reducers/contracts/thunks';
 import {
@@ -27,7 +27,7 @@ import {
 
 import { ErrorDialog } from '../../components/ErrorDialog';
 
-class ContractsComponent extends React.Component<Props> {
+class ContractsComponent extends React.Component<Props, States> {
 
     topContractsByBalanceRef: any = null;
     topContractsByInvocationRef: any = null;
@@ -39,6 +39,9 @@ class ContractsComponent extends React.Component<Props> {
         this.topContractsByBalanceRef = React.createRef();
         this.topContractsByInvocationRef = React.createRef();
         this.graphContainer = React.createRef();
+        this.state = {
+            contractsByInvocationFilter: ''
+        }
     }
 
     componentDidMount() {
@@ -81,8 +84,9 @@ class ContractsComponent extends React.Component<Props> {
         }
     }
 
-    onTopContractsBYInvocationLimitChange = (limit: number, date: number) => {
+    onTopContractsBYInvocationLimitChange = (limit: number, date: number, filter: string) => {
         limit = limit ? limit : 15;
+        this.setState({contractsByInvocationFilter: filter});
         if(limit <= 1000) {
             this.fetchTopContractsByInvocationData(limit, date);
         }
@@ -174,7 +178,8 @@ class ContractsComponent extends React.Component<Props> {
                                 _ref= {this.topContractsByInvocationRef}
                                 isLimitAvailable={true}
                                 isDateFilter={true}
-                                text=''/>
+                                text=''
+                                selectedFilter = {this.state.contractsByInvocationFilter}/>
                         }
                         
                     </React.Fragment>

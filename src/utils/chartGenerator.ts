@@ -7,7 +7,7 @@ export class chartGenerator {
          // Clear SVG Elements of old data
          svg.selectAll("*").remove();
 
-        const margin = {top: 0, right: 20, bottom: 50, left: 70};
+        const margin = {top: 0, right: 0, bottom: 50, left: 70};
 
         let xRange: any = d3.range(data.length);
         const constData: any = d3.range(15);
@@ -189,4 +189,202 @@ export class chartGenerator {
         });
     }
 
+    static generateLineChart(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", yLabelFunction: Function, xLabelFunction: Function) {
+        // Clear SVG Elements of old data
+        svg.selectAll("*").remove();
+
+        // set the dimensions and margins of the graph
+        var margin = {top: 10, right: 30, bottom: 30, left: 60},
+        width = width - margin.left - margin.right,
+        height = height - margin.top - margin.bottom;
+        data.forEach((item:any, index:number) => { 
+            item.x = index+1;
+        })
+
+        // append the svg object to the body of the page
+        var svg = svg
+                .append("g")
+                .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+        
+
+        // Add X axis --> it is a date format
+        const x:any = d3.scaleLinear()
+                .domain([0, (data.length-1)])
+                .range([0, width]);
+
+        svg.append("g")
+            .style('font-family', 'Nunito')
+            .style('font-size', '10px')
+            .style('font-weight', '400')
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        // Add Y axis
+        const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
+        var y = d3.scaleLinear()
+            .domain([0, d3.max<any>(yAxisData)])
+            .range([ height, 0 ]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        const bisect = d3.bisector(function(d:any) { return d.x; }).left;
+
+        // Add the line
+        svg
+            .append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", color)
+            .attr("stroke-width", 1.5)
+            .attr("d", d3.line()
+            .x(function(d:any, i: number) { return x(i) })
+            .y(function(d: any, i: number) { return y(d[yAxisKey]) })
+            )
+
+        // Create a rect on top of the svg area: this rectangle recovers mouse position
+        svg
+            .append('rect')
+            .style("fill", "none")
+            .style("pointer-events", "all")
+            .attr('width', width)
+            .attr('height', height)
+            .on('mouseover', mouseover)
+            .on('mousemove', mousemove)
+            .on('mouseout', mouseout);
+
+
+        // What happens when the mouse move -> show the annotations at the right positions.
+        let tooltip: any = '';
+        function mouseover() {
+            tooltip = d3.select("body").append("div").attr("class", "graphToolTip");
+        }
+
+        function mousemove(this: any) {
+            // recover coordinate we need
+            var x0 = x.invert(d3.mouse(this)[0]);
+            var i = bisect(data, x0, 1);
+            var selectedData = data[i]
+
+            tooltip
+                .style("left", d3.event.pageX + 20 + "px")
+                .style("top", d3.event.pageY - 70 + "px")
+                .style("display", "inline-block")
+                .style("position", "absolute")
+                .style("text-align", "center")
+                .style("background", "#313C4E")
+                .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
+                .style("font-family", "Roboto")
+                .style("font-size", "8px")
+                .style("line-height", "15px")
+                .style("letter-spacing", "0.4px")
+                .style("color", "#ffffff")
+                .style("padding", "5px 20px")
+                .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+        }
+        function mouseout() {
+            tooltip.style("display", "none");
+        }
+
+    }
+
+
+    static generateLineChartWithoutXAxis(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", yLabelFunction: Function, xLabelFunction: Function) {
+        // Clear SVG Elements of old data
+        svg.selectAll("*").remove();
+
+        // set the dimensions and margins of the graph
+        var margin = {top: 10, right: 30, bottom: 30, left: 60},
+        width = width - margin.left - margin.right,
+        height = height - margin.top - margin.bottom;
+        data.forEach((item:any, index:number) => { 
+            item.x = index+1;
+        })
+
+        // append the svg object to the body of the page
+        var svg = svg
+                .append("g")
+                .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+        
+
+        // Add X axis --> it is a date format
+        const x:any = d3.scaleLinear()
+                .domain([0, (data.length-1)])
+                .range([0, width]);
+
+        // svg.append("g")
+        //     .attr("transform", "translate(0," + height + ")")
+        //     .call(d3.axisBottom(x));
+
+        // Add Y axis
+        const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
+       
+        var y = d3.scaleLinear()
+            .domain([0, d3.max<any>(yAxisData)])
+            .range([ height, 0 ]);
+        svg.append("g")
+            .style('font-family', 'Nunito')
+            .style('font-size', '10px')
+            .style('font-weight', '400')
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(y).ticks(5));
+
+        const bisect = d3.bisector(function(d:any) { return d.x; }).left;
+
+        // Add the line
+        svg
+            .append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", color)
+            .attr("stroke-width", 1.5)
+            .attr("d", d3.line()
+            .x(function(d:any, i: number) { return x(i) })
+            .y(function(d: any, i: number) { return y(d[yAxisKey]) })
+            )
+
+        // Create a rect on top of the svg area: this rectangle recovers mouse position
+        svg
+            .append('rect')
+            .style("fill", "none")
+            .style("pointer-events", "all")
+            .attr('width', width)
+            .attr('height', height)
+            .on('mouseover', mouseover)
+            .on('mousemove', mousemove)
+            .on('mouseout', mouseout);
+
+
+        // What happens when the mouse move -> show the annotations at the right positions.
+        let tooltip: any = '';
+        function mouseover() {
+            tooltip = d3.select("body").append("div").attr("class", "graphToolTip");
+        }
+
+        function mousemove(this: any) {
+            // recover coordinate we need
+            var x0 = x.invert(d3.mouse(this)[0]);
+            var i = bisect(data, x0, 1);
+            var selectedData = data[i]
+
+            tooltip
+                .style("left", d3.event.pageX + 20 + "px")
+                .style("top", d3.event.pageY - 70 + "px")
+                .style("display", "inline-block")
+                .style("position", "absolute")
+                .style("text-align", "center")
+                .style("background", "#313C4E")
+                .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
+                .style("font-family", "Roboto")
+                .style("font-size", "8px")
+                .style("line-height", "15px")
+                .style("letter-spacing", "0.4px")
+                .style("color", "#ffffff")
+                .style("padding", "5px 20px")
+                .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+        }
+        function mouseout() {
+            tooltip.style("display", "none");
+        }
+
+    }
 }

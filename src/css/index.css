@@ -378,3 +378,8 @@ g.grid > g.tick {
 g.grid > path {
     display: none;
 }
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}

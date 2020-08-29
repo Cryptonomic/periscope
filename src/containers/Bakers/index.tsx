@@ -48,7 +48,8 @@ class BakersComponent extends React.Component<Props, States> {
         this.state = {
             stakersNames: {},
             topBakerNamesByBlock: {},
-            topBakerNamesByDelegation: {}
+            topBakerNamesByDelegation: {},
+            topBakerByBlockFilter: ''
         }
     }
 
@@ -122,8 +123,9 @@ class BakersComponent extends React.Component<Props, States> {
         }
     }
 
-    onTopBakerByBlockLimitChange = (limit: number, timestamp: number) => {
+    onTopBakerByBlockLimitChange = (limit: number, timestamp: number, filter: string) => {
         limit = limit ? limit : 15;
+        this.setState({topBakerByBlockFilter: filter});
         if(limit <= 1000) {
             this.fetchTopBakerByBlockData(limit, timestamp);
         }
@@ -233,7 +235,8 @@ class BakersComponent extends React.Component<Props, States> {
                                 _ref= {this.topBakersByBlockRef}
                                 isLimitAvailable={true}
                                 isDateFilter={true}
-                                text=''/>
+                                text=''
+                                selectedFilter={this.state.topBakerByBlockFilter}/>
                         }
                         
                     </React.Fragment>

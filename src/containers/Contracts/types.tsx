@@ -34,3 +34,8 @@ export interface ContracyByInvocation {
     destination: string;
     count_operation_group_hash: string;
 }
+
+export interface States {
+    contractsByInvocationFilter: string
+}
+

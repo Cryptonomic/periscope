@@ -19,13 +19,15 @@ interface Props {
     isDateFilter: boolean,
     isLimitAvailable: boolean,
     text: any, 
-    hoverColor: string
+    hoverColor: string,
+    selectedFilter?: string,
 }
 
 interface States {
     limit: number,
     selectedDateFilter: string,
-    xLabel: any
+    xLabel: any, 
+    graphBuilder: string,
 }
 
 export default class ChartWrapper extends React.Component<Props, States> {
@@ -39,8 +41,9 @@ export default class ChartWrapper extends React.Component<Props, States> {
         this.updateLimitDebounce = debounce(1000, false, this.updateLimit);
         this.state = {
             limit: 15,
-            selectedDateFilter: 'one_day_in_milliseconds',
+            selectedDateFilter: props.selectedFilter ? props.selectedFilter : 'one_day_in_milliseconds',
             xLabel: props.text ? props.text : '',
+            graphBuilder: ''
         }
     }
 
@@ -50,7 +53,11 @@ export default class ChartWrapper extends React.Component<Props, States> {
 
     componentDidUpdate(prevProps: Props) {
         if (JSON.stringify(prevProps.data) !== JSON.stringify(this.props.data)) {
-          this.generateChart();
+          if(this.props.selectedFilter && this.props.selectedFilter === constants.one_month_filter) {
+            this.generateLineChart();
+          } else {
+            this.generateChart();
+          }
         }
     }
 
@@ -60,8 +67,6 @@ export default class ChartWrapper extends React.Component<Props, States> {
 
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 532
 
-        chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing);
-        
         const xTooltipFn = function(d: any, i: number) {
             return xTooltip(d, i);
         }
@@ -70,7 +75,32 @@ export default class ChartWrapper extends React.Component<Props, States> {
             return yTooltip(d, i);
         }
 
+        chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing);
+        
         chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, color, hoverColor);
+    }
+
+    generateLineChart() {
+        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor} = this.props
+        const svg = d3.select(_ref.current);
+
+        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 532
+
+        const xTooltipFn = function(d: any, i: number) {
+            return xTooltip(d, i);
+        }
+    
+        const yTooltipFn = function(d: any, i: number) {
+            return yTooltip(d, i);
+        }
+        this.setState({graphBuilder: this.generateRandomGraphBuilder()});
+        chartGenerator.generateLineChart(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn);
+        
+    }
+
+    generateRandomGraphBuilder() {
+        const number: number = Math.floor(Math.random()*10000000);
+        return number.toString();
     }
 
 
@@ -98,7 +128,8 @@ export default class ChartWrapper extends React.Component<Props, States> {
         if(this.state.xLabel) {
             this.changeLabelText(timestamp);
         }
-        this.props.onLimitChange(this.state.limit, timestamp);
+
+        this.props.onLimitChange(this.state.limit, timestamp, filter);
     }
 
     changeLabelText(timestamp: number) {
@@ -137,10 +168,13 @@ export default class ChartWrapper extends React.Component<Props, States> {
                                 <span onClick={e=> this.filterResult(constants.all_time_filter)} className={selectedDateFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span> */}
                             </div>
                         }
+                        {
+                             
+                            <div className="graph-holder" ref={this.graphContainer}>
+                                <svg viewBox={svgLength} className="account-graph" ref={_ref}></svg>
+                            </div>
+                        }
                         
-                        <div className="graph-holder" ref={this.graphContainer}>
-                            <svg viewBox={svgLength} className="account-graph" ref={_ref}></svg>
-                        </div>
                         <p className="year-text">{xLabel}</p>
                     </React.Fragment>
                 }

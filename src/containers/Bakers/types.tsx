@@ -32,7 +32,8 @@ export type Props = OwnProps & RouteComponentWithParmas;
 export interface States {
     stakersNames: any,
     topBakerNamesByBlock: any,
-    topBakerNamesByDelegation: any
+    topBakerNamesByDelegation: any,
+    topBakerByBlockFilter: string
 }
 
 export interface BakerByDelegation {
