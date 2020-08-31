@@ -62,7 +62,7 @@ class BakersComponent extends React.Component<Props, States> {
 
     componentDidUpdate(prevProps: Props) {
         const currParams = new URLSearchParams(this.props.history.location.search);
-        const currId: any = currParams.get('q') ? currParams.get('q') : 'topStakers';
+        const currId: any = currParams.get('q');
 
         const element: any = document.getElementById(currId);
         if(element) {
