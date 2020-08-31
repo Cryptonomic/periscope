@@ -66,9 +66,15 @@ class BakersComponent extends React.Component<Props, States> {
 
         const element: any = document.getElementById(currId);
         if(element) {
-            window.scrollTo(0, element.offsetTop); 
+            window.scrollTo(0, element.offsetTop);
         }
-        
+    }
+
+    updateQueryParams(param: string) {
+        this.props.history.push({
+            pathname: this.props.history.location.pathname,
+            search: '?q='+param
+        })
     }
 
     async fetchTopBakerByDelegationData(limit: number){
@@ -118,6 +124,7 @@ class BakersComponent extends React.Component<Props, States> {
 
     onTopBakerByDelegationLimitChange = (limit: number) => {
         limit = limit ? limit : 15;
+        this.updateQueryParams('topDelegator');
         if(limit <= 1000) {
             this.fetchTopBakerByDelegationData(limit);
         }
@@ -125,6 +132,7 @@ class BakersComponent extends React.Component<Props, States> {
 
     onTopBakerByBlockLimitChange = (limit: number, timestamp: number, filter: string) => {
         limit = limit ? limit : 15;
+        this.updateQueryParams('topBlockers');
         this.setState({topBakerByBlockFilter: filter});
         if(limit <= 1000) {
             this.fetchTopBakerByBlockData(limit, timestamp);
@@ -152,6 +160,7 @@ class BakersComponent extends React.Component<Props, States> {
 
     onTopBakerByStakeLimitChange= (limit: number) => {
         limit = limit ? limit : 15;
+        this.updateQueryParams('topStakers');
         if(limit <= 1000) {
             this.fetchTopBakersByStakeData(limit);
         }

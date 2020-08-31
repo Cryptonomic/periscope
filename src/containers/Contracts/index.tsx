@@ -61,6 +61,13 @@ class ContractsComponent extends React.Component<Props, States> {
         }
     }
 
+    updateQueryParams(param: string) {
+        this.props.history.push({
+            pathname: this.props.history.location.pathname,
+            search: '?q='+param
+        })
+    }
+
     async fetchTopContractsByBalanceData(limit: number){
         const { fetchTopContractsByBalance } = this.props;
         await fetchTopContractsByBalance(limit);
@@ -78,6 +85,7 @@ class ContractsComponent extends React.Component<Props, States> {
     }
 
     onTopContractsByBalanceLimitChange = (limit: number) => {
+        this.updateQueryParams('contractsByBalance');
         limit = limit ? limit : 15;
         if(limit <= 1000) {
             this.fetchTopContractsByBalanceData(limit);
@@ -85,6 +93,7 @@ class ContractsComponent extends React.Component<Props, States> {
     }
 
     onTopContractsBYInvocationLimitChange = (limit: number, date: number, filter: string) => {
+        this.updateQueryParams('contractsByInvocation');
         limit = limit ? limit : 15;
         this.setState({contractsByInvocationFilter: filter});
         if(limit <= 1000) {

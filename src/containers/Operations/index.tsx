@@ -103,6 +103,7 @@ class OperationsComponent extends React.Component<Props, States> {
     }
 
     onHourlyTransactionChange = (limit: any, date: number, filter: string) => {
+        this.updateQueryParams('trancations');
         this.setState({selectedHourlyTransactionFilter: filter});
         this.fetchHourlyTransactionData(date);
     }
@@ -136,6 +137,7 @@ class OperationsComponent extends React.Component<Props, States> {
     }
 
     onHourlyVolumeChange = (limit: any, date: number, filter: string) => {
+        this.updateQueryParams('trancationsVolume');
         this.setState({selectedHourlyVolumeFilter: filter});
         this.fetchHourlyVolumeData(date);
     }
@@ -163,6 +165,7 @@ class OperationsComponent extends React.Component<Props, States> {
     }
     
     onHourlyGasChange = (limit: any, date: number, filter: string) => {
+        this.updateQueryParams('gasConsumed');
         this.setState({selectedHourlyGasFilter: filter});
         this.fetchHourlyGasData(date);
     }
@@ -192,6 +195,7 @@ class OperationsComponent extends React.Component<Props, States> {
     }
     
     onHourlyFeeChange = (limit: any, date: number, filter: string) => {
+        this.updateQueryParams('feesPaid');
         this.setState({selectedHourlyFeeFilter: filter});
         this.fetchHourlyFeeData(date);
     }
@@ -216,6 +220,7 @@ class OperationsComponent extends React.Component<Props, States> {
     }
     
     onDailyActivationChange = (limit: any, date: number) => {
+        this.updateQueryParams('activations');
         this.fetchDailyActivationData(date);
     }
 
@@ -233,6 +238,7 @@ class OperationsComponent extends React.Component<Props, States> {
     }
     
     onDailyOriginationChange = (limit: any, date: number) => {
+        this.updateQueryParams('originations');
         this.fetchDailyActivationData(date);
     }
 
@@ -242,6 +248,13 @@ class OperationsComponent extends React.Component<Props, States> {
 
     yToolTipForDailyOrigination = (d:any, i:any) => {
         return moment(d.date).format("YYYY MMM DD, HH:mm");
+    }
+
+    updateQueryParams(param: string) {
+        this.props.history.push({
+            pathname: this.props.history.location.pathname,
+            search: '?q='+param
+        })
     }
 
     render() {

@@ -73,6 +73,13 @@ class BlocksComponent extends React.Component<Props, States> {
         }
     }
 
+    updateQueryParams(param: string) {
+        this.props.history.push({
+            pathname: this.props.history.location.pathname,
+            search: '?q='+param
+        })
+    }
+
     async fetchHourlyBlockData(date: number, filter?: string){
         const { fetchHourlyBlock } = this.props;
         // Fetch top ten
@@ -152,6 +159,7 @@ class BlocksComponent extends React.Component<Props, States> {
     }
 
     onHourlyBlockDateChange (filter: string) {
+        this.updateQueryParams('hourlyBlocks');
         let timestamp = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
@@ -167,6 +175,7 @@ class BlocksComponent extends React.Component<Props, States> {
 
 
     onPriorityBlockDateChange (filter: string) {
+        this.updateQueryParams('priorityBlocks');
         let timestamp = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
@@ -181,6 +190,7 @@ class BlocksComponent extends React.Component<Props, States> {
     }
 
     onEndorsementDateChange (filter: string) {
+        this.updateQueryParams('endorsement');
         let timestamp = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {

@@ -33,7 +33,7 @@ export interface States {
     stakersNames: any,
     topBakerNamesByBlock: any,
     topBakerNamesByDelegation: any,
-    topBakerByBlockFilter: string
+    topBakerByBlockFilter: string,
 }
 
 export interface BakerByDelegation {
