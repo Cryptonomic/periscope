@@ -5,7 +5,8 @@ import {
     Subtitle,
     List,
     ListItem,
-    Footer
+    Footer,
+    CryptoNomicLogo
 } from './styles';
 import Logo from '../../assets/images/logo.svg';
 import { NavLink, Link } from 'react-router-dom';
@@ -18,8 +19,15 @@ const Sidebar: React.FC<Props> = props => {
     return (
         <div>
             <Holder>
-                <Title>PERISCOPE</Title>
+                <Title><Link to='/'>PERISCOPE</Link></Title>
                 <Subtitle>All Tezos Blockchain data at your fingertips</Subtitle>
+                <CryptoNomicLogo>
+                    <p>
+                        <span>A product of </span>
+                        <img src={Logo} alt="img"/>
+                        <span className="logo">CRYPTONOMIC</span>
+                    </p>
+                </CryptoNomicLogo>
                 <List className="head">
                     <ListItem>
                     <NavLink exact activeClassName="selected" className="main-style" to="/accounts">
@@ -130,11 +138,6 @@ const Sidebar: React.FC<Props> = props => {
                     </ListItem>
                 </List>
                 <Footer>
-                    <p>
-                        <span>A product of </span>
-                        <img src={Logo} alt="img"/>
-                        <span className="logo">CRYPTONOMIC</span>
-                    </p>
                     <p className="links">
                         <span>Powered by <a href="#">Arronax</a>, <a href="#">Conseil</a> and  <a href="#">Nautilus Cloud</a></span>
                     </p>

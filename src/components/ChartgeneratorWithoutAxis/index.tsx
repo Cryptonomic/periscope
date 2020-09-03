@@ -127,7 +127,10 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date
         } else {
-            timestamp = new Date().getTime() - constants[filter];
+            const date = new Date();
+            date.setMinutes(0);
+            date.setSeconds(0);
+            timestamp = date.getTime() - constants[filter];
         }
         if(this.state.xLabel) {
             this.changeLabelText(timestamp);

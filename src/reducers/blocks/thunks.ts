@@ -155,9 +155,9 @@ export const fetchEndorsement = (date: number) => async (dispatch: any, state: a
         } else {
             query = ConseilQueryBuilder.addFields(query, 'kind');
             query = ConseilQueryBuilder.addFields(query, 'timestamp');
-            query = ConseilQueryBuilder.addPredicate(query, 'kind', ConseilOperator.EQ, ['transaction']);
-            query = ConseilQueryBuilder.addPredicate(query, 'status', ConseilOperator.EQ, ['applied']);
+            // query = conseiljs.ConseilQueryBuilder.addFields(query, 'block_level');
             query = ConseilQueryBuilder.addPredicate(query, 'timestamp', ConseilOperator.BETWEEN, [date, new Date().getTime()]);
+            query = ConseilQueryBuilder.addPredicate(query, 'kind', ConseilOperator.EQ, ['endorsement']);
             query = ConseilQueryBuilder.addAggregationFunction(query, 'kind', ConseilFunction.count);
             query = ConseilQueryBuilder.addOrdering(query, "timestamp", ConseilSortDirection.ASC);
             query = ConseilQueryBuilder.setLimit(query, 1000000000);
@@ -177,8 +177,6 @@ export const fetchEndorsement = (date: number) => async (dispatch: any, state: a
                 values.push(0)
             }
 
-            console.log(timestamps);
-            
             for(var r = 0; r < result.length; r++) {
                 for(var t = label.length - 1; t > 0; t--) {
                     if(parseInt(result[r].timestamp) > parseInt(label[t].getTime())) {

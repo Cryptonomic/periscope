@@ -10,6 +10,10 @@ export const Title = styled.h1`
     color: #242423;
     margin: 0 0 10px;
     text-align:center;
+    & a {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 
 export const Holder = styled.div`
@@ -25,7 +29,7 @@ export const Subtitle = styled.p`
     font-size: 13px;
     line-height: 20px;
     color: #274B93;
-    margin:0 0 15px;
+    margin:0 0 5px;
     text-align:center;
 `;
 
@@ -109,6 +113,45 @@ export const Footer = styled.div `
         text-align: left;
         padding: 16px 10px 0;
         margin: 90px 10px 5px;
+        &.links {
+            margin:0 10px;
+            padding-top:0;
+        }
+    }
+    img {
+        display:inline-block;
+        vertical-align:middle;
+        margin-left:5px;
+        margin-right: -5px;
+    }
+    span {
+        font-family: Nunito;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: #8492A4;
+        display:inline-block;
+        vertical-align:middle;
+        &.logo {
+            font-family: Nunito;
+            font-weight: 600;
+            font-size: 8px;
+            line-height: 16px;
+            color: #242423;
+        }
+        a {
+            color:#5CBCD4;
+            text-decoration:none;
+        }
+    }
+`
+
+export const CryptoNomicLogo = styled.div `
+    text-align:center;
+    p {
+        text-align: left;
+        padding: 0px 10px 0;
+        margin: 0px 10px 15px;
         &.links {
             margin:0 10px;
             padding-top:0;

@@ -26,7 +26,7 @@ export class chartGenerator {
                     .range([height - margin.bottom, margin.top])
 
         
-        let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, data.length]).range(<any>([margin.left, width - margin.right]));
+        let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, (data.length-1)]).range(<any>([margin.left, width - margin.right]));
         if(data.length < 100) {
             xAxisScaleForBottom = x; 
         }
@@ -43,7 +43,9 @@ export class chartGenerator {
             .style('font-family', 'Nunito')
             .style('font-size', '10px')
             .style('font-weight', '400')
-            .call(d3.axisBottom(xAxisScaleForBottom).ticks(15))
+            .call(d3.axisBottom(xAxisScaleForBottom).tickFormat((d:any, i:any) => {
+                return i+1;
+            }).ticks(15))
             .attr("class", "xAxis");
 
         const yAxis = (g:any) => g
@@ -63,6 +65,7 @@ export class chartGenerator {
         spacing = yAxisData.length <= 70 ? spacing : 1;
         svg.append("g")
             .attr("class", "svg-columns")
+            .attr('transform', 'translate(6,0)')
             .attr("fill", color)
             .selectAll("rect")
             .data(data)
@@ -84,7 +87,7 @@ export class chartGenerator {
        // Clear SVG Elements of old data
        svg.selectAll("*").remove();
 
-       const margin = {top: 0, right: 20, bottom: 50, left: marginLeft};
+       const margin = {top: 10, right: 20, bottom: 50, left: marginLeft};
 
        let xRange: any = d3.range(data.length);
        const constData: any = d3.range(15);
@@ -121,7 +124,9 @@ export class chartGenerator {
       
        const xAxis = (g:any) => g
            .attr("transform", `translate(0,${height - margin.bottom})`)
-           .call(d3.axisBottom(xAxisScaleForBottom).ticks(15))
+           .call(d3.axisBottom(xAxisScaleForBottom).tickFormat((d:any, i:any) => {
+            return i+1;
+        }).ticks(15))
 
        const yAxis = (g:any) => g
            .attr("transform", `translate(${margin.left},0)`)
@@ -130,16 +135,16 @@ export class chartGenerator {
            .style('font-weight', '400')
            .call(d3.axisLeft(y).ticks(5));
         // add the Y gridlines
-        svg.append("g")			
-        .attr("class", "grid")
-        .attr("transform", `translate(${margin.left},50)`)
-        .style('font-family', 'Nunito')
-        .style('font-size', '10px')
-        .style('font-weight', '400')
-        .call(make_y_gridlines()
-            .tickSize(-width+marginLeft)
-            .tickFormat(null)
-        ).attr("opacity", '.6')  
+        // svg.append("g")			
+        // .attr("class", "grid")
+        // .attr("transform", `translate(${margin.left},50)`)
+        // .style('font-family', 'Nunito')
+        // .style('font-size', '10px')
+        // .style('font-weight', '400')
+        // .call(make_y_gridlines()
+        //     .tickSize(-width+marginLeft)
+        //     .tickFormat(null)
+        // ).attr("opacity", '.6')  
 
        spacing = yAxisData.length <= 70 ? spacing : 1;
        svg.append("g")
