@@ -69,7 +69,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
             width = 786;
         }
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft);
+        chartGenerator.seperateAxisPrioritizedBarChartGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft,100, this.graphContainer);
 
         if(xTooltip && yTooltip) {
             const xTooltipFn = function(d: any, i: number) {
@@ -103,7 +103,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
                 return yTooltip(d, i);
             }
             
-            chartGenerator.generateLineChartWithoutXAxis(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn);
+            chartGenerator.generateLineChartWithoutXAxis(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
         }
     }
 
@@ -145,12 +145,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
 
     render() {
         const { height, _ref, isDateFilter, isLimitAvailable } = this.props;
-        let width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0;
-        if(width <= 0) {
-            width = 786;
-        }
         const { limit, selectedDateFilter, xLabel } = this.state;
-        const svgLength = `0,0,${width},${height}`;
 
         return (
             <div className="mapHolder">
@@ -179,7 +174,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
                         }
                         
                         <div className="graph-holder" ref={this.graphContainer}>
-                            <svg viewBox={svgLength} className="account-graph" ref={_ref}></svg>
+                            <svg className="account-graph" ref={_ref}></svg>
                         </div>
                         <p className="year-text">{xLabel}</p>
                     </React.Fragment>

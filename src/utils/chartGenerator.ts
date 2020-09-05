@@ -5,10 +5,10 @@ export class chartGenerator {
 
     static graphGenerator(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", spacing: number) {
         
-         // Clear SVG Elements of old data
-         svg.selectAll("*").remove();
+        // Clear SVG Elements of old data
+        svg.selectAll("*").remove();
 
-        const margin = {top: 0, right: 0, bottom: 50, left: 70};
+        const margin = {top: 10, right: 0, bottom: 50, left: 70};
 
         let xRange: any = d3.range(data.length);
         const constData: any = d3.range(15);
@@ -82,12 +82,16 @@ export class chartGenerator {
                 .call(yAxis);
     }
 
-    static seperateAxisPrioritizedBarChartGenerator(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", spacing: number, marginLeft: number, marginRight: number = 100) {
+    static seperateAxisPrioritizedBarChartGenerator(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", spacing: number, marginLeft: number, marginRight: number = 100, ele: any) {
         
        // Clear SVG Elements of old data
        svg.selectAll("*").remove();
 
+       width = ele.current.offsetWidth ? ele.current.offsetWidth : width;
+
        const margin = {top: 10, right: 20, bottom: 50, left: marginLeft};
+       svg.attr('height', height)
+            .attr('width', width);
 
        let xRange: any = d3.range(data.length);
        const constData: any = d3.range(15);
@@ -294,12 +298,13 @@ export class chartGenerator {
     }
 
 
-    static generateLineChartWithoutXAxis(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", yLabelFunction: Function, xLabelFunction: Function) {
+    static generateLineChartWithoutXAxis(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", yLabelFunction: Function, xLabelFunction: Function, element:any) {
         // Clear SVG Elements of old data
         svg.selectAll("*").remove();
 
         // set the dimensions and margins of the graph
         const margin = {top: 0, right: 0, bottom: 50, left: 70};
+        width = element.current.offsetWidth ? element.current.offsetWidth-20 : width;
         width = (width - margin.left - margin.right);
         height = height - margin.top - margin.bottom;
         data.forEach((item:any, index:number) => { 

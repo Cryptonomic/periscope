@@ -100,9 +100,9 @@ class BlocksComponent extends React.Component<Props, States> {
 
         if(filter && filter === constants.one_month_filter) {
 
-            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn);
+            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn, this.graphContainer);
         } else {
-            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA" ,5, 100);
+            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA" ,5, 100, 100, this.graphContainer);
         
             chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
         }
@@ -128,9 +128,9 @@ class BlocksComponent extends React.Component<Props, States> {
         }
 
         if(filter && filter === constants.one_month_filter) {
-            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn);
+            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn, this.graphContainer);
         } else {
-            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA" ,5, 100);
+            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA" ,5, 100, 100, this.graphContainer);
             chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
         }
     }
@@ -150,12 +150,12 @@ class BlocksComponent extends React.Component<Props, States> {
             return moment(d.date).format("YYYY MMM DD, HH:mm");
         }
         if(filter && filter === constants.one_month_filter) {
-            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn);
+            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn, this.graphContainer);
         } else {
             if(this.props.endorsement[0].hasOwnProperty('cycle')) {
-                chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5, 100);
+                chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5, 100, 100, this.graphContainer);
             } else {
-                chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5, 100);
+                chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5, 100, 100, this.graphContainer);
             }
         }
         
@@ -209,7 +209,6 @@ class BlocksComponent extends React.Component<Props, States> {
 
     render() {
         const { isHourlyBlockLoading, isPriorityBlockLoading, isEndorsementLoading } = this.props;
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
         const { 
             hourlyBlocksFilter, 
             priorityBlockFilter, 
@@ -218,7 +217,6 @@ class BlocksComponent extends React.Component<Props, States> {
             priorityBlockGraphText,
             endorsementGraphText
         } = this.state;
-        const svgLength = `0,0,${width},${250}`;
         return (
             <MainContainer>
                 <Title>Blocks</Title>
@@ -248,7 +246,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 </div>
                                 
                                 <div className="graph-holder" ref={this.graphContainer}>
-                                    <svg viewBox={svgLength} className="account-graph" ref={this.hourlyBlockRef}></svg>
+                                    <svg className="account-graph" ref={this.hourlyBlockRef}></svg>
                                 </div>
                                 <p className="year-text">{hourlyBlockGraphText}</p>
                             </React.Fragment>
@@ -282,7 +280,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 </div>
                                 
                                 <div className="graph-holder" ref={this.graphContainer}>
-                                    <svg viewBox={svgLength} className="account-graph" ref={this.priorityBlockRef}></svg>
+                                    <svg className="account-graph" ref={this.priorityBlockRef}></svg>
                                 </div>
                                 <p className="year-text">{priorityBlockGraphText}</p>
                             </React.Fragment>
@@ -315,7 +313,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 </div>
                                 
                                 <div className="graph-holder" ref={this.graphContainer}>
-                                    <svg viewBox={svgLength} className="account-graph" ref={this.endorsementRef}></svg>
+                                    <svg className="account-graph" ref={this.endorsementRef}></svg>
                                 </div>
                                 <p className="year-text">{endorsementGraphText}</p>
                             </React.Fragment>
