@@ -86,7 +86,7 @@ export const fetchHourlyTransaction = (date: number) => async (dispatch: any, st
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyTransactionLoading(false);
     }
@@ -145,7 +145,7 @@ export const fetchHourlyVolume = (date: number) => async (dispatch: any, state: 
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyVolumeLoading(false);
     }
@@ -207,7 +207,7 @@ export const fetchHourlyGas = (date: number) => async (dispatch: any, state: any
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyGasLoading(false);
     }
@@ -270,7 +270,7 @@ export const fetchHourlyFee = (date: number) => async (dispatch: any, state: any
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyGasLoading(false);
     }
@@ -317,7 +317,7 @@ export const fetchDailyActivation = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setDailyActivationLoading(false);
     }
@@ -383,7 +383,7 @@ export const fetchDailyOrigination = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setDailyOriginationLoading(false);
     }

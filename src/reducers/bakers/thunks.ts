@@ -12,7 +12,6 @@ import {
 import {
     ConseilDataClient,
     ConseilQueryBuilder,
-    ConseilSortDirection,
 } from 'conseiljs';
 
 import { defaultQueries, generateQueryUrl} from '../../utils/defaultQueries';
@@ -44,7 +43,7 @@ export const fetchTopBakersByStake = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setTopBakersByStakeLoading(false);
     }
@@ -74,7 +73,7 @@ export const fetchTopBakersByDelegation = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setTopBakersByStakeLoading(false);
     }
@@ -106,7 +105,7 @@ export const fetchTopBakersByBlocks = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setTopBakersByStakeLoading(false);
     }

@@ -21,6 +21,7 @@ interface Props {
     text: any, 
     hoverColor: string,
     selectedFilter?: string,
+    isLineChart?: boolean,
 }
 
 interface States {
@@ -83,7 +84,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     generateLineChart() {
-        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor} = this.props
+        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color} = this.props
         const svg = d3.select(_ref.current);
 
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 532

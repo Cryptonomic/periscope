@@ -86,7 +86,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
     }
 
     generateLineChart() {
-        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor, marginLeft} = this.props
+        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color } = this.props
         const svg = d3.select(_ref.current);
 
         let width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0;
@@ -148,7 +148,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
     }
 
     render() {
-        const { height, _ref, isDateFilter, isLimitAvailable } = this.props;
+        const { _ref, isDateFilter, isLimitAvailable } = this.props;
         const { limit, selectedDateFilter, xLabel } = this.state;
 
         return (
