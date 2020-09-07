@@ -177,21 +177,44 @@ export class chartGenerator {
         // Add event listener for tooltip
         bar.on("mousemove", function(this:any, d: any, i: number,) {
             d3.select(this).attr("fill", hoverColor);
-            tooltip
-                .style("left", d3.event.pageX + 20 + "px")
-                .style("top", d3.event.pageY - 70 + "px")
-                .style("display", "inline-block")
-                .style("position", "absolute")
-                .style("text-align", "center")
-                .style("background", "#313C4E")
-                .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
-                .style("font-family", "Roboto")
-                .style("font-size", "8px")
-                .style("line-height", "15px")
-                .style("letter-spacing", "0.4px")
-                .style("color", "#ffffff")
-                .style("padding", "5px 20px")
-                .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
+            if(window.innerWidth/2 > d3.event.pageX) {
+                tooltip
+                    .attr("class", "graphToolTip")
+                    .style("left", d3.event.pageX + 20 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("display", "inline-block")
+                    .style("position", "absolute")
+                    .style("text-align", "center")
+                    .style("background", "#313C4E")
+                    .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
+                    .style("font-family", "Roboto")
+                    .style("font-size", "8px")
+                    .style("line-height", "15px")
+                    .style("letter-spacing", "0.4px")
+                    .style("color", "#ffffff")
+                    .style("padding", "5px 20px")
+                    .style("transform", "translate(0, 0)")
+                    .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
+            } else {
+                tooltip
+                    .attr("class", "rightArrow")
+                    .style("left", d3.event.pageX + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("display", "inline-block")
+                    .style("position", "absolute")
+                    .style("text-align", "center")
+                    .style("background", "#313C4E")
+                    .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
+                    .style("font-family", "Roboto")
+                    .style("font-size", "8px")
+                    .style("line-height", "15px")
+                    .style("letter-spacing", "0.4px")
+                    .style("color", "#ffffff")
+                    .style("padding", "5px 20px")
+                    .style("transform", "translate(-110%, 0)")
+                    .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
+            }
+            
         })
         .on("mouseout", function(this:any, d: any){ 
             d3.select(this).attr("fill", color)
@@ -274,22 +297,43 @@ export class chartGenerator {
             var x0 = x.invert(d3.mouse(this)[0]);
             var i = bisect(data, x0, 1);
             var selectedData = data[i]
-
-            tooltip
-                .style("left", d3.event.pageX + 20 + "px")
-                .style("top", d3.event.pageY - 70 + "px")
-                .style("display", "inline-block")
-                .style("position", "absolute")
-                .style("text-align", "center")
-                .style("background", "#313C4E")
-                .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
-                .style("font-family", "Roboto")
-                .style("font-size", "8px")
-                .style("line-height", "15px")
-                .style("letter-spacing", "0.4px")
-                .style("color", "#ffffff")
-                .style("padding", "5px 20px")
-                .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+            if(window.innerWidth/2 > d3.event.pageX) {
+                tooltip
+                    .attr("class", "graphToolTip")
+                    .style("left", d3.event.pageX + 20 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("display", "inline-block")
+                    .style("position", "absolute")
+                    .style("text-align", "center")
+                    .style("background", "#313C4E")
+                    .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
+                    .style("font-family", "Roboto")
+                    .style("font-size", "8px")
+                    .style("line-height", "15px")
+                    .style("letter-spacing", "0.4px")
+                    .style("color", "#ffffff")
+                    .style("padding", "5px 20px")
+                    .style("transform", "translate(0, 0)")
+                    .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+            } else {
+                tooltip
+                    .attr("class", "rightArrow")
+                    .style("left", d3.event.pageX + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("display", "inline-block")
+                    .style("position", "absolute")
+                    .style("text-align", "center")
+                    .style("background", "#313C4E")
+                    .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
+                    .style("font-family", "Roboto")
+                    .style("font-size", "8px")
+                    .style("line-height", "15px")
+                    .style("letter-spacing", "0.4px")
+                    .style("color", "#ffffff")
+                    .style("padding", "5px 20px")
+                    .style("transform", "translate(-110%, 0)")
+                    .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+            }
         }
         function mouseout() {
             tooltip.style("display", "none");
@@ -376,22 +420,43 @@ export class chartGenerator {
             var x0 = x.invert(d3.mouse(this)[0]);
             var i = bisect(data, x0, 1);
             var selectedData = data[i]
-
-            tooltip
-                .style("left", d3.event.pageX + 20 + "px")
-                .style("top", d3.event.pageY - 70 + "px")
-                .style("display", "inline-block")
-                .style("position", "absolute")
-                .style("text-align", "center")
-                .style("background", "#313C4E")
-                .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
-                .style("font-family", "Roboto")
-                .style("font-size", "8px")
-                .style("line-height", "15px")
-                .style("letter-spacing", "0.4px")
-                .style("color", "#ffffff")
-                .style("padding", "5px 20px")
-                .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+            if(window.innerWidth/2 > d3.event.pageX) {
+                tooltip
+                    .attr("class", "graphToolTip")
+                    .style("left", d3.event.pageX + 20 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("display", "inline-block")
+                    .style("position", "absolute")
+                    .style("text-align", "center")
+                    .style("background", "#313C4E")
+                    .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
+                    .style("font-family", "Roboto")
+                    .style("font-size", "8px")
+                    .style("line-height", "15px")
+                    .style("letter-spacing", "0.4px")
+                    .style("color", "#ffffff")
+                    .style("padding", "5px 20px")
+                    .style("transform", "translate(0, 0)")
+                    .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+            } else {
+                tooltip
+                    .attr("class", "rightArrow")
+                    .style("left", d3.event.pageX + 20 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("display", "inline-block")
+                    .style("position", "absolute")
+                    .style("text-align", "center")
+                    .style("background", "#313C4E")
+                    .style("box-shadow", "1.5px 2.5px 4px rgba(119, 119, 119, 0.25)")
+                    .style("font-family", "Roboto")
+                    .style("font-size", "8px")
+                    .style("line-height", "15px")
+                    .style("letter-spacing", "0.4px")
+                    .style("color", "#ffffff")
+                    .style("padding", "5px 20px")
+                    .style("transform", "translate(-110%, 0)")
+                    .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+            }
         }
         function mouseout() {
             tooltip.style("display", "none");
