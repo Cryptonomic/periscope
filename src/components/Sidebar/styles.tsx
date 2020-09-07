@@ -30,7 +30,7 @@ export const Subtitle = styled.p`
     line-height: 20px;
     color: #274B93;
     margin:0 0 5px;
-    text-align:center;
+    text-align:left;
 `;
 
 export const List = styled.ul`
@@ -150,8 +150,8 @@ export const CryptoNomicLogo = styled.div `
     text-align:center;
     p {
         text-align: left;
-        padding: 0px 10px 0;
-        margin: 0px 10px 15px;
+        padding: 0px;
+        margin: 0px 0px 5px;
         &.links {
             margin:0 10px;
             padding-top:0;
