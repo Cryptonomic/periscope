@@ -297,7 +297,7 @@ export const fetchDailyActivation = (
         query = ConseilQueryBuilder.setLimit(query, 1000000000);
         let result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'operations', query);
         
-        const { values, label } = formatData(date, result, 'timestamp', 'count_kind');
+        const { values, label } = formatData(date, result, 'timestamp', 'count_kind', 86400000);
         let data = [];
         for(var x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), values : values[x] });
@@ -390,13 +390,13 @@ export const fetchDailyOrigination = (
 
 }
 
-const formatData = (date: number, result: Array<any>, xKey: string, yKey: string) => {
+const formatData = (date: number, result: Array<any>, xKey: string, yKey: string, timeFilter: number = 3600000) => {
     var label: any = [],
     timestamps = [],
     values: any = [];
     const now = new Date().getTime();
 
-    for(var time = new Date(date).getTime(); time < now; time += 3600000) {
+    for(var time = new Date(date).getTime(); time < now; time += timeFilter) {
         label.push(new Date(time));
         timestamps.push(time);
         values.push(0);

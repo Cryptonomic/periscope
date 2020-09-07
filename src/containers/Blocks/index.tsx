@@ -154,8 +154,10 @@ class BlocksComponent extends React.Component<Props, States> {
         } else {
             if(this.props.endorsement[0].hasOwnProperty('cycle')) {
                 chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5, 100, 100, this.graphContainer);
+                chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
             } else {
                 chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5, 100, 100, this.graphContainer);
+                chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
             }
         }
         
@@ -163,12 +165,19 @@ class BlocksComponent extends React.Component<Props, States> {
 
     onHourlyBlockDateChange (filter: string) {
         this.updateQueryParams('hourlyBlocks');
-        let timestamp = 0;
+        let timestamp:any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date;
         } else {
-            timestamp = new Date().getTime() - constants[filter];
+            const date = new Date();
+            date.setMinutes(0);
+            date.setSeconds(0);
+            timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
@@ -179,12 +188,19 @@ class BlocksComponent extends React.Component<Props, States> {
 
     onPriorityBlockDateChange (filter: string) {
         this.updateQueryParams('priorityBlocks');
-        let timestamp = 0;
+        let timestamp:any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date;
         } else {
-            timestamp = new Date().getTime() - constants[filter];
+            const date = new Date();
+            date.setMinutes(0);
+            date.setSeconds(0);
+            timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
@@ -194,12 +210,19 @@ class BlocksComponent extends React.Component<Props, States> {
 
     onEndorsementDateChange (filter: string) {
         this.updateQueryParams('endorsement');
-        let timestamp = 0;
+        let timestamp:any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date;
         } else {
-            timestamp = new Date().getTime() - constants[filter];
+            const date = new Date();
+            date.setMinutes(0);
+            date.setSeconds(0);
+            timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;

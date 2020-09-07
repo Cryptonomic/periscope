@@ -457,6 +457,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.dailyActivationRef}
                                 isLimitAvailable={false}
                                 isDateFilter={false}
+                                selectedFilter={constants.one_month_filter}
                                 text={`${moment(new Date().getTime() - constants.one_month_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                         }
                         
@@ -492,6 +493,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.dailyActivationRef}
                                 isLimitAvailable={false}
                                 isDateFilter={false}
+                                selectedFilter={constants.one_month_filter}
                                 text={`${moment(new Date().getTime() - constants.one_month_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                         }
                         

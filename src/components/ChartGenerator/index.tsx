@@ -46,7 +46,11 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     componentDidMount() {
-       this.generateChart();
+        if(this.props.selectedFilter && this.props.selectedFilter === constants.one_month_filter) {
+            this.generateLineChart();
+        } else {
+            this.generateChart();
+        }
     }
 
     componentDidUpdate(prevProps: Props) {
@@ -110,7 +114,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
 
     filterResult(filter: string) {
         this.setState({selectedDateFilter: filter});
-        let timestamp = 0;
+        let timestamp: any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date
@@ -119,6 +123,10 @@ export default class ChartWrapper extends React.Component<Props, States> {
             date.setMinutes(0);
             date.setSeconds(0);
             timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
         if(this.state.xLabel) {
             this.changeLabelText(timestamp);

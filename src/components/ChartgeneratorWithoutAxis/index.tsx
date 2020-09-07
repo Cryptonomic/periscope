@@ -122,7 +122,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
 
     filterResult(filter: string) {
         this.setState({selectedDateFilter: filter});
-        let timestamp = 0;
+        let timestamp: any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date
@@ -131,6 +131,10 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
             date.setMinutes(0);
             date.setSeconds(0);
             timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
         if(this.state.xLabel) {
             this.changeLabelText(timestamp);

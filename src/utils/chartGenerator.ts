@@ -227,7 +227,7 @@ export class chartGenerator {
         svg.selectAll("*").remove();
 
         // set the dimensions and margins of the graph
-        var margin = {top: 0, right: 0, bottom: 50, left: 70},
+        var margin = {top: 10, right: 10, bottom: 50, left: 70},
         width = width - margin.left - margin.right,
         height = height - margin.top - margin.bottom;
         data.forEach((item:any, index:number) => { 
@@ -250,7 +250,9 @@ export class chartGenerator {
             .style('font-size', '10px')
             .style('font-weight', '400')
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).tickFormat((d:any, i:any) => {
+                return i+1;
+            }).ticks(15));
 
         // Add Y axis
         const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
@@ -258,7 +260,7 @@ export class chartGenerator {
             .domain([0, d3.max<any>(yAxisData)])
             .range([ height, 0 ]);
         svg.append("g")
-            .call(d3.axisLeft(y));
+            .call(d3.axisLeft(y).ticks(5));
 
         const bisect = d3.bisector(function(d:any) { return d.x; }).left;
 
