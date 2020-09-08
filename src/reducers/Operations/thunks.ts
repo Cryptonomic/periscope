@@ -361,7 +361,7 @@ export const fetchDailyOrigination = (
         }
 
         for(var r = 0; r < result.length; r++) {
-            for(var t = label.length - 1; t > 0; t--) {
+            for(var t = label.length-1; t >= 0; t--) {
                 if(parseInt(result[r].timestamp) > parseInt(label[t].getTime())) {
                     originations[t] += 1;
                     break;
@@ -403,7 +403,7 @@ const formatData = (date: number, result: Array<any>, xKey: string, yKey: string
     }
 
     for(var r = 0; r < result.length; r++) {
-        for(var t = label.length - 1; t > 0; t--) {
+        for(var t = label.length - 1; t >= 0; t--) {
             if(parseInt(result[r][xKey]) > parseInt(label[t].getTime())) {
                 values[t] += parseInt(result[r][yKey]);
                 break;

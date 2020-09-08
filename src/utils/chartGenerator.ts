@@ -295,7 +295,7 @@ export class chartGenerator {
             // recover coordinate we need
             var x0 = x.invert(d3.mouse(this)[0]);
             var i = bisect(data, x0, 1);
-            var selectedData = data[i]
+            var selectedData = data[i-1]
             if(window.innerWidth/2 > d3.event.pageX) {
                 tooltip
                     .attr("class", "graphToolTip")
@@ -418,7 +418,7 @@ export class chartGenerator {
             // recover coordinate we need
             var x0 = x.invert(d3.mouse(this)[0]);
             var i = bisect(data, x0, 1);
-            var selectedData = data[i]
+            var selectedData = data[i-1]
             if(window.innerWidth/2 > d3.event.pageX) {
                 tooltip
                     .attr("class", "graphToolTip")
