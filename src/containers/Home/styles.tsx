@@ -42,3 +42,13 @@ export const Widget = styled.div`
     }
   }
 `;
+
+export const Label = styled.span `
+  font-size: 14px;
+    line-height: 20px;
+    color: #8492A4;
+    font-family: Nunito;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+`

@@ -41,7 +41,7 @@ export const fetchTopContractsByBalance = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setTopContractsByBalanceLoading(false);
     }
@@ -73,7 +73,7 @@ export const fetchTopContractsByInvocation = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setTopContractsByInvocationLoading(false);
     }

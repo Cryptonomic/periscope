@@ -86,7 +86,7 @@ export const fetchHourlyTransaction = (date: number) => async (dispatch: any, st
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyTransactionLoading(false);
     }
@@ -145,7 +145,7 @@ export const fetchHourlyVolume = (date: number) => async (dispatch: any, state: 
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyVolumeLoading(false);
     }
@@ -207,7 +207,7 @@ export const fetchHourlyGas = (date: number) => async (dispatch: any, state: any
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyGasLoading(false);
     }
@@ -270,7 +270,7 @@ export const fetchHourlyFee = (date: number) => async (dispatch: any, state: any
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyGasLoading(false);
     }
@@ -297,7 +297,7 @@ export const fetchDailyActivation = (
         query = ConseilQueryBuilder.setLimit(query, 1000000000);
         let result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'operations', query);
         
-        const { values, label } = formatData(date, result, 'timestamp', 'count_kind');
+        const { values, label } = formatData(date, result, 'timestamp', 'count_kind', 86400000);
         let data = [];
         for(var x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), values : values[x] });
@@ -317,7 +317,7 @@ export const fetchDailyActivation = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setDailyActivationLoading(false);
     }
@@ -361,7 +361,7 @@ export const fetchDailyOrigination = (
         }
 
         for(var r = 0; r < result.length; r++) {
-            for(var t = label.length - 1; t > 0; t--) {
+            for(var t = label.length-1; t >= 0; t--) {
                 if(parseInt(result[r].timestamp) > parseInt(label[t].getTime())) {
                     originations[t] += 1;
                     break;
@@ -383,27 +383,27 @@ export const fetchDailyOrigination = (
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setDailyOriginationLoading(false);
     }
 
 }
 
-const formatData = (date: number, result: Array<any>, xKey: string, yKey: string) => {
+const formatData = (date: number, result: Array<any>, xKey: string, yKey: string, timeFilter: number = 3600000) => {
     var label: any = [],
     timestamps = [],
     values: any = [];
     const now = new Date().getTime();
 
-    for(var time = new Date(date).getTime(); time < now; time += 3600000) {
+    for(var time = new Date(date).getTime(); time < now; time += timeFilter) {
         label.push(new Date(time));
         timestamps.push(time);
         values.push(0);
     }
 
     for(var r = 0; r < result.length; r++) {
-        for(var t = label.length - 1; t > 0; t--) {
+        for(var t = label.length - 1; t >= 0; t--) {
             if(parseInt(result[r][xKey]) > parseInt(label[t].getTime())) {
                 values[t] += parseInt(result[r][yKey]);
                 break;

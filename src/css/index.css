@@ -264,6 +264,10 @@ div[class^="Footer"] a {
     text-align: right;
 }
 
+.linkHolder ul li.leftAlign h3 {
+    margin-bottom: 0;
+}
+
 .linkHolder ul li a {
     font-family: 'Nunito';
     font-style: normal;
@@ -374,20 +378,20 @@ div[class^="Footer"] a {
     padding: 20px 0 20px 0;
 }
 
-g.y-axis > path {
+g.y-axis>path {
     display: none !important;
 }
 
-g.y-axis > g > line {
+g.y-axis>g>line {
     display: none !important;
 }
 
-g.grid > g.tick {
+g.grid>g.tick {
     opacity: .6 !important;
     color: #dce1e6;
 }
 
-g.grid > path {
+g.grid>path {
     display: none;
 }
 

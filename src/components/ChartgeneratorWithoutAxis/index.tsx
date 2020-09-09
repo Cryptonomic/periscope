@@ -86,7 +86,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
     }
 
     generateLineChart() {
-        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor, marginLeft} = this.props
+        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color } = this.props
         const svg = d3.select(_ref.current);
 
         let width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0;
@@ -122,7 +122,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
 
     filterResult(filter: string) {
         this.setState({selectedDateFilter: filter});
-        let timestamp = 0;
+        let timestamp: any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date
@@ -131,6 +131,10 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
             date.setMinutes(0);
             date.setSeconds(0);
             timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
         if(this.state.xLabel) {
             this.changeLabelText(timestamp);
@@ -144,7 +148,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
     }
 
     render() {
-        const { height, _ref, isDateFilter, isLimitAvailable } = this.props;
+        const { _ref, isDateFilter, isLimitAvailable } = this.props;
         const { limit, selectedDateFilter, xLabel } = this.state;
 
         return (

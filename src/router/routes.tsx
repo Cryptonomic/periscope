@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Layout from '../components/Layout';
 import { Accounts } from '../containers/Accounts';
@@ -20,7 +20,6 @@ export default () => {
         <Route exact path="/contracts" component={Contracts} />
         <Route exact path="/operations" component={Operations} />
         <Route exact path="/blocks" component={Blocks} />
-        {/* <Redirect to="/" /> */}
       </Layout>
     </Switch>
   );

@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import { color } from "d3";
 
 export class chartGenerator {
 
@@ -11,7 +10,6 @@ export class chartGenerator {
         const margin = {top: 10, right: 0, bottom: 50, left: 70};
 
         let xRange: any = d3.range(data.length);
-        const constData: any = d3.range(15);
         const xAxisData =  data.map((d: any, index: any) => index);
         const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
 
@@ -26,7 +24,7 @@ export class chartGenerator {
                     .range([height - margin.bottom, margin.top])
 
         
-        let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, (data.length-1)]).range(<any>([margin.left, width - margin.right]));
+        let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, (data.length-1)]).range(([margin.left, width - margin.right]) as any);
         if(data.length < 100) {
             xAxisScaleForBottom = x; 
         }
@@ -94,7 +92,6 @@ export class chartGenerator {
             .attr('width', width);
 
        let xRange: any = d3.range(data.length);
-       const constData: any = d3.range(15);
        const xAxisData =  data.map((d: any, index: any) => index);
        const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
 
@@ -109,15 +106,15 @@ export class chartGenerator {
                    .range([height - margin.bottom, margin.top])
 
        
-       let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, data.length]).range(<any>([margin.left, width - margin.right]));
-       if(data.length < 100) {
-           xAxisScaleForBottom = x; 
-       }
+    //    let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, data.length]).range(([margin.left, width - margin.right]) as any);
+    //    if(data.length < 100) {
+    //        xAxisScaleForBottom = x; 
+    //    }
 
-       function make_y_gridlines() {		
-            return d3.axisLeft(y)
-                .ticks(5)
-        }
+    //    function make_y_gridlines() {		
+    //         return d3.axisLeft(y)
+    //             .ticks(5)
+    //     }
 
        if(x.bandwidth() <= 3) {
            let rangeData: any = d3.range(xAxisData.length)
@@ -126,11 +123,11 @@ export class chartGenerator {
                .range([margin.left, xAxisData.length * 3]);
        }
       
-       const xAxis = (g:any) => g
-           .attr("transform", `translate(0,${height - margin.bottom})`)
-           .call(d3.axisBottom(xAxisScaleForBottom).tickFormat((d:any, i:any) => {
-            return i+1;
-        }).ticks(15))
+    //    const xAxis = (g:any) => g
+    //        .attr("transform", `translate(0,${height - margin.bottom})`)
+    //        .call(d3.axisBottom(xAxisScaleForBottom).tickFormat((d:any, i:any) => {
+    //         return i+1;
+    //     }).ticks(15))
 
        const yAxis = (g:any) => g
            .attr("transform", `translate(${margin.left},0)`)
@@ -194,6 +191,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(0, 0)")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
             } else {
                 tooltip
@@ -212,6 +212,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(-110%, 0)")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
             }
             
@@ -227,15 +230,15 @@ export class chartGenerator {
         svg.selectAll("*").remove();
 
         // set the dimensions and margins of the graph
-        var margin = {top: 0, right: 0, bottom: 50, left: 70},
-        width = width - margin.left - margin.right,
+        const margin = {top: 10, right: 10, bottom: 50, left: 70};
+        width = width - margin.left - margin.right;
         height = height - margin.top - margin.bottom;
         data.forEach((item:any, index:number) => { 
             item.x = index+1;
         })
 
         // append the svg object to the body of the page
-        var svg = svg
+        svg = svg
                 .append("g")
                 .attr("transform","translate(" + margin.left + "," + margin.top + ")");
         
@@ -250,7 +253,9 @@ export class chartGenerator {
             .style('font-size', '10px')
             .style('font-weight', '400')
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).tickFormat((d:any, i:any) => {
+                return i+1;
+            }).ticks(15));
 
         // Add Y axis
         const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
@@ -258,7 +263,7 @@ export class chartGenerator {
             .domain([0, d3.max<any>(yAxisData)])
             .range([ height, 0 ]);
         svg.append("g")
-            .call(d3.axisLeft(y));
+            .call(d3.axisLeft(y).ticks(5));
 
         const bisect = d3.bisector(function(d:any) { return d.x; }).left;
 
@@ -296,7 +301,7 @@ export class chartGenerator {
             // recover coordinate we need
             var x0 = x.invert(d3.mouse(this)[0]);
             var i = bisect(data, x0, 1);
-            var selectedData = data[i]
+            var selectedData = data[i-1]
             if(window.innerWidth/2 > d3.event.pageX) {
                 tooltip
                     .attr("class", "graphToolTip")
@@ -314,6 +319,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(0, 0)")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
             } else {
                 tooltip
@@ -332,6 +340,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(-110%, 0)")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
             }
         }
@@ -356,7 +367,7 @@ export class chartGenerator {
         })
 
         // append the svg object to the body of the page
-        var svg = svg
+        svg = svg
                 .append("g")
                 .attr("transform","translate(" + margin.left + "," + margin.top + ")");
         
@@ -419,7 +430,7 @@ export class chartGenerator {
             // recover coordinate we need
             var x0 = x.invert(d3.mouse(this)[0]);
             var i = bisect(data, x0, 1);
-            var selectedData = data[i]
+            var selectedData = data[i-1]
             if(window.innerWidth/2 > d3.event.pageX) {
                 tooltip
                     .attr("class", "graphToolTip")
@@ -437,6 +448,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(0, 0)")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
             } else {
                 tooltip
@@ -455,6 +469,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(-110%, 0)")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
             }
         }
