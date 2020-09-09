@@ -13,7 +13,8 @@ import {TopBakers} from './topBakers';
 import {
     MainContainer,
     Title,
-    Widget
+    Widget,
+    Label
 } from './styles';
 
 import { Props, States } from './types';
@@ -189,6 +190,7 @@ class HomeComponent extends React.Component<Props, States> {
         return (
             <MainContainer>
                 <Title>Tezos Network Overview </Title>
+                <Label>Tezos Network: Mainnet</Label>
                 <Widget>
                     <h3>Operations</h3>
                     <Grid container spacing={4}>

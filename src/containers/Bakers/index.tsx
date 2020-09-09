@@ -180,9 +180,12 @@ class BakersComponent extends React.Component<Props, States> {
             <MainContainer>
                 <Title>Bakers</Title>
                 <Widget id="topStakers">
-                    <h3>Top Bakers by Stake</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Top Bakers by Stake</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.topBakersByStakeQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -215,9 +218,12 @@ class BakersComponent extends React.Component<Props, States> {
                     </React.Fragment>
                 </Widget>
                 <Widget id="topBlockers">
-                    <h3>Top Bakers by Block</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Top Bakers by Block</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.topBakersByBlockQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -252,9 +258,12 @@ class BakersComponent extends React.Component<Props, States> {
                     { isTopBakersByDelegationLoading && <Loader /> }         
                 </Widget>
                 <Widget id="topDelegator">
-                    <h3>Top Bakers by Delegations</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Top Bakers by Delegations</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.topBakersByDelegationQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">

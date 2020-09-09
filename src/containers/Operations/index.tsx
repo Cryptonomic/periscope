@@ -284,9 +284,12 @@ class OperationsComponent extends React.Component<Props, States> {
             <MainContainer>
                 <Title>Operations</Title>
                 <Widget id="trancations">
-                    <h3>Transactions per Hour</h3>
+                   
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Transactions per Hour</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={hourlyTransactionQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -320,9 +323,12 @@ class OperationsComponent extends React.Component<Props, States> {
                     </React.Fragment>
                 </Widget>
                 <Widget id="trancationsVolume">
-                    <h3>Transaction Volume per Hour</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Transaction Volume per Hour</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={hourlyVolumeQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -356,9 +362,12 @@ class OperationsComponent extends React.Component<Props, States> {
                     </React.Fragment>
                 </Widget>
                 <Widget id="gasConsumed">
-                    <h3>Gas Consumed per Hour</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Gas Consumed per Hour</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={hourlyGasQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -392,9 +401,12 @@ class OperationsComponent extends React.Component<Props, States> {
                     </React.Fragment>
                 </Widget>
                 <Widget id="feesPaid">
-                    <h3>Fees Paid per Hour</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Fees Paid per Hour</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={hourlyFeeQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -428,9 +440,12 @@ class OperationsComponent extends React.Component<Props, States> {
                     </React.Fragment>
                 </Widget>
                 <Widget id="activations">
-                    <h3>Activations per Day</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Activations per Day</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={dailyActivationQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -463,9 +478,12 @@ class OperationsComponent extends React.Component<Props, States> {
                     </React.Fragment>
                 </Widget>
                 <Widget id="originations">
-                    <h3>Originations per Day</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Originations per Day</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={dailyOriginationQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">

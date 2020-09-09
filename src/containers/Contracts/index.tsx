@@ -123,9 +123,12 @@ class ContractsComponent extends React.Component<Props, States> {
             <MainContainer>
                 <Title>Contracts</Title>
                 <Widget id="contractsByBalance">
-                    <h3>Top Contracts by Balance</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Top Contracts by Balance</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.topContractsByBalanceQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,9 +161,12 @@ class ContractsComponent extends React.Component<Props, States> {
                     </React.Fragment>
                 </Widget>
                 <Widget id="contractsByInvocation">
-                    <h3>Top Contracts by Invocation</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Top Contracts by Invocation</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.topContractsByInvocationQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -221,9 +221,11 @@ class BlocksComponent extends React.Component<Props, States> {
             <MainContainer>
                 <Title>Blocks</Title>
                 <Widget id="hourlyBlocks">
-                    <h3>Blocks per Hour</h3>
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Blocks per Hour</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.hourlyBlockQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -255,9 +257,12 @@ class BlocksComponent extends React.Component<Props, States> {
                        
                     </Widget>
                     <Widget id="priorityBlocks">
-                    <h3>Priority Zero Blocks per Hour</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                                <h3>Priority Zero Blocks per Hour</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.priorityBlockQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -288,9 +293,12 @@ class BlocksComponent extends React.Component<Props, States> {
                     </div>      
                     </Widget>
                     <Widget id="endorsement">
-                    <h3>Endorsements per Hour</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                            <h3>Endorsements per Hour</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.endorsementQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -191,7 +191,9 @@ export class chartGenerator {
                 .style("letter-spacing", "0.4px")
                 .style("color", "#ffffff")
                 .style("padding", "5px 20px")
-                .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
+                .style("max-width", "120px")
+                .style("word-break", "break-all")
+                .html(yLabelFunction(d, i) + xLabelFunction(d, i));
         })
         .on("mouseout", function(this:any, d: any){ 
             d3.select(this).attr("fill", color)
@@ -289,7 +291,9 @@ export class chartGenerator {
                 .style("letter-spacing", "0.4px")
                 .style("color", "#ffffff")
                 .style("padding", "5px 20px")
-                .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+                .style('max-width:120px')
+                .style('word-break:break-word')
+                .html(yLabelFunction(selectedData, i) + xLabelFunction(selectedData, i));
         }
         function mouseout() {
             tooltip.style("display", "none");
@@ -391,10 +395,12 @@ export class chartGenerator {
                 .style("letter-spacing", "0.4px")
                 .style("color", "#ffffff")
                 .style("padding", "5px 20px")
-                .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
+                .style('max-width:120px')
+                .style('word-break:break-word')
+                .html(yLabelFunction(selectedData, i) + xLabelFunction(selectedData, i));
         }
         function mouseout() {
-            tooltip.style("display", "none");
+            tooltip.style("display", "block !important");
         }
 
     }

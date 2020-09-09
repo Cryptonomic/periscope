@@ -71,9 +71,12 @@ class AccountsComponent extends React.Component<Props, States> {
             <MainContainer>
                 <Title>Accounts</Title>
                 <Widget>
-                    <h3>Top Tez Holders</h3>
+                    
                     <div className="linkHolder">
                         <ul>
+                            <li className="leftAlign">
+                            <h3 className="mb-0">Top Tez Holders</h3>
+                            </li>
                             <li className="rightAlign">
                                 <a href={this.props.topAccountsQuery} target="_blank">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
