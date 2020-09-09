@@ -191,8 +191,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(0, 0)")
-                    .style("max-width", "120px")
-                    .style("word-break", "break-all")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
             } else {
                 tooltip
@@ -211,8 +212,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(-110%, 0)")
-                    .style("max-width", "120px")
-                    .style("word-break", "break-all")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(d, i) + "<br>" + xLabelFunction(d, i));
             }
             
@@ -317,8 +319,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(0, 0)")
-                    .style("max-width", "120px")
-                    .style("word-break", "break-all")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
             } else {
                 tooltip
@@ -337,8 +340,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(-110%, 0)")
-                    .style("max-width", "120px")
-                    .style("word-break", "break-all")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
             }
         }
@@ -444,8 +448,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(0, 0)")
-                    .style("max-width", "120px")
-                    .style("word-break", "break-all")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
             } else {
                 tooltip
@@ -464,8 +469,9 @@ export class chartGenerator {
                     .style("color", "#ffffff")
                     .style("padding", "5px 20px")
                     .style("transform", "translate(-110%, 0)")
-                    .style("max-width", "120px")
-                    .style("word-break", "break-all")
+                    .style("max-width", "160px")
+                    .style("min-width", "140px")
+                    .style("word-break", "break-word")
                     .html(yLabelFunction(selectedData, i) + "<br>" + xLabelFunction(selectedData, i));
             }
         }
