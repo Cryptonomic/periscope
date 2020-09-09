@@ -476,7 +476,7 @@ export class chartGenerator {
             }
         }
         function mouseout() {
-            tooltip.style("display", "block !important");
+            tooltip.style("display", "none");
         }
 
     }
