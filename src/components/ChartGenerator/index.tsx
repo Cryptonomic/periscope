@@ -21,6 +21,7 @@ interface Props {
     text: any, 
     hoverColor: string,
     selectedFilter?: string,
+    isLineChart?: boolean,
 }
 
 interface States {
@@ -46,7 +47,11 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     componentDidMount() {
-       this.generateChart();
+        if(this.props.selectedFilter && this.props.selectedFilter === constants.one_month_filter) {
+            this.generateLineChart();
+        } else {
+            this.generateChart();
+        }
     }
 
     componentDidUpdate(prevProps: Props) {
@@ -79,7 +84,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     generateLineChart() {
-        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color ,spacing, hoverColor} = this.props
+        const {_ref, data, xTooltip, yTooltip, height , xKey, yKey, color} = this.props
         const svg = d3.select(_ref.current);
 
         const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 532
@@ -110,7 +115,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
 
     filterResult(filter: string) {
         this.setState({selectedDateFilter: filter});
-        let timestamp = 0;
+        let timestamp: any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date
@@ -119,6 +124,10 @@ export default class ChartWrapper extends React.Component<Props, States> {
             date.setMinutes(0);
             date.setSeconds(0);
             timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
         if(this.state.xLabel) {
             this.changeLabelText(timestamp);

@@ -37,7 +37,7 @@ export const fetchTopAccounts = (limit: number) => async (dispatch: any, state: 
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setLoading(false);
     }

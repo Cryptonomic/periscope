@@ -216,6 +216,18 @@ div[class^="Footer"] a {
     content: '';
 }
 
+.rightArrow:before {
+    position: absolute;
+    right: -10px;
+    top: 10px;
+    content: '';
+    width: 0px;
+    height: 0px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #313c4e;
+}
+
 .y-axis {
     position: absolute;
     left: 15px;

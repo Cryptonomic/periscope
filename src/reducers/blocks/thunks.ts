@@ -69,7 +69,7 @@ export const fetchHourlyBlock = (date: number) => async (dispatch: any, state: a
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setHourlyBlockLoading(false);
     }
@@ -126,7 +126,7 @@ export const fetchPriorityBlock = (date: number) => async (dispatch: any, state:
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         setPriorityBlockLoading(false);
     }
@@ -206,7 +206,7 @@ export const fetchEndorsement = (date: number) => async (dispatch: any, state: a
             e.message ||
             `Unable to load transactions data for Home page.`;
         if (e.message) {
-            await dispatch(createMessageAction(e.message, true));
+            await dispatch(createMessageAction(message, true));
         }
         dispatch(setEndorsementLoading(false));
     }

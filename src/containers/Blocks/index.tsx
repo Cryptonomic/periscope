@@ -154,8 +154,10 @@ class BlocksComponent extends React.Component<Props, States> {
         } else {
             if(this.props.endorsement[0].hasOwnProperty('cycle')) {
                 chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5, 100, 100, this.graphContainer);
+                chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
             } else {
                 chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5, 100, 100, this.graphContainer);
+                chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
             }
         }
         
@@ -163,12 +165,19 @@ class BlocksComponent extends React.Component<Props, States> {
 
     onHourlyBlockDateChange (filter: string) {
         this.updateQueryParams('hourlyBlocks');
-        let timestamp = 0;
+        let timestamp:any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date;
         } else {
-            timestamp = new Date().getTime() - constants[filter];
+            const date = new Date();
+            date.setMinutes(0);
+            date.setSeconds(0);
+            timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
@@ -179,12 +188,19 @@ class BlocksComponent extends React.Component<Props, States> {
 
     onPriorityBlockDateChange (filter: string) {
         this.updateQueryParams('priorityBlocks');
-        let timestamp = 0;
+        let timestamp:any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date;
         } else {
-            timestamp = new Date().getTime() - constants[filter];
+            const date = new Date();
+            date.setMinutes(0);
+            date.setSeconds(0);
+            timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
@@ -194,12 +210,19 @@ class BlocksComponent extends React.Component<Props, States> {
 
     onEndorsementDateChange (filter: string) {
         this.updateQueryParams('endorsement');
-        let timestamp = 0;
+        let timestamp:any = 0;
         // calculate timestamp for conseiljs query builder
         if(filter === constants.all_time_filter) {
             timestamp = constants.all_time_date;
         } else {
-            timestamp = new Date().getTime() - constants[filter];
+            const date = new Date();
+            date.setMinutes(0);
+            date.setSeconds(0);
+            timestamp = date.getTime() - constants[filter];
+            timestamp = new Date(timestamp)
+            timestamp.setMinutes(0);
+            timestamp.setSeconds(0);
+            timestamp = timestamp.getTime();
         }
 
         const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
@@ -227,7 +250,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 <h3>Blocks per Hour</h3>
                             </li>
                             <li className="rightAlign">
-                                <a href={this.props.hourlyBlockQuery} target="_blank">Arronax Query
+                                <a href={this.props.hourlyBlockQuery} target="_blank" rel="noopener noreferrer">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -264,7 +287,7 @@ class BlocksComponent extends React.Component<Props, States> {
                                 <h3>Priority Zero Blocks per Hour</h3>
                             </li>
                             <li className="rightAlign">
-                                <a href={this.props.priorityBlockQuery} target="_blank">Arronax Query
+                                <a href={this.props.priorityBlockQuery} target="_blank" rel="noopener noreferrer">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -300,7 +323,7 @@ class BlocksComponent extends React.Component<Props, States> {
                             <h3>Endorsements per Hour</h3>
                             </li>
                             <li className="rightAlign">
-                                <a href={this.props.endorsementQuery} target="_blank">Arronax Query
+                                <a href={this.props.endorsementQuery} target="_blank" rel="noopener noreferrer">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
