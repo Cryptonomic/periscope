@@ -3,10 +3,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import Loader from '../../components/Loader';
-import {chartGenerator} from '../../utils/chartGenerator';
 import { constants } from '../../utils/constants';
 import moment from 'moment';
-import * as d3 from 'd3';
 
 import {
     MainContainer,
@@ -15,6 +13,7 @@ import {
 } from './styles';
 
 import { ErrorDialog } from '../../components/ErrorDialog';
+import ChartWrapper from '../../components/ChartGenerator';
 
 import { Props, States } from './types';
 
@@ -76,170 +75,79 @@ class BlocksComponent extends React.Component<Props, States> {
         }
     }
 
-    updateQueryParams(param: string) {
+    updateQueryParams = (param: string) => {
         this.props.history.push({
             pathname: this.props.history.location.pathname,
             search: '?q='+param
         })
     }
 
-    async fetchHourlyBlockData(date: number, filter?: string){
+    async fetchHourlyBlockData(date: number){
         const { fetchHourlyBlock } = this.props;
-        // Fetch top ten
         await fetchHourlyBlock(date);
-        const svg = d3.select(this.hourlyBlockRef.current);
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
-
-        const xTooltipFn = function(d: any, i: number) {
-            return d.value.toLocaleString() + " Blocks per Hour";
-        }
-    
-        const yTooltipFn = function(d: any, i: number) {
-            return moment(d.date).format("YYYY MMM DD, HH:mm");
-        }
-
-        if(filter && filter === constants.one_month_filter) {
-
-            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn, this.graphContainer);
-        } else {
-            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.hourlyBlock, "date", "value", "#CEE6CA" ,5, 100, 100, this.graphContainer);
-        
-            chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
-        }
-        
     }
 
-    async fetchPriorityBlock(date: number, filter?: string) {
+    xTooltipForBlocksFn = (d: any, i: number) => {
+        return d.value.toLocaleString() + " Blocks per Hour";
+    }
+
+    yTooltipForBlocksFn = function(d: any, i: number) {
+        return moment(d.date).format("YYYY MMM DD, HH:mm");
+    }
+
+    async fetchPriorityBlock(date: number) {
         const { fetchPriorityBlock } = this.props;
-
-        // Fetch top ten
         await fetchPriorityBlock(date);
-        const svg = d3.select(this.priorityBlockRef.current);
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
-
-        
-        
-        const xTooltipFn = function(d: any, i: number) {
-            return d.value.toLocaleString() + " Priority Zero Blocks per Hour";
-        }
-    
-        const yTooltipFn = function(d: any, i: number) {
-            return moment(d.date).format("YYYY MMM DD, HH:mm");
-        }
-
-        if(filter && filter === constants.one_month_filter) {
-            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn, this.graphContainer);
-        } else {
-            chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.priorityBlock, "date", "value", "#CEE6CA" ,5, 100, 100, this.graphContainer);
-            chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
-        }
     }
 
-    async fetchEndorsement(date: number, filter?: string) {
+    xTooltipForPriorityFn = (d: any, i: number) => {
+        return d.value.toLocaleString() + " Priority Zero Blocks per Hour";
+    }
+
+    yTooltipForPriorityFn = (d: any, i: number) => {
+        return moment(d.date).format("YYYY MMM DD, HH:mm");
+    }
+
+    async fetchEndorsement(date: number) {
         const { fetchEndorsement } = this.props;
-
-        // Fetch top ten
         await fetchEndorsement(date);
-        const svg = d3.select(this.endorsementRef.current);
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 0
-        const xTooltipFn = function(d: any, i: number) {
-            return d.value.toLocaleString() + " Endorsements";
-        }
-    
-        const yTooltipFn = function(d: any, i: number) {
-            return moment(d.date).format("YYYY MMM DD, HH:mm");
-        }
-        if(filter && filter === constants.one_month_filter) {
-            chartGenerator.generateLineChartWithoutXAxis(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA", xTooltipFn, yTooltipFn, this.graphContainer);
-        } else {
-            if(this.props.endorsement[0].hasOwnProperty('cycle')) {
-                chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "cycle", "count_kind", "#CEE6CA" ,5, 100, 100, this.graphContainer);
-                chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
-            } else {
-                chartGenerator.seperateAxisPrioritizedBarChartGenerator(250, width, svg, this.props.endorsement, "date", "value", "#CEE6CA" ,5, 100, 100, this.graphContainer);
-                chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, '#CEE6CA', '#677365');
-            }
-        }
         
     }
 
-    onHourlyBlockDateChange (filter: string) {
+    xTooltipForEndorsementFn = (d: any, i: number) => {
+        return d.value.toLocaleString() + " Endorsements";
+    }
+
+    yTooltipForEndorsementFn = (d: any, i: number) => {
+        return moment(d.date).format("YYYY MMM DD, HH:mm");
+    }
+
+    onHourlyBlockDateChange = (limit: number, date: number, filter: string) => {
         this.updateQueryParams('hourlyBlocks');
-        let timestamp:any = 0;
-        // calculate timestamp for conseiljs query builder
-        if(filter === constants.all_time_filter) {
-            timestamp = constants.all_time_date;
-        } else {
-            const date = new Date();
-            date.setMinutes(0);
-            date.setSeconds(0);
-            timestamp = date.getTime() - constants[filter];
-            timestamp = new Date(timestamp)
-            timestamp.setMinutes(0);
-            timestamp.setSeconds(0);
-            timestamp = timestamp.getTime();
-        }
-
-        const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
+        const text = `${moment(date).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
         this.setState({hourlyBlockGraphText: text, hourlyBlocksFilter: filter});
-        this.fetchHourlyBlockData(timestamp, filter);
+        this.fetchHourlyBlockData(date);
     }
 
 
-    onPriorityBlockDateChange (filter: string) {
+    onPriorityBlockDateChange = (limit: number, date: number, filter: string) => {
         this.updateQueryParams('priorityBlocks');
-        let timestamp:any = 0;
-        // calculate timestamp for conseiljs query builder
-        if(filter === constants.all_time_filter) {
-            timestamp = constants.all_time_date;
-        } else {
-            const date = new Date();
-            date.setMinutes(0);
-            date.setSeconds(0);
-            timestamp = date.getTime() - constants[filter];
-            timestamp = new Date(timestamp)
-            timestamp.setMinutes(0);
-            timestamp.setSeconds(0);
-            timestamp = timestamp.getTime();
-        }
 
-        const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
+        const text = `${moment(date).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
         this.setState({priorityBlockGraphText: text, priorityBlockFilter: filter});
-        this.fetchPriorityBlock(timestamp, filter);
+        this.fetchPriorityBlock(date);
     }
 
-    onEndorsementDateChange (filter: string) {
+    onEndorsementDateChange = (limit: number, date: number, filter: string) => {
         this.updateQueryParams('endorsement');
-        let timestamp:any = 0;
-        // calculate timestamp for conseiljs query builder
-        if(filter === constants.all_time_filter) {
-            timestamp = constants.all_time_date;
-        } else {
-            const date = new Date();
-            date.setMinutes(0);
-            date.setSeconds(0);
-            timestamp = date.getTime() - constants[filter];
-            timestamp = new Date(timestamp)
-            timestamp.setMinutes(0);
-            timestamp.setSeconds(0);
-            timestamp = timestamp.getTime();
-        }
 
-        const text = `${moment(timestamp).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
+        const text = `${moment(date).format("YYYY MMMM Do")} - ${moment().format("YYYY MMMM Do")}`;
         this.setState({endorsementGraphText: text, endorsementFilter: filter});
-        this.fetchEndorsement(timestamp, filter);
+        this.fetchEndorsement(date);
     }
 
     render() {
         const { isHourlyBlockLoading, isPriorityBlockLoading, isEndorsementLoading } = this.props;
-        const { 
-            hourlyBlocksFilter, 
-            priorityBlockFilter, 
-            endorsementFilter, 
-            hourlyBlockGraphText,
-            priorityBlockGraphText,
-            endorsementGraphText
-        } = this.state;
         return (
             <MainContainer>
                 <Title>Blocks</Title>
@@ -259,24 +167,26 @@ class BlocksComponent extends React.Component<Props, States> {
                             </li>
                         </ul>
                     </div>
-                    <div className="mapHolder">
+                    <React.Fragment>
                         {
-                            <React.Fragment>
-                                <div className="pos-abs-right">
-                                    <span onClick={e=> this.onHourlyBlockDateChange(constants.one_day_filter)} className={hourlyBlocksFilter=== constants.one_day_filter ? 'selected': ' '} >Day</span>
-                                    <span onClick={e=> this.onHourlyBlockDateChange(constants.one_week_filter)} className={hourlyBlocksFilter=== constants.one_week_filter ? 'selected': ' '}>Week</span>
-                                    <span onClick={e=> this.onHourlyBlockDateChange(constants.one_month_filter)} className={hourlyBlocksFilter=== constants.one_month_filter ? 'selected': ' '}>Month</span>
-                                    {/* <span onClick={e=> this.onHourlyBlockDateChange(constants.one_year_filter)} className={hourlyBlocksFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
-                                    <span onClick={e=> this.onHourlyBlockDateChange(constants.all_time_filter)} className={hourlyBlocksFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span> */}
-                                </div>
-                                
-                                <div className="graph-holder" ref={this.graphContainer}>
-                                    <svg className="account-graph" ref={this.hourlyBlockRef}></svg>
-                                </div>
-                                <p className="year-text">{hourlyBlockGraphText}</p>
-                            </React.Fragment>
+                            this.props.hourlyBlock.length && 
+                            <ChartWrapper data= {this.props.hourlyBlock}
+                                color= '#CEE6CA'
+                                hoverColor='#677365'
+                                height= {250}
+                                xKey= "date"
+                                yKey= "value"
+                                spacing= {10}
+                                onLimitChange= {this.onHourlyBlockDateChange}
+                                xTooltip= {this.xTooltipForBlocksFn}
+                                yTooltip= {this.yTooltipForBlocksFn}
+                                _ref= {this.hourlyBlockRef}
+                                isLimitAvailable={false}
+                                isDateFilter={true}
+                                text={moment().format("YYYY MMMM Do")}
+                                selectedFilter={this.state.hourlyBlocksFilter}/>
                         }
-                    </div>
+                    </React.Fragment>
                        
                     </Widget>
                     <Widget id="priorityBlocks">
@@ -299,18 +209,24 @@ class BlocksComponent extends React.Component<Props, States> {
                     <div className="mapHolder">
                         {
                             <React.Fragment>
-                                <div className="pos-abs-right">
-                                    <span onClick={e=> this.onPriorityBlockDateChange(constants.one_day_filter)} className={priorityBlockFilter=== constants.one_day_filter ? 'selected': ' '} >Day</span>
-                                    <span onClick={e=> this.onPriorityBlockDateChange(constants.one_week_filter)} className={priorityBlockFilter=== constants.one_week_filter ? 'selected': ' '}>Week</span>
-                                    <span onClick={e=> this.onPriorityBlockDateChange(constants.one_month_filter)} className={priorityBlockFilter=== constants.one_month_filter ? 'selected': ' '}>Month</span>
-                                    {/* <span onClick={e=> this.onPriorityBlockDateChange(constants.one_year_filter)} className={priorityBlockFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
-                                    <span onClick={e=> this.onPriorityBlockDateChange(constants.all_time_filter)} className={priorityBlockFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span> */}
-                                </div>
-                                
-                                <div className="graph-holder" ref={this.graphContainer}>
-                                    <svg className="account-graph" ref={this.priorityBlockRef}></svg>
-                                </div>
-                                <p className="year-text">{priorityBlockGraphText}</p>
+                                {
+                                    this.props.priorityBlock.length && 
+                                    <ChartWrapper data= {this.props.priorityBlock}
+                                        color= '#CEE6CA'
+                                        hoverColor='#677365'
+                                        height= {250}
+                                        xKey= "date"
+                                        yKey= "value"
+                                        spacing= {10}
+                                        onLimitChange= {this.onPriorityBlockDateChange}
+                                        xTooltip= {this.xTooltipForPriorityFn}
+                                        yTooltip= {this.yTooltipForPriorityFn}
+                                        _ref= {this.priorityBlockRef}
+                                        isLimitAvailable={false}
+                                        isDateFilter={true}
+                                        text={moment().format("YYYY MMMM Do")}
+                                        selectedFilter={this.state.priorityBlockFilter}/>
+                                }
                             </React.Fragment>
                         }
                     </div>      
@@ -335,18 +251,24 @@ class BlocksComponent extends React.Component<Props, States> {
                     <div className="mapHolder">
                         {
                             <React.Fragment>
-                               <div className="pos-abs-right">
-                                    <span onClick={e=> this.onEndorsementDateChange(constants.one_day_filter)} className={endorsementFilter=== constants.one_day_filter ? 'selected': ' '} >Day</span>
-                                    <span onClick={e=> this.onEndorsementDateChange(constants.one_week_filter)} className={endorsementFilter=== constants.one_week_filter ? 'selected': ' '}>Week</span>
-                                    <span onClick={e=> this.onEndorsementDateChange(constants.one_month_filter)} className={endorsementFilter=== constants.one_month_filter ? 'selected': ' '}>Month</span>
-                                    {/* <span onClick={e=> this.onEndorsementDateChange(constants.one_year_filter)} className={endorsementFilter=== constants.one_year_filter ? 'selected': ' '}>Year</span>
-                                    <span onClick={e=> this.onEndorsementDateChange(constants.all_time_filter)} className={endorsementFilter=== constants.all_time_filter ? 'selected': ' '}>All Time</span> */}
-                                </div>
-                                
-                                <div className="graph-holder" ref={this.graphContainer}>
-                                    <svg className="account-graph" ref={this.endorsementRef}></svg>
-                                </div>
-                                <p className="year-text">{endorsementGraphText}</p>
+                                {
+                                    this.props.endorsement.length && 
+                                    <ChartWrapper data= {this.props.endorsement}
+                                        color= '#CEE6CA'
+                                        hoverColor='#677365'
+                                        height= {250}
+                                        xKey= "date"
+                                        yKey= "value"
+                                        spacing= {10}
+                                        onLimitChange= {this.onEndorsementDateChange}
+                                        xTooltip= {this.xTooltipForEndorsementFn}
+                                        yTooltip= {this.yTooltipForEndorsementFn}
+                                        _ref= {this.endorsementRef}
+                                        isLimitAvailable={false}
+                                        isDateFilter={true}
+                                        text={moment().format("YYYY MMMM Do")}
+                                        selectedFilter={this.state.endorsementFilter}/>
+                                }
                             </React.Fragment>
                         }
                     </div>      

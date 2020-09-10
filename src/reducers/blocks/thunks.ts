@@ -43,22 +43,23 @@ export const fetchHourlyBlock = (date: number) => async (dispatch: any, state: a
         data: any = [];
         const now = new Date().getTime();
 
-        for(var time = new Date(date).getTime(); time < now; time += 3600000) {
+        for(let time = new Date(date).getTime(); time < now; time += 3600000) {
             label.push(new Date(time));
             timestamps.push(time);
             values.push(0)
         }
         
-        for(var t = 0; t < label.length; t++) {
+        for(let t = 0; t < label.length; t++) {
             while(result.length > 0 && parseInt(result[0].timestamp) < parseInt(label[t].getTime())) {
                 values[t] += 1;
                 result.shift()
             }
         }
 
-        for(var x = 0; x < values.length; x++) {
+        for(let x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), value : parseInt(values[x])});
         }
+        data.shift();
 
         const queryUrl = generateQueryUrl(network, 'blocks', query);
         dispatch(setHourlyBlockQuery(queryUrl));
@@ -98,14 +99,14 @@ export const fetchPriorityBlock = (date: number) => async (dispatch: any, state:
         data: any = [];
         const now = new Date().getTime();
 
-        for(var time = new Date(date).getTime(); time < now; time += 3600000) {
+        for(let time = new Date(date).getTime(); time < now; time += 3600000) {
             label.push(new Date(time));
             timestamps.push(time);
             values.push(0)
         }
         
-        for(var r = 0; r < result.length; r++) {
-            for(var t = label.length - 1; t > 0; t--) {
+        for(let r = 0; r < result.length; r++) {
+            for(let t = label.length - 1; t > 0; t--) {
                 if(parseInt(result[r].timestamp) > parseInt(label[t].getTime())) {
                     values[t] += 1;
                     break;
@@ -113,10 +114,10 @@ export const fetchPriorityBlock = (date: number) => async (dispatch: any, state:
             }
         }   
     
-        for(var x = 0; x < values.length; x++) {
+        for(let x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), value : parseInt(values[x])});
         }
-
+        data.shift();
         const queryUrl = generateQueryUrl(network, 'blocks', query);
         dispatch(setPriorityBlockQuery(queryUrl));
         dispatch(setPriorityBlock(data));
@@ -171,14 +172,14 @@ export const fetchEndorsement = (date: number) => async (dispatch: any, state: a
                 data: any = [];
                 const now = new Date().getTime();
 
-            for(var time = new Date(date).getTime(); time < now; time += 3600000) {
+            for(let time = new Date(date).getTime(); time < now; time += 3600000) {
                 label.push(new Date(time));
                 timestamps.push(time);
                 values.push(0)
             }
 
-            for(var r = 0; r < result.length; r++) {
-                for(var t = label.length - 1; t > 0; t--) {
+            for(let r = 0; r < result.length; r++) {
+                for(let t = label.length - 1; t > 0; t--) {
                     if(parseInt(result[r].timestamp) > parseInt(label[t].getTime())) {
                         values[t] += parseInt(result[r].count_kind);
                         break;
@@ -186,11 +187,10 @@ export const fetchEndorsement = (date: number) => async (dispatch: any, state: a
                 }
             }  
 
-            for(var x = 0; x < values.length; x++) {
+            for(let x = 0; x < values.length; x++) {
                 data.push({date : parseInt(label[x].getTime()), value : parseInt(values[x])});
             }
 
-            data.pop();
             data.shift();
 
             result = data;

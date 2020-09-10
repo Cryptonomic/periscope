@@ -68,7 +68,7 @@ export const fetchHourlyTransaction = (date: number) => async (dispatch: any, st
         if(!isCycle) {
             const { values, label } = formatData(date, result, 'timestamp', 'count_kind');
             let data = [];
-            for(var x = 0; x < values.length; x++) {
+            for(let x = 0; x < values.length; x++) {
                 data.push({date : label[x].getTime(), values : values[x] });
             }
 
@@ -127,7 +127,7 @@ export const fetchHourlyVolume = (date: number) => async (dispatch: any, state: 
         if(!isCycle) {
             const { values, label } = formatData(date, result, 'timestamp', 'sum_amount');
             let data = [];
-            for(var x = 0; x < values.length; x++) {
+            for(let x = 0; x < values.length; x++) {
                 data.push({date : label[x].getTime(), values : values[x] / 1000000.0 });
             }
 
@@ -188,7 +188,7 @@ export const fetchHourlyGas = (date: number) => async (dispatch: any, state: any
         if(!isCycle) {
             const { values, label } = formatData(date, result, 'timestamp', 'sum_consumed_gas');
             let data = [];
-            for(var x = 0; x < values.length; x++) {
+            for(let x = 0; x < values.length; x++) {
                 data.push({date : label[x].getTime(), values : parseInt(values[x]) });
             }
 
@@ -251,7 +251,7 @@ export const fetchHourlyFee = (date: number) => async (dispatch: any, state: any
         if(!isCycle) {
             const { values, label } = formatData(date, result, 'timestamp', 'sum_fee');
             let data = [];
-            for(var x = 0; x < values.length; x++) {
+            for(let x = 0; x < values.length; x++) {
                 data.push({date : label[x].getTime(), values : values[x] / 1000000.0 });
             }
 
@@ -281,7 +281,7 @@ export const fetchDailyActivation = (
     date: number
 ) => async (dispatch: any, state: any) => {
 
-    try { 
+    try {
         dispatch(setDailyActivationLoading(true));
         const { selectedConfig } = state().accounts;
         const { network, url, apiKey } = selectedConfig;
@@ -297,9 +297,28 @@ export const fetchDailyActivation = (
         query = ConseilQueryBuilder.setLimit(query, 1000000000);
         let result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'operations', query);
         
-        const { values, label } = formatData(date, result, 'timestamp', 'count_kind', 86400000);
+        const label: any = [],
+        timestamps = [],
+        values: any = [];
+        const now = new Date().getTime();
+    
+        for(let time = new Date(date).getTime(); time < now; time += 86400000) {
+            label.push(new Date(time));
+            timestamps.push(time);
+            values.push(0);
+        }
+    
+        for(let r = 0; r < result.length; r++) {
+            for(let t = label.length - 1; t >= 0; t--) {
+                if(parseInt(result[r]['timestamp']) > parseInt(label[t].getTime())) {
+                    values[t] += parseInt(result[r]['count_kind']);
+                    break;
+                }
+            }
+        }  
+
         let data = [];
-        for(var x = 0; x < values.length; x++) {
+        for(let x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), values : values[x] });
         }
 
@@ -352,7 +371,7 @@ export const fetchDailyOrigination = (
         originations: any = [],
         data = [];
 
-        for(var time = date; time < now; time += 86400000) {
+        for(let time = date; time < now; time += 86400000) {
             let value = new Date(time);
             value.setHours(0, 0, 0, 0)
             label.push(value);
@@ -360,8 +379,9 @@ export const fetchDailyOrigination = (
             originations.push(0)
         }
 
-        for(var r = 0; r < result.length; r++) {
-            for(var t = label.length-1; t >= 0; t--) {
+        
+        for(let r = 0; r < result.length; r++) {
+            for(let t = label.length-1; t >= 0; t--) {
                 if(parseInt(result[r].timestamp) > parseInt(label[t].getTime())) {
                     originations[t] += 1;
                     break;
@@ -369,7 +389,7 @@ export const fetchDailyOrigination = (
             }
         }  
 
-        for(var x = 0; x < originations.length; x++) {
+        for(let x = 0; x < originations.length; x++) {
             data.push({date : parseInt(label[x].getTime()), values : parseInt(originations[x])});
         }
 
@@ -391,19 +411,19 @@ export const fetchDailyOrigination = (
 }
 
 const formatData = (date: number, result: Array<any>, xKey: string, yKey: string, timeFilter: number = 3600000) => {
-    var label: any = [],
+    let label: any = [],
     timestamps = [],
     values: any = [];
     const now = new Date().getTime();
 
-    for(var time = new Date(date).getTime(); time < now; time += timeFilter) {
+    for(let time = new Date(date).getTime(); time < now; time += timeFilter) {
         label.push(new Date(time));
         timestamps.push(time);
         values.push(0);
     }
 
-    for(var r = 0; r < result.length; r++) {
-        for(var t = label.length - 1; t >= 0; t--) {
+    for(let r = 0; r < result.length; r++) {
+        for(let t = label.length - 1; t > 0; t--) {
             if(parseInt(result[r][xKey]) > parseInt(label[t].getTime())) {
                 values[t] += parseInt(result[r][yKey]);
                 break;

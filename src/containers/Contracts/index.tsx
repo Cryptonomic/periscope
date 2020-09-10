@@ -193,8 +193,7 @@ class ContractsComponent extends React.Component<Props, States> {
                                 _ref= {this.topContractsByInvocationRef}
                                 isLimitAvailable={true}
                                 isDateFilter={true}
-                                text=''
-                                selectedFilter = {this.state.contractsByInvocationFilter}/>
+                                text=''/>
                         }
                         
                     </React.Fragment>

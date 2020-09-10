@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import ChartWithoutAxisWrapper from '../../components/ChartgeneratorWithoutAxis';
+import ChartWrapper from '../../components/ChartGenerator';
 import { getBaker } from '../../utils/GetBakers';
 import Grid from '@material-ui/core/Grid';
 
@@ -110,7 +110,8 @@ class TopBakersComponent extends React.Component<Props, States> {
                     <div className="linkHolder">
                         <ul>
                             <li className="rightAlign">
-                                <a href={this.props.topBakersByStakeQuery} target="_blank" rel="noopener noreferrer">Top Tezos Bakers
+                                <span className="subHeading">Top Bakers by Staked Balance</span>
+                                <a href={this.props.topBakersByStakeQuery} target="_blank" rel="noopener noreferrer">Arronax Query
                                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.55553 0L7.38498 1.82944L3.49609 5.71832L4.28165 6.50388L8.17053 2.615L9.99997 4.44444V0H5.55553Z" fill="#5CBBD4"/>
                                         <path d="M8.88887 8.88887H1.11111V1.11111H4.99999L3.88888 0H1.11111C0.498332 0 0 0.498332 0 1.11111V8.88887C0 9.50165 0.498332 9.99998 1.11111 9.99998H8.88887C9.50165 9.99998 9.99998 9.50165 9.99998 8.88887V6.1111L8.88887 4.99999V8.88887Z" fill="#5CBBD4"/>
@@ -122,7 +123,7 @@ class TopBakersComponent extends React.Component<Props, States> {
                     <React.Fragment>
                         {
                             this.props.topBakersByStake.length && 
-                            <ChartWithoutAxisWrapper data= {this.props.topBakersByStake}
+                            <ChartWrapper data= {this.props.topBakersByStake}
                                 color= '#3371AA'
                                 hoverColor='#99B8D5'
                                 height= {250}
@@ -136,7 +137,8 @@ class TopBakersComponent extends React.Component<Props, States> {
                                 isLimitAvailable={true}
                                 isDateFilter={false}
                                 text=''
-                                marginLeft={90}/>
+                                marginLeft={90}
+                                tickSpacing={3}/>
                         }
                         
                     </React.Fragment>

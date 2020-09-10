@@ -250,8 +250,7 @@ class BakersComponent extends React.Component<Props, States> {
                                 _ref= {this.topBakersByBlockRef}
                                 isLimitAvailable={true}
                                 isDateFilter={true}
-                                text=''
-                                selectedFilter={this.state.topBakerByBlockFilter}/>
+                                text=''/>
                         }
                         
                     </React.Fragment>
