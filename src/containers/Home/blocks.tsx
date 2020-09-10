@@ -6,6 +6,7 @@ import { constants } from '../../utils/constants';
 import moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import ChartWithoutAxisWrapper from '../../components/ChartgeneratorWithoutAxis';
+import ChartWrapper from '../../components/ChartGenerator';
 
 import { fetchHourlyBlock, fetchPriorityBlock, fetchEndorsement} from '../../reducers/blocks/thunks';
 import {
@@ -172,7 +173,7 @@ class BlocksComponent extends React.Component<Props, States> {
                         <React.Fragment>
                             {
                                 this.props.endorsement.length && 
-                                <ChartWithoutAxisWrapper data= {this.props.endorsement}
+                                <ChartWrapper data= {this.props.endorsement}
                                     color= '#CEE6CA'
                                     hoverColor='#677365'
                                     height= {250}
@@ -187,7 +188,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     isDateFilter={true}
                                     marginLeft={50}
                                     selectedFilter={this.state.endorsementFilter}
-                                    text={endorsementGraphText}/>
+                                    text={endorsementGraphText}
+                                    tickSpacing={3}/>
                             }
                         </React.Fragment>
                     </div>
@@ -210,7 +212,7 @@ class BlocksComponent extends React.Component<Props, States> {
                         <React.Fragment>
                             {
                                 this.props.hourlyBlock.length && 
-                                <ChartWithoutAxisWrapper data= {this.props.hourlyBlock}
+                                <ChartWrapper data= {this.props.hourlyBlock}
                                     color= '#CEE6CA'
                                     hoverColor='#677365'
                                     height= {250}
@@ -225,7 +227,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     isDateFilter={true}
                                     marginLeft={50}
                                     selectedFilter={this.state.hourlyBlocksFilter}
-                                    text={hourlyBlockGraphText}/>
+                                    text={hourlyBlockGraphText}
+                                    tickSpacing={3}/>
                             }
                         </React.Fragment>
                     </div>
@@ -249,7 +252,7 @@ class BlocksComponent extends React.Component<Props, States> {
                         <React.Fragment>
                             {
                                 this.props.priorityBlock.length && 
-                                <ChartWithoutAxisWrapper data= {this.props.priorityBlock}
+                                <ChartWrapper data= {this.props.priorityBlock}
                                     color= '#CEE6CA'
                                     hoverColor='#677365'
                                     height= {250}
@@ -264,7 +267,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     isDateFilter={true}
                                     marginLeft={50}
                                     selectedFilter={this.state.priorityBlockFilter}
-                                    text={priorityBlockGraphText}/>
+                                    text={priorityBlockGraphText}
+                                    tickSpacing={3}/>
                             }
                         </React.Fragment>
                         

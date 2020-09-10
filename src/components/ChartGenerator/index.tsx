@@ -21,7 +21,8 @@ interface Props {
     text: any, 
     hoverColor: string,
     selectedFilter?: string,
-    isLineChart?: boolean,
+    marginLeft?: number,
+    tickSpacing?: number,
 }
 
 interface States {
@@ -77,8 +78,9 @@ export default class ChartWrapper extends React.Component<Props, States> {
         const yTooltipFn = function(d: any, i: number) {
             return yTooltip(d, i);
         }
-
-        chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing);
+        const marginLeft = this.props.marginLeft ? this.props.marginLeft : 70;
+        const tickSpacing = this.props.tickSpacing ? this.props.tickSpacing : 6;
+        chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft, this.graphContainer, tickSpacing);
         
         chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, color, hoverColor);
     }
@@ -96,7 +98,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
         const yTooltipFn = function(d: any, i: number) {
             return yTooltip(d, i);
         }
-        chartGenerator.generateLineChart(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn);
+        chartGenerator.generateLineChart(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
         
     }
 
@@ -142,10 +144,8 @@ export default class ChartWrapper extends React.Component<Props, States> {
     }
 
     render() {
-        const { height, _ref, isDateFilter, isLimitAvailable } = this.props;
-        const width = this.graphContainer.current ? this.graphContainer.current.offsetWidth-200 : 1295
+        const { _ref, isDateFilter, isLimitAvailable } = this.props;
         const { limit, selectedDateFilter, xLabel } = this.state;
-        const svgLength = `0,0,${width},${height}`;
 
         return (
             <div className="mapHolder">
@@ -175,7 +175,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
                         {
                              
                             <div className="graph-holder" ref={this.graphContainer}>
-                                <svg viewBox={svgLength} className="account-graph" ref={_ref}></svg>
+                                <svg className="account-graph" ref={_ref}></svg>
                             </div>
                         }
                         

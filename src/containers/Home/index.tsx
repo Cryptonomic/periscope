@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import Loader from '../../components/Loader';
-import ChartWithoutAxisWrapper from '../../components/ChartgeneratorWithoutAxis';
+import ChartWrapper from '../../components/ChartGenerator';
 import Grid from '@material-ui/core/Grid';
 import {constants} from '../../utils/constants';
 import moment from 'moment';
@@ -212,7 +212,7 @@ class HomeComponent extends React.Component<Props, States> {
                                 <React.Fragment>
                                 {
                                     hourlyTransaction.length > 0 && 
-                                    <ChartWithoutAxisWrapper data= {hourlyTransaction}
+                                    <ChartWrapper data= {hourlyTransaction}
                                         color= '#5CBBD4'
                                         hoverColor='#CEEAF2'
                                         height= {250}
@@ -227,7 +227,8 @@ class HomeComponent extends React.Component<Props, States> {
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
                                         selectedFilter={this.state.hourlyTransactionFilter}
-                                        marginLeft={50}/>
+                                        marginLeft={50}
+                                        tickSpacing={3}/>
                                 }
                                 </React.Fragment>
                             </div>
@@ -250,7 +251,7 @@ class HomeComponent extends React.Component<Props, States> {
                                 <React.Fragment>
                                 {
                                     hourlyVolume.length > 0 && 
-                                    <ChartWithoutAxisWrapper data= {hourlyVolume}
+                                    <ChartWrapper data= {hourlyVolume}
                                         color= '#5CBBD4'
                                         hoverColor='#CEEAF2'
                                         height= {250}
@@ -265,7 +266,8 @@ class HomeComponent extends React.Component<Props, States> {
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
                                         selectedFilter={this.state.HourlyVolumeFilter}
-                                        marginLeft={70}/>
+                                        marginLeft={70}
+                                        tickSpacing={3}/>
                                 }
                                 </React.Fragment>
                             </div>
@@ -289,7 +291,7 @@ class HomeComponent extends React.Component<Props, States> {
                             <React.Fragment>
                                 {
                                     hourlyGas.length > 0 && 
-                                    <ChartWithoutAxisWrapper data= {hourlyGas}
+                                    <ChartWrapper data= {hourlyGas}
                                         color= '#5CBBD4'
                                         hoverColor='#CEEAF2'
                                         height= {250}
@@ -304,7 +306,8 @@ class HomeComponent extends React.Component<Props, States> {
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
                                         selectedFilter={this.state.hourlyGasFilter}
-                                        marginLeft={100}/>
+                                        marginLeft={70}
+                                        tickSpacing={3}/>
                                 }
                                 
                             </React.Fragment>

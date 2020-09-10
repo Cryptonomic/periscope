@@ -36,7 +36,7 @@ export const Widget = styled.div`
     color: #3D4857;
   }
   .mapHolder {
-    min-height: 300px;
+    min-height: 350px;
     .graph-holder {
       padding: 0
     }

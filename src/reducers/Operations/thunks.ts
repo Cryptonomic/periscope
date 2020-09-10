@@ -281,7 +281,7 @@ export const fetchDailyActivation = (
     date: number
 ) => async (dispatch: any, state: any) => {
 
-    try { 
+    try {
         dispatch(setDailyActivationLoading(true));
         const { selectedConfig } = state().accounts;
         const { network, url, apiKey } = selectedConfig;
@@ -297,7 +297,26 @@ export const fetchDailyActivation = (
         query = ConseilQueryBuilder.setLimit(query, 1000000000);
         let result = await ConseilDataClient.executeEntityQuery(serverInfo, 'tezos', network, 'operations', query);
         
-        const { values, label } = formatData(date, result, 'timestamp', 'count_kind', 86400000);
+        const label: any = [],
+        timestamps = [],
+        values: any = [];
+        const now = new Date().getTime();
+    
+        for(var time = new Date(date).getTime(); time < now; time += 86400000) {
+            label.push(new Date(time));
+            timestamps.push(time);
+            values.push(0);
+        }
+    
+        for(var r = 0; r < result.length; r++) {
+            for(var t = label.length - 1; t >= 0; t--) {
+                if(parseInt(result[r]['timestamp']) > parseInt(label[t].getTime())) {
+                    values[t] += parseInt(result[r]['count_kind']);
+                    break;
+                }
+            }
+        }  
+
         let data = [];
         for(var x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), values : values[x] });
@@ -360,6 +379,7 @@ export const fetchDailyOrigination = (
             originations.push(0)
         }
 
+        
         for(var r = 0; r < result.length; r++) {
             for(var t = label.length-1; t >= 0; t--) {
                 if(parseInt(result[r].timestamp) > parseInt(label[t].getTime())) {
@@ -403,7 +423,7 @@ const formatData = (date: number, result: Array<any>, xKey: string, yKey: string
     }
 
     for(var r = 0; r < result.length; r++) {
-        for(var t = label.length - 1; t >= 0; t--) {
+        for(var t = label.length - 1; t > 0; t--) {
             if(parseInt(result[r][xKey]) > parseInt(label[t].getTime())) {
                 values[t] += parseInt(result[r][yKey]);
                 break;

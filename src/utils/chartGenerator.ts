@@ -2,12 +2,15 @@ import * as d3 from "d3";
 
 export class chartGenerator {
 
-    static graphGenerator(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", spacing: number) {
+    static graphGenerator(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", spacing: number, marginLeft: number,ele: any, tickSpacing: number=6) {
         
         // Clear SVG Elements of old data
         svg.selectAll("*").remove();
 
-        const margin = {top: 10, right: 0, bottom: 50, left: 70};
+        const margin = {top: 10, right: 20, bottom: 20, left: marginLeft};
+        width = ele.current.offsetWidth ? ele.current.offsetWidth : width;
+        svg.attr('height', height)
+            .attr('width', width);
 
         let xRange: any = d3.range(data.length);
         const xAxisData =  data.map((d: any, index: any) => index);
@@ -41,13 +44,15 @@ export class chartGenerator {
             .style('font-family', 'Nunito')
             .style('font-size', '10px')
             .style('font-weight', '400')
-            .call(d3.axisBottom(xAxisScaleForBottom).tickFormat((d:any, i:any) => {
-                return i+1;
-            }).ticks(15))
+            .call(d3.axisBottom(xAxisScaleForBottom)
+            .tickFormat((d:any, i:any) => {
+                return d+1;
+            })
+            .ticks(15))
             .attr("class", "xAxis");
 
         const yAxis = (g:any) => g
-            .attr("transform", `translate(${margin.left},${margin.right})`)
+            .attr("transform", `translate(${margin.left},0)`)
             .style('font-family', 'Nunito')
             .style('font-size', '10px')
             .style('font-weight', '400')
@@ -63,7 +68,7 @@ export class chartGenerator {
         spacing = yAxisData.length <= 70 ? spacing : 1;
         svg.append("g")
             .attr("class", "svg-columns")
-            .attr('transform', 'translate(6,0)')
+            .attr('transform', `translate(${tickSpacing},0)`)
             .attr("fill", color)
             .selectAll("rect")
             .data(data)
@@ -106,15 +111,15 @@ export class chartGenerator {
                    .range([height - margin.bottom, margin.top])
 
        
-    //    let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, data.length]).range(([margin.left, width - margin.right]) as any);
-    //    if(data.length < 100) {
-    //        xAxisScaleForBottom = x; 
-    //    }
+       let xAxisScaleForBottom: any = d3.scaleLinear<string>().domain([0, data.length]).range(([margin.left, width - margin.right]) as any);
+       if(data.length < 100) {
+           xAxisScaleForBottom = x; 
+       }
 
-    //    function make_y_gridlines() {		
-    //         return d3.axisLeft(y)
-    //             .ticks(5)
-    //     }
+       function make_y_gridlines() {		
+            return d3.axisLeft(y)
+                .ticks(5)
+        }
 
        if(x.bandwidth() <= 3) {
            let rangeData: any = d3.range(xAxisData.length)
@@ -123,11 +128,11 @@ export class chartGenerator {
                .range([margin.left, xAxisData.length * 3]);
        }
       
-    //    const xAxis = (g:any) => g
-    //        .attr("transform", `translate(0,${height - margin.bottom})`)
-    //        .call(d3.axisBottom(xAxisScaleForBottom).tickFormat((d:any, i:any) => {
-    //         return i+1;
-    //     }).ticks(15))
+       const xAxis = (g:any) => g
+           .attr("transform", `translate(0,${height - margin.bottom})`)
+           .call(d3.axisBottom(xAxisScaleForBottom).tickFormat((d:any, i:any) => {
+            return i+1;
+        }).ticks(15))
 
        const yAxis = (g:any) => g
            .attr("transform", `translate(${margin.left},0)`)
@@ -161,6 +166,8 @@ export class chartGenerator {
         svg.append("g")
             .attr("class", "y-axis")
            .call(yAxis);
+           svg.append("g")
+           .call(xAxis);
     }
 
     static barGraphFloatingTooltipGenerator(graphSVGElement: any, xLabelFunction: Function, yLabelFunction: Function, color: string, hoverColor: string) {
@@ -225,12 +232,15 @@ export class chartGenerator {
         });
     }
 
-    static generateLineChart(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", yLabelFunction: Function, xLabelFunction: Function) {
+    static generateLineChart(height: number, width: number, svg: any, data: any, xAxisKey: string, yAxisKey: string, color:string = "rgba(135, 194, 205, 0.58639)", yLabelFunction: Function, xLabelFunction: Function, ele: any) {
         // Clear SVG Elements of old data
         svg.selectAll("*").remove();
 
         // set the dimensions and margins of the graph
-        const margin = {top: 10, right: 10, bottom: 50, left: 70};
+        const margin = {top: 10, right: 20, bottom: 30, left: 70};
+        width = ele.current.offsetWidth ? ele.current.offsetWidth : width;
+        svg.attr('height', height)
+            .attr('width', width);
         width = width - margin.left - margin.right;
         height = height - margin.top - margin.bottom;
         data.forEach((item:any, index:number) => { 
@@ -244,18 +254,30 @@ export class chartGenerator {
         
 
         // Add X axis --> it is a date format
-        const x:any = d3.scaleLinear()
+        const xData:any = d3.scaleLinear()
                 .domain([0, (data.length-1)])
                 .range([0, width]);
+        let xRange: any = d3.range(data.length);
+        let x = d3.scaleBand()
+                .domain(xRange)
+                .range([0, width])
+                .padding(0.1);
 
+        let devisor = 1;
+        if (data.length > 100 && data.length < 500) {
+            devisor = 10;
+        } else if (data.length > 500) {
+            devisor = 100;
+        }
         svg.append("g")
             .style('font-family', 'Nunito')
             .style('font-size', '10px')
             .style('font-weight', '400')
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickFormat((d:any, i:any) => {
-                return i+1;
-            }).ticks(15));
+            .call(d3.axisBottom(x)
+            .tickValues(x.domain().filter(function(d,i:number) { 
+                return !(i%devisor)
+            })).ticks(15));
 
         // Add Y axis
         const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
@@ -271,11 +293,12 @@ export class chartGenerator {
         svg
             .append("path")
             .datum(data)
+            .attr("width", width - margin.right)
             .attr("fill", "none")
             .attr("stroke", color)
             .attr("stroke-width", 1.5)
             .attr("d", d3.line()
-            .x(function(d:any, i: number) { return x(i) })
+            .x(function(d:any, i: number) { return xData(i) })
             .y(function(d: any, i: number) { return y(d[yAxisKey]) })
             )
 
@@ -299,9 +322,12 @@ export class chartGenerator {
 
         function mousemove(this: any) {
             // recover coordinate we need
-            var x0 = x.invert(d3.mouse(this)[0]);
+            var x0 = xData.invert(d3.mouse(this)[0]);
             var i = bisect(data, x0, 1);
-            var selectedData = data[i-1]
+            var d0 = data[i - 1],                              // **********
+            d1 = data[i],                                  // **********
+            selectedData = data[Math.floor(x0)];
+            //var selectedData = data[i]
             if(window.innerWidth/2 > d3.event.pageX) {
                 tooltip
                     .attr("class", "graphToolTip")

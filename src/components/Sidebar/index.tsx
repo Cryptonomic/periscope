@@ -39,7 +39,7 @@ const Sidebar: React.FC<Props> = props => {
                 </List>
                 <List className="sub">
                     <ListItem>
-                        <Link to='/accounts'> Accounts by Balance</Link>
+                        <Link to='/accounts'> Top Accounts by Balance</Link>
                     </ListItem>
                 </List>
                 <List className="head">

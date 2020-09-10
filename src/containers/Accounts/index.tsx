@@ -75,7 +75,7 @@ class AccountsComponent extends React.Component<Props, States> {
                     <div className="linkHolder">
                         <ul>
                             <li className="leftAlign">
-                            <h3 className="mb-0">Top Tez Holders</h3>
+                            <h3 className="mb-0">Top Accounts by Balance</h3>
                             </li>
                             <li className="rightAlign">
                                 <a href={this.props.topAccountsQuery} target="_blank" rel="noopener noreferrer">Arronax Query
