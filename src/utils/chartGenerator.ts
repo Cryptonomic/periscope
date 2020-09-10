@@ -324,9 +324,9 @@ export class chartGenerator {
             // recover coordinate we need
             var x0 = xData.invert(d3.mouse(this)[0]);
             var i = bisect(data, x0, 1);
-            var d0 = data[i - 1],                              // **********
-            d1 = data[i],                                  // **********
-            selectedData = data[Math.floor(x0)];
+            // var d0 = data[i - 1],
+            // d1 = data[i],                                  
+            const selectedData = data[Math.floor(Math.abs(x0))];
             //var selectedData = data[i]
             if(window.innerWidth/2 > d3.event.pageX) {
                 tooltip
