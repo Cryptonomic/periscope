@@ -59,6 +59,7 @@ export const fetchHourlyBlock = (date: number) => async (dispatch: any, state: a
         for(var x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), value : parseInt(values[x])});
         }
+        data.shift();
 
         const queryUrl = generateQueryUrl(network, 'blocks', query);
         dispatch(setHourlyBlockQuery(queryUrl));
@@ -116,7 +117,7 @@ export const fetchPriorityBlock = (date: number) => async (dispatch: any, state:
         for(var x = 0; x < values.length; x++) {
             data.push({date : label[x].getTime(), value : parseInt(values[x])});
         }
-
+        data.shift();
         const queryUrl = generateQueryUrl(network, 'blocks', query);
         dispatch(setPriorityBlockQuery(queryUrl));
         dispatch(setPriorityBlock(data));
@@ -190,7 +191,6 @@ export const fetchEndorsement = (date: number) => async (dispatch: any, state: a
                 data.push({date : parseInt(label[x].getTime()), value : parseInt(values[x])});
             }
 
-            data.pop();
             data.shift();
 
             result = data;
