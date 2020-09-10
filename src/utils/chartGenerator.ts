@@ -281,7 +281,7 @@ export class chartGenerator {
 
         // Add Y axis
         const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
-        var y = d3.scaleLinear()
+        const y = d3.scaleLinear()
             .domain([0, d3.max<any>(yAxisData)])
             .range([ height, 0 ]);
         svg.append("g")
@@ -322,8 +322,8 @@ export class chartGenerator {
 
         function mousemove(this: any) {
             // recover coordinate we need
-            var x0 = xData.invert(d3.mouse(this)[0]);
-            var i = bisect(data, x0, 1);
+            const x0 = xData.invert(d3.mouse(this)[0]);
+            const i = bisect(data, x0, 1);
             // var d0 = data[i - 1],
             // d1 = data[i],                                  
             const selectedData = data[Math.floor(Math.abs(x0))];
@@ -410,7 +410,7 @@ export class chartGenerator {
         // Add Y axis
         const yAxisData = data.map((d: { [x: string]: string; }) => parseFloat(d[yAxisKey]));
        
-        var y = d3.scaleLinear()
+        const y = d3.scaleLinear()
             .domain([0, d3.max<any>(yAxisData)])
             .range([ height, 0 ]);
         svg.append("g")
@@ -454,9 +454,9 @@ export class chartGenerator {
 
         function mousemove(this: any) {
             // recover coordinate we need
-            var x0 = x.invert(d3.mouse(this)[0]);
-            var i = bisect(data, x0, 1);
-            var selectedData = data[i-1]
+            const x0 = x.invert(d3.mouse(this)[0]);
+            const i = bisect(data, x0, 1);
+            const selectedData = data[i-1]
             if(window.innerWidth/2 > d3.event.pageX) {
                 tooltip
                     .attr("class", "graphToolTip")
