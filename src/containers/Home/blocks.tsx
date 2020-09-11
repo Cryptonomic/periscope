@@ -233,7 +233,7 @@ class BlocksComponent extends React.Component<Props, States> {
                         </React.Fragment>
                     </div>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={12}>
                     
                     <div className="linkHolder">
                         <ul>
