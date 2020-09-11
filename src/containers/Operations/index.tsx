@@ -355,7 +355,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.hourlyVolumeRef}
                                 isLimitAvailable={false}
                                 isDateFilter={true}
-                                text=''
+                                text={moment().format("YYYY MMMM Do")}
                                 selectedFilter={this.state.selectedHourlyVolumeFilter}/>
                         }
                         
@@ -394,7 +394,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 _ref= {this.hourlyGasRef}
                                 isLimitAvailable={false}
                                 isDateFilter={true}
-                                text=''
+                                text={moment().format("YYYY MMMM Do")}
                                 selectedFilter={this.state.selectedHourlyGasFilter}/>
                         }
                         
