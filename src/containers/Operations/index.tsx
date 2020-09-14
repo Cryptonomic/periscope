@@ -100,7 +100,7 @@ class OperationsComponent extends React.Component<Props, States> {
     async fetchHourlyTransactionData(date: number){
         const { fetchHourlyTransaction } = this.props;
         await fetchHourlyTransaction(date);
-        if(this.props.hourlyTransaction[0].hasOwnProperty('cycle')) {
+        if(this.props.hourlyTransaction && this.props.hourlyTransaction[0].hasOwnProperty('cycle')) {
             this.setState({xHourlyTransactionKey: 'cycle', yHourlyTransactionKey: 'sum_amount'})
         }
     }
@@ -128,7 +128,7 @@ class OperationsComponent extends React.Component<Props, States> {
     async fetchHourlyVolumeData(date: number){
         const { fetchHourlyVolume } = this.props;
         await fetchHourlyVolume(date);
-        if(this.props.hourlyVolume[0].hasOwnProperty('cycle')) {
+        if(this.props.hourlyVolume && this.props.hourlyVolume[0].hasOwnProperty('cycle')) {
             this.setState({xHourlyVolumeKey: 'cycle', yHourlyVolumeKey: 'sum_amount'})
         }
     }
@@ -162,7 +162,7 @@ class OperationsComponent extends React.Component<Props, States> {
     async fetchHourlyGasData(date: number){
         const { fetchHourlyGas } = this.props;
         await fetchHourlyGas(date);
-        if(this.props.hourlyGas[0].hasOwnProperty('cycle')) {
+        if(this.props.hourlyGas && this.props.hourlyGas[0].hasOwnProperty('cycle')) {
             this.setState({xHourlyGasKey: 'cycle', yHourlyGasKey: 'sum_consumed_gas'})
         }
     }
@@ -190,7 +190,7 @@ class OperationsComponent extends React.Component<Props, States> {
     async fetchHourlyFeeData(date: number){
         const { fetchHourlyFee } = this.props;
         await fetchHourlyFee(date);
-        if(this.props.hourlyFee[0].hasOwnProperty('cycle')) {
+        if(this.props.hourlyFee && this.props.hourlyFee[0].hasOwnProperty('cycle')) {
             this.setState({xHourlyFeeKey: 'cycle', yHourlyFeeKey: 'sum_fee'})
         } else {
             this.setState({xHourlyFeeKey: 'date', yHourlyFeeKey: 'values'})
@@ -317,7 +317,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={true}
                                 text={moment().format("YYYY MMMM Do")}
-                                selectedFilter={this.state.selectedHourlyTransactionFilter}/>
+                                selectedFilter={this.state.selectedHourlyTransactionFilter}
+                                isDateAxis={true}/>
                         }
                         
                     </React.Fragment>
@@ -356,7 +357,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={true}
                                 text={moment().format("YYYY MMMM Do")}
-                                selectedFilter={this.state.selectedHourlyVolumeFilter}/>
+                                selectedFilter={this.state.selectedHourlyVolumeFilter}
+                                isDateAxis={true}/>
                         }
                         
                     </React.Fragment>
@@ -395,7 +397,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={true}
                                 text={moment().format("YYYY MMMM Do")}
-                                selectedFilter={this.state.selectedHourlyGasFilter}/>
+                                selectedFilter={this.state.selectedHourlyGasFilter}
+                                isDateAxis={true}/>
                         }
                         
                     </React.Fragment>
@@ -434,7 +437,8 @@ class OperationsComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={true}
                                 text={moment().format("YYYY MMMM Do")}
-                                selectedFilter={this.state.selectedHourlyFeeFilter}/>
+                                selectedFilter={this.state.selectedHourlyFeeFilter}
+                                isDateAxis={true}/>
                         }
                         
                     </React.Fragment>

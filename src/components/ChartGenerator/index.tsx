@@ -23,6 +23,7 @@ interface Props {
     selectedFilter?: string,
     marginLeft?: number,
     tickSpacing?: number,
+    isDateAxis?: boolean
 }
 
 interface States {
@@ -80,7 +81,13 @@ export default class ChartWrapper extends React.Component<Props, States> {
         }
         const marginLeft = this.props.marginLeft ? this.props.marginLeft : 70;
         const tickSpacing = this.props.tickSpacing ? this.props.tickSpacing : 6;
-        chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft, this.graphContainer, tickSpacing);
+        const isDateAxis = this.props.isDateAxis ? this.props.isDateAxis : false;
+        if(this.props.selectedFilter && this.props.selectedFilter === constants.one_week_filter && this.props.isDateAxis) {
+            chartGenerator.graphGeneratorWeeklyDateAxis(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft, this.graphContainer, tickSpacing);
+        } else {
+            chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft, this.graphContainer, tickSpacing, isDateAxis);
+        }
+
         
         chartGenerator.barGraphFloatingTooltipGenerator(svg, xTooltipFn, yTooltipFn, color, hoverColor);
     }
@@ -99,6 +106,7 @@ export default class ChartWrapper extends React.Component<Props, States> {
             return yTooltip(d, i);
         }
         chartGenerator.generateLineChart(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
+        // chartGenerator.generateLineChartWithDateAxis(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
         
     }
 

@@ -69,7 +69,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
             width = 786;
         }
 
-        chartGenerator.seperateAxisPrioritizedBarChartGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft,100, this.graphContainer);
+        //chartGenerator.graphGenerator(height, width, svg, data, xKey, yKey, color ,spacing, marginLeft,100, this.graphContainer);
 
         if(xTooltip && yTooltip) {
             const xTooltipFn = function(d: any, i: number) {
@@ -103,7 +103,7 @@ export default class ChartWithoutAxisWrapper extends React.Component<Props, Stat
                 return yTooltip(d, i);
             }
             
-            chartGenerator.generateLineChartWithoutXAxis(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
+            //chartGenerator.generateLineChartWithoutXAxis(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
         }
     }
 
