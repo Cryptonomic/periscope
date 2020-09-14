@@ -228,7 +228,9 @@ class HomeComponent extends React.Component<Props, States> {
                                         text={moment().format("YYYY MMMM Do")}
                                         selectedFilter={this.state.hourlyTransactionFilter}
                                         marginLeft={50}
-                                        tickSpacing={3}/>
+                                        tickSpacing={3}
+                                        isDateAxis={true}
+                                        />
                                 }
                                 </React.Fragment>
                             </div>
@@ -267,7 +269,8 @@ class HomeComponent extends React.Component<Props, States> {
                                         text={moment().format("YYYY MMMM Do")}
                                         selectedFilter={this.state.HourlyVolumeFilter}
                                         marginLeft={70}
-                                        tickSpacing={3}/>
+                                        tickSpacing={3}
+                                        isDateAxis={true}/>
                                 }
                                 </React.Fragment>
                             </div>
@@ -307,7 +310,8 @@ class HomeComponent extends React.Component<Props, States> {
                                         text={moment().format("YYYY MMMM Do")}
                                         selectedFilter={this.state.hourlyGasFilter}
                                         marginLeft={70}
-                                        tickSpacing={3}/>
+                                        tickSpacing={3}
+                                        isDateAxis={true}/>
                                 }
                                 
                             </React.Fragment>
