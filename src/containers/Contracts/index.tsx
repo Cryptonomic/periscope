@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import {constants} from '../../utils/constants';
 import Loader from '../../components/Loader';
 import ChartWrapper from '../../components/ChartGenerator';
+import moment from 'moment';
 
 import {
     MainContainer,
@@ -193,7 +194,7 @@ class ContractsComponent extends React.Component<Props, States> {
                                 _ref= {this.topContractsByInvocationRef}
                                 isLimitAvailable={true}
                                 isDateFilter={true}
-                                text=''/>
+                                text={moment().format("YYYY MMMM Do")}/>
                         }
                         
                     </React.Fragment>

@@ -6,6 +6,7 @@ import {constants} from '../../utils/constants';
 import Loader from '../../components/Loader';
 import ChartWrapper from '../../components/ChartGenerator';
 import { getBaker } from '../../utils/GetBakers';
+import moment from 'moment';
 
 import {
     MainContainer,
@@ -250,7 +251,7 @@ class BakersComponent extends React.Component<Props, States> {
                                 _ref= {this.topBakersByBlockRef}
                                 isLimitAvailable={true}
                                 isDateFilter={true}
-                                text=''/>
+                                text={moment().format("YYYY MMMM Do")}/>
                         }
                         
                     </React.Fragment>
