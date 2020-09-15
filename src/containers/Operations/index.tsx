@@ -477,6 +477,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={false}
                                 selectedFilter={constants.one_month_filter}
+                                isDateAxis={true}
                                 text={`${moment(new Date().getTime() - constants.one_month_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                         }
                         
@@ -516,6 +517,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={false}
                                 selectedFilter={constants.one_month_filter}
+                                isDateAxis={true}
                                 text={`${moment(new Date().getTime() - constants.one_month_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                         }
                         
