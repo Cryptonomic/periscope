@@ -184,7 +184,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={true}
                                 text={moment().format("YYYY MMMM Do")}
-                                selectedFilter={this.state.hourlyBlocksFilter}/>
+                                selectedFilter={this.state.hourlyBlocksFilter}
+                                isDateAxis={true}/>
                         }
                     </React.Fragment>
                        
@@ -225,7 +226,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                         isLimitAvailable={false}
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
-                                        selectedFilter={this.state.priorityBlockFilter}/>
+                                        selectedFilter={this.state.priorityBlockFilter}
+                                        isDateAxis={true}/>
                                 }
                             </React.Fragment>
                         }
@@ -267,7 +269,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                         isLimitAvailable={false}
                                         isDateFilter={true}
                                         text={moment().format("YYYY MMMM Do")}
-                                        selectedFilter={this.state.endorsementFilter}/>
+                                        selectedFilter={this.state.endorsementFilter}
+                                        isDateAxis={true}/>
                                 }
                             </React.Fragment>
                         }

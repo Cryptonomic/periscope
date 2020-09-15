@@ -189,7 +189,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     marginLeft={50}
                                     selectedFilter={this.state.endorsementFilter}
                                     text={endorsementGraphText}
-                                    tickSpacing={3}/>
+                                    tickSpacing={3}
+                                    isDateAxis={true}/>
                             }
                         </React.Fragment>
                     </div>
@@ -228,7 +229,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     marginLeft={50}
                                     selectedFilter={this.state.hourlyBlocksFilter}
                                     text={hourlyBlockGraphText}
-                                    tickSpacing={3}/>
+                                    tickSpacing={3}
+                                    isDateAxis={true}/>
                             }
                         </React.Fragment>
                     </div>
@@ -268,7 +270,8 @@ class BlocksComponent extends React.Component<Props, States> {
                                     marginLeft={50}
                                     selectedFilter={this.state.priorityBlockFilter}
                                     text={priorityBlockGraphText}
-                                    tickSpacing={3}/>
+                                    tickSpacing={3}
+                                    isDateAxis={true}/>
                             }
                         </React.Fragment>
                         

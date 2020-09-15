@@ -172,7 +172,7 @@ class BakersComponent extends React.Component<Props, States> {
     }
 
     yToolTipForTopBakerByStake = (d:any, i:any) => {
-        return this.props.topBakersByStake[i].staking_balance.toLocaleString();
+        return this.props.topBakersByStake[i].staking_balance.toLocaleString()+ " ꜩ";
     }
 
     render() {

@@ -149,7 +149,7 @@ class OperationsComponent extends React.Component<Props, States> {
         if(d.hasOwnProperty('cycle')) {
             return "Cycle "+ d.cycle;
         }
-        return d.values.toLocaleString();
+        return d.values.toLocaleString()+ " ꜩ";
     }
 
     yToolTipForHourlyVolume = (d:any, i:any) => {
@@ -207,7 +207,7 @@ class OperationsComponent extends React.Component<Props, States> {
         if(d.hasOwnProperty('cycle')) {
             return "Cycle "+ d.cycle;
         }
-        return d.values.toLocaleString();
+        return d.values.toLocaleString()+ " ꜩ";
     }
 
     yToolTipForHourlyFee = (d:any, i:any) => {
@@ -477,6 +477,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={false}
                                 selectedFilter={constants.one_month_filter}
+                                isDateAxis={true}
                                 text={`${moment(new Date().getTime() - constants.one_month_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                         }
                         
@@ -516,6 +517,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 isLimitAvailable={false}
                                 isDateFilter={false}
                                 selectedFilter={constants.one_month_filter}
+                                isDateAxis={true}
                                 text={`${moment(new Date().getTime() - constants.one_month_in_milliseconds).format("YYYY MMMM Do")}-${moment().format("YYYY MMMM Do")}`}/>
                         }
                         

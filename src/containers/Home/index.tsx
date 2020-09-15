@@ -134,7 +134,7 @@ class HomeComponent extends React.Component<Props, States> {
         if(d.hasOwnProperty('cycle')) {
             return "Cycle "+ d.cycle;
         }
-        return d.values.toLocaleString();
+        return d.values.toLocaleString()+ " ꜩ";
     }
 
     yToolTipForHourlyVolume = (d:any, i:any) => {

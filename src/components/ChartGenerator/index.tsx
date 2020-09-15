@@ -105,8 +105,12 @@ export default class ChartWrapper extends React.Component<Props, States> {
         const yTooltipFn = function(d: any, i: number) {
             return yTooltip(d, i);
         }
-        chartGenerator.generateLineChart(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
-        // chartGenerator.generateLineChartWithDateAxis(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
+        if(this.props.selectedFilter && this.props.selectedFilter === constants.one_month_filter && this.props.isDateAxis) {
+            chartGenerator.generateLineChartWithDateAxis(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
+        } else {
+            chartGenerator.generateLineChart(height, width, svg, data, xKey, yKey, color, xTooltipFn, yTooltipFn, this.graphContainer);
+        }
+        
         
     }
 

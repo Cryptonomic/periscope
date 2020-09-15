@@ -107,7 +107,7 @@ class ContractsComponent extends React.Component<Props, States> {
     }
 
     yToolTipForTopContractsByBalance = (d:any, i:any) => {
-        return d.balance.toLocaleString()+ ' XTZ';
+        return d.balance.toLocaleString()+ ' ꜩ';
     }
 
     xToolTipForTopContractsByInvocation = (d:any, i:any) => {
