@@ -20,10 +20,10 @@ const Sidebar: React.FC<Props> = props => {
         <div>
             <Holder>
                 <Title><Link to='/'>PERISCOPE</Link></Title>
-                <Subtitle>All Tezos Blockchain data at your fingertips</Subtitle>
+                {/* <Subtitle>All Tezos Blockchain data at your fingertips</Subtitle> */}
                 <CryptoNomicLogo>
                     <p>
-                        <span>A product of </span>
+                        <span>an Open Source Project by</span>
                         <img src={Logo} alt="img"/>
                         <span className="logo">CRYPTONOMIC</span>
                     </p>

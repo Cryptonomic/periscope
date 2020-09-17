@@ -180,6 +180,7 @@ class BakersComponent extends React.Component<Props, States> {
         return (
             <MainContainer>
                 <Title>Bakers</Title>
+                <span className="brand-text">Tezos Network: Mainnet</span>
                 <Widget id="topStakers">
                     
                     <div className="linkHolder">

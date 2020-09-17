@@ -399,3 +399,13 @@ g.grid>path {
     fill: none;
     pointer-events: all;
 }
+
+.brand-text {
+    font-size: 14px;
+    line-height: 20px;
+    color: #8492A4;
+    font-family: Nunito;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}

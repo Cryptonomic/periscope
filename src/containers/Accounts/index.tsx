@@ -69,6 +69,7 @@ class AccountsComponent extends React.Component<Props, States> {
         const { isLoading } = this.props;
         return (
             <MainContainer>
+                <span className="brand-text">Tezos Network: Mainnet</span>
                 <Title>Accounts</Title>
                 <Widget>
                     

@@ -151,6 +151,7 @@ class BlocksComponent extends React.Component<Props, States> {
         return (
             <MainContainer>
                 <Title>Blocks</Title>
+                <span className="brand-text">Tezos Network: Mainnet</span>
                 <Widget id="hourlyBlocks">
                     <div className="linkHolder">
                         <ul>

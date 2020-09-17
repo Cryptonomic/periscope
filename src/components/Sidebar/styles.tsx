@@ -6,9 +6,9 @@ export const Title = styled.h1`
     font-weight: 400;
     font-size: 32px;
     line-height: 20px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     color: #242423;
-    margin: 0 0 10px;
+    margin: 0 0 20px;
     text-align:center;
     & a {
         text-decoration: none;
@@ -53,7 +53,7 @@ export const List = styled.ul`
         li {
             margin-bottom:0;
             a {
-                padding: 16px 10px;
+                padding: 6px 10px;
                 margin: 0 10px;
                 display:block;
                 svg {
@@ -71,14 +71,14 @@ export const List = styled.ul`
         }
     }
     &.sub {
-        padding: 10px 0px 0px 26px;
+        padding: 6px 0px 0px 26px;
     }
 `;
 
 export const ListItem = styled.li`
     font-size:12px;
     list-style:none;
-    margin-bottom:15px;
+    margin-bottom:12px;
     svg,a {
         display: inline-block;
         vertical-align: sub;
@@ -149,9 +149,9 @@ export const Footer = styled.div `
 export const CryptoNomicLogo = styled.div `
     text-align:center;
     p {
-        text-align: left;
+        text-align: center;
         padding: 0px;
-        margin: 0px 0px 5px;
+        margin: 0px 0px 20px;
         &.links {
             margin:0 10px;
             padding-top:0;
@@ -160,15 +160,15 @@ export const CryptoNomicLogo = styled.div `
     img {
         display:inline-block;
         vertical-align:middle;
-        margin-left:5px;
+        margin-left:0px;
         margin-right: -5px;
     }
     span {
-        font-family: Nunito;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 20px;
-        color: #8492A4;
+        font-family: 'Roboto';
+        font-size: 10px;
+        font-weight:300;
+        line-height: 12px;
+        color: #242F57;
         display:inline-block;
         vertical-align:middle;
         &.logo {
@@ -177,6 +177,7 @@ export const CryptoNomicLogo = styled.div `
             font-size: 8px;
             line-height: 16px;
             color: #242423;
+            margin-left:-9px;
         }
         a {
             color:#5CBCD4;
