@@ -283,6 +283,7 @@ class OperationsComponent extends React.Component<Props, States> {
         return (
             <MainContainer>
                 <Title>Operations</Title>
+                <span className="brand-text">Tezos Network: Mainnet</span>
                 <Widget id="trancations">
                    
                     <div className="linkHolder">

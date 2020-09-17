@@ -123,6 +123,7 @@ class ContractsComponent extends React.Component<Props, States> {
         return (
             <MainContainer>
                 <Title>Contracts</Title>
+                <span className="brand-text">Tezos Network: Mainnet</span>
                 <Widget id="contractsByBalance">
                     
                     <div className="linkHolder">
