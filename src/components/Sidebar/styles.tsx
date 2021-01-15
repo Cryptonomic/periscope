@@ -19,7 +19,11 @@ export const Title = styled.h1`
 export const Holder = styled.div`
     background-color:#fff;
     padding:30px 10px;
-    min-height: 100vh;
+    height: 100%;
+    position: fixed;
+    display: block;
+    width: 280px;
+    overflow-y: scroll;
 `;
 
 export const Subtitle = styled.p`
