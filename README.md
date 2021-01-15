@@ -3,9 +3,15 @@
 [![Build Status](https://travis-ci.org/Cryptonomic/Arronax.svg?branch=master)](https://travis-ci.org/Cryptonomic/Arronax)
 [![dependencies](https://david-dm.org/Cryptonomic/Arronax/status.svg)](https://david-dm.org/Cryptonomic/Arronax)
 
-Blockchain data analytics tool built with [ConseilJS](https://github.com/Cryptonomic/ConseilJS), powered by the [Conseil](https://github.com/Cryptonomic/Conseil) API. Beta deployment is [live](https://arronax.io).
+Blockchain data analytics tool built with [ConseilJS](https://github.com/Cryptonomic/ConseilJS), powered by the [Conseil](https://github.com/Cryptonomic/Conseil) API. Beta deployment is [live](https://periscope.arronax.io).
+
+## Prerequisites
+
+A [Conseil](https://github.com/Cryptonomic/Conseil) Node is needed. You can use [Nautilus Core](https://github.com/Cryptonomic/Nautilus) to run up a local deployment along with a local Tezos Archive node, or [Nautilus Cloud](https://nautilus.cloud) to use our cloud hosted Conseil Node.
 
 ## Building
+
+Use NPM version >= 6.14.x
 
 ```bash
 git clone https://github.com/Cryptonomic/periscope.git
@@ -14,6 +20,8 @@ npm install
 #Read instructions for configuration
 npm start
 ```
+
+The webpage supports TLS/HTTPS.
 
 ### Configuration Instructions
 
@@ -24,21 +32,18 @@ import { Config } from './types';
 
 const configs: Config[] = [
   {
-    platform: '',
-    network: '',
-    displayName: '',
-    url: 'conseil.server',
+    platform: 'tezos',
+    network: 'mainnet',
+    displayName: 'Tezos Mainnet',
+    url: 'https://conseil.server',
     apiKey: 'SomeSecret',
-    nodeUrl: 'tezos.server',
-    entities: ['blocks', 'operations', 'accounts', 'bakers', 'governance'],
-    hiddenEntities: ['originated_account_maps', 'big_maps', 'big_map_contents']
   }
 ]
 
 export default configs;
 ```
 
-`platform` ('tezos') and `network` ('mainnet') in that file become URL parameters that ConseilJS uses. `displayName` is used in the UI network selector. `url` and `apiKey` are Conseil service parameters. Cryptonomic provides a turn-key Tezos infrastructure service – [nautilus.cloud](https://nautilus.cloud). Conseil and Tezos endpoints are provided by that service. `nodeUrl` is a Tezos RPC endpoint. `entities` and `hiddenEntities` provide priority sorting for entity display and hide entities from display respectively.
+`platform` ('tezos') and `network` ('mainnet') in that file become URL parameters that ConseilJS uses. `displayName` is used in the UI network selector. `url` and `apiKey` are Conseil service parameters. Cryptonomic provides a turn-key Tezos infrastructure service – [nautilus.cloud](https://nautilus.cloud). Conseil and Tezos endpoints are provided by that service. `nodeUrl` is a Tezos RPC endpoint. 
 
 ### Other Build Targets
 
