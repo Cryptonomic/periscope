@@ -148,6 +148,20 @@ export const Footer = styled.div `
             text-decoration:none;
         }
     }
+    .footer-links {
+        display: flex;
+        justify-content: space-evenly;
+        width: 80%;
+    }
+    .footer-link {
+        display: block;
+    }
+    .footer-icon {
+        display: block;
+        color: black;
+        width: 25px;
+        height: 25px;
+    }
 `
 
 export const CryptoNomicLogo = styled.div `

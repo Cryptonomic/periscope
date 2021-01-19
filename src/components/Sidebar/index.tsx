@@ -9,6 +9,10 @@ import {
     CryptoNomicLogo
 } from './styles';
 import Logo from '../../assets/images/logo.svg';
+import twitter from '../../assets/images/twitter.svg';
+import riot from '../../assets/images/riot.svg';
+import medium from '../../assets/images/medium.svg';
+import github from '../../assets/images/github.svg';
 import { NavLink, Link } from 'react-router-dom';
 
 interface Props {
@@ -23,7 +27,7 @@ const Sidebar: React.FC<Props> = props => {
                 {/* <Subtitle>All Tezos Blockchain data at your fingertips</Subtitle> */}
                 <CryptoNomicLogo>
                     <p>
-                        <span>an Open Source Project by</span>
+                        <span>an <a href={"https://github.com/Cryptonomic/periscope"}>Open Source</a> Project by</span>
                         <img src={Logo} alt="img"/>
                         <span className="logo">CRYPTONOMIC</span>
                     </p>
@@ -151,6 +155,21 @@ const Sidebar: React.FC<Props> = props => {
                     <p className="links">
                         <span>Powered by <a href="#">Arronax</a>, <a href="#">Conseil</a> and  <a href="#">Nautilus Cloud</a></span>
                     </p>
+                    <br></br><br></br>
+                    <div className={"footer-links"}>
+                        <a href={"https://twitter.com/CryptonomicTech"} className={"footer-link"}>
+                            <img src={twitter} className={"footer-icon"}/>
+                        </a>
+                        <a href={"https://github.com/Cryptonomic/periscope"} className={"footer-link"}>
+                            <img src={github} className={"footer-icon"}/>
+                        </a>
+                        <a href={"https://matrix.to/#/!heGqMNcsOSHGPxrMJs:cryptonomic.tech"} className={"footer-link"}>
+                            <img src={riot} className={"footer-icon"}/>
+                        </a>
+                        <a href={"https://medium.com/the-cryptonomic-aperiodical"} className={"footer-link"}>
+                            <img src={medium} className={"footer-icon"}/>
+                        </a>
+                    </div>
                 </Footer>
             </Holder>
         </div>
