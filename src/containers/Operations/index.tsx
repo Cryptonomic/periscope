@@ -46,6 +46,7 @@ class OperationsComponent extends React.Component<Props, States> {
     hourlyGasRef: any = null;
     hourlyFeeRef: any = null;
     dailyActivationRef: any = null;
+    dailyOriginationRef: any = null;
     graphContainer: any = null;
 
     constructor(props: Props) {
@@ -69,6 +70,7 @@ class OperationsComponent extends React.Component<Props, States> {
         this.hourlyGasRef = React.createRef();
         this.hourlyFeeRef = React.createRef(); 
         this.dailyActivationRef = React.createRef();
+        this.dailyOriginationRef = React.createRef();
         this.graphContainer = React.createRef();
     }
 
@@ -242,7 +244,7 @@ class OperationsComponent extends React.Component<Props, States> {
     
     onDailyOriginationChange = (limit: any, date: number) => {
         this.updateQueryParams('originations');
-        this.fetchDailyActivationData(date);
+        this.fetchDailyOriginationData(date);
     }
 
     xToolTipForDailyOrigination = (d:any, i:any) => {
@@ -514,7 +516,7 @@ class OperationsComponent extends React.Component<Props, States> {
                                 onLimitChange= {this.onDailyOriginationChange}
                                 xTooltip= {this.xToolTipForDailyOrigination}
                                 yTooltip= {this.yToolTipForDailyOrigination}
-                                _ref= {this.dailyActivationRef}
+                                _ref= {this.dailyOriginationRef}
                                 isLimitAvailable={false}
                                 isDateFilter={false}
                                 selectedFilter={constants.one_month_filter}
